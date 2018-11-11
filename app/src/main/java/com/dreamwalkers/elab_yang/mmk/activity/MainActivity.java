@@ -40,7 +40,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.paperdb.Paper;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, IActivityBased {
     private static final String TAG = "MainActivity";
     SharedPreferences pref;
     Context mContext;
@@ -60,14 +60,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
+
         mContext = this;
+        initSetting();
+//        hoxy_first();
+    }
+
+    @Override
+    public void bindView() {
+        ButterKnife.bind(this);
+    }
+
+    @Override
+    public void initSetting() {
+        bindView();
         setStatusbar();
         set();
         setNavi();
         Paper.init(this);
         setDevice();
-//        hoxy_first();
     }
 
     // 상태바
@@ -248,4 +259,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 })
                 .show();
     }
+
+
 }

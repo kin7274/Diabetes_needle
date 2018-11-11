@@ -17,6 +17,7 @@ class DeveloperActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_developer)
 
+
         developerList = getDeveloper()
         developerAdapter = DeveloperAdapter(this, developerList)
 
