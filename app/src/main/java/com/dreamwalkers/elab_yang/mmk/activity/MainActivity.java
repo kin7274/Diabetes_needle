@@ -198,18 +198,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(new Intent(MainActivity.this, SettingActivity.class));
                 break;
 
-            case R.id.nav_delete_database:
-                // DATABASE + CACHE CLEAR;
-                Log.d(TAG, "onNavigationItemSelected: nav_delete_database");
-                Toast.makeText(getApplicationContext(), "DATABASE + CACHE CLEAR", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(MainActivity.this, DeleteDataBaseActivity.class));
-                break;
-
-            case R.id.nav_its_me:
-                // 개발자 정보
-                Log.d(TAG, "onNavigationItemSelected: nav_its_me");
-                Toast.makeText(getApplicationContext(), "개발자 정보", Toast.LENGTH_SHORT).show();
-                break;
+//            case R.id.nav_delete_database:
+//                // DATABASE + CACHE CLEAR;
+//                Log.d(TAG, "onNavigationItemSelected: nav_delete_database");
+//                Toast.makeText(getApplicationContext(), "DATABASE + CACHE CLEAR", Toast.LENGTH_SHORT).show();
+//                startActivity(new Intent(MainActivity.this, DeleteDataBaseActivity.class));
+//                break;
+//
+//            case R.id.nav_its_me:
+//                // 개발자 정보
+//                Log.d(TAG, "onNavigationItemSelected: nav_its_me");
+//                Toast.makeText(getApplicationContext(), "개발자 정보", Toast.LENGTH_SHORT).show();
+//                break;
 
 //            case R.id.nav_setting:
 //                //환경설정
