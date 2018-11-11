@@ -12,17 +12,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BottomBarActivity extends AppCompatActivity {
-
-    private static final String TAG_FRAGMENT_CALLS = "tag_frag_calls";
-    private static final String TAG_FRAGMENT_RECENTS = "tag_frag_recents";
-    private static final String TAG_FRAGMENT_TRIPS = "tag_frag_trips";
-
     private BottomNavigationView bottomNavigationView;
 
     /**
      * Maintains a list of Fragments for {@link BottomNavigationView}
      */
-    private List<BottomBarFragment> fragments = new ArrayList<>(3);
+    private List<BottomBarFragment> fragments = new ArrayList<>(5);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,14 +31,20 @@ public class BottomBarActivity extends AppCompatActivity {
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         switch (item.getItemId()) {
-                            case R.id.action_bottombar_calls:
-                                switchFragment(0, TAG_FRAGMENT_CALLS);
+                            case R.id.action_add_device:
+                                switchFragment(0, "tag_frag_add_device");
                                 return true;
-                            case R.id.action_bottombar_recents:
-                                switchFragment(1, TAG_FRAGMENT_RECENTS);
+                            case R.id.action_set_insulin:
+                                switchFragment(1, "tag_frag_set_insulin");
                                 return true;
-                            case R.id.action_bottombar_trips:
-                                switchFragment(2, TAG_FRAGMENT_TRIPS);
+                            case R.id.action_connect:
+                                switchFragment(2, "tag_frag_connect");
+                                return true;
+                            case R.id.action_data_today:
+                                switchFragment(3, "tag_frag_data_today");
+                                return true;
+                            case R.id.action_data_total:
+                                switchFragment(4, "tag_frag_data_total");
                                 return true;
                         }
                         return false;
@@ -53,7 +54,7 @@ public class BottomBarActivity extends AppCompatActivity {
         buildFragmentsList();
 
         // Set the 0th Fragment to be displayed by default.
-        switchFragment(0, TAG_FRAGMENT_CALLS);
+        switchFragment(0, "tag_frag_add_device");
 
     }
 
@@ -66,13 +67,17 @@ public class BottomBarActivity extends AppCompatActivity {
 
 
     private void buildFragmentsList() {
-        BottomBarFragment callsFragment = buildFragment("Calls");
-        BottomBarFragment recentsFragment = buildFragment("Recents");
-        BottomBarFragment tripsFragment = buildFragment("Trips");
+        BottomBarFragment addDeviceFragment = buildFragment("Add_device");
+        BottomBarFragment setInsulinFragment = buildFragment("Set_insulin");
+        BottomBarFragment connectFragment = buildFragment("Connect");
+        BottomBarFragment todatDataFragment = buildFragment("Today_data");
+        BottomBarFragment totalDataFragment = buildFragment("Total_data");
 
-        fragments.add(callsFragment);
-        fragments.add(recentsFragment);
-        fragments.add(tripsFragment);
+        fragments.add(addDeviceFragment);
+        fragments.add(setInsulinFragment);
+        fragments.add(connectFragment);
+        fragments.add(todatDataFragment);
+        fragments.add(totalDataFragment);
     }
 
     /**
