@@ -16,7 +16,7 @@ class DeveloperActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_developer)
-
+        setSupportActionBar(toolbar)
 
         developerList = getDeveloper()
         developerAdapter = DeveloperAdapter(this, developerList)

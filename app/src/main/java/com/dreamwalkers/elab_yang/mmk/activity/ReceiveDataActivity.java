@@ -12,15 +12,15 @@ import android.widget.Toast;
 
 import com.dreamwalkers.elab_yang.mmk.R;
 import com.dreamwalkers.elab_yang.mmk.adapter.MyRecyclerAdapter;
+import com.dreamwalkers.elab_yang.mmk.database.insulin.DBHelper;
 import com.dreamwalkers.elab_yang.mmk.model.CardItem;
-import com.dreamwalkers.elab_yang.mmk.model.DB;
 
 import java.util.List;
 
 public class ReceiveDataActivity extends AppCompatActivity {
     private final static String TAG = ReceiveDataActivity.class.getSimpleName();
 
-    DB db;
+    DBHelper db;
     SQLiteDatabase sql;
 
     String data = "";
@@ -66,7 +66,7 @@ public class ReceiveDataActivity extends AppCompatActivity {
         Log.d(TAG, "i_start = " + i_start);
         Log.d(TAG, i_start + "번째부터 블루투스값 받으면 돼");
 
-        db = new DB(this);
+        db = new DBHelper(this);
         Intent intent = getIntent();
         data = intent.getStringExtra("BLE");
         // & = end bit로 구분

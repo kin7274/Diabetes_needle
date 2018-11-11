@@ -26,6 +26,7 @@ import static com.dreamwalkers.elab_yang.mmk.consts.IntentConst.DEVICEADDRESS;
 
 // TimelineActivity
 public class AutoReceiveActivity extends AppCompatActivity {
+
     private final static String TAG = AutoReceiveActivity.class.getSimpleName();
     Context mContext;
     TextView text1, text2;
@@ -37,6 +38,7 @@ public class AutoReceiveActivity extends AppCompatActivity {
     String message = "";
     String abc = "";
     Handler handler = new Handler();
+
     Runnable r = new Runnable() {
         @Override
         public void run() {
@@ -52,8 +54,10 @@ public class AutoReceiveActivity extends AppCompatActivity {
             finish();
         }
     };
+
     //
     BluetoothLeService mBluetoothLeService = new BluetoothLeService();
+
     private final BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {

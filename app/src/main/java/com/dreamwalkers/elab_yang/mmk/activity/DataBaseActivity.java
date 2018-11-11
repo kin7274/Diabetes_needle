@@ -19,8 +19,8 @@ import android.widget.Toast;
 
 import com.dreamwalkers.elab_yang.mmk.R;
 import com.dreamwalkers.elab_yang.mmk.adapter.MyRecyclerAdapter;
+import com.dreamwalkers.elab_yang.mmk.database.insulin.DBHelper;
 import com.dreamwalkers.elab_yang.mmk.model.CardItem;
-import com.dreamwalkers.elab_yang.mmk.model.DB;
 import com.dreamwalkers.elab_yang.mmk.model.EventCard;
 
 import org.greenrobot.eventbus.EventBus;
@@ -39,7 +39,7 @@ public class DataBaseActivity extends AppCompatActivity implements View.OnClickL
     RelativeLayout data_exist_layout;
     // 데이터가 없을 시 : 이미지+텍스트뷰
     RelativeLayout data_0_layout;
-    DB db;
+    DBHelper db;
     SQLiteDatabase sql;
 
     List<CardItem> lists;
@@ -64,7 +64,7 @@ public class DataBaseActivity extends AppCompatActivity implements View.OnClickL
     }
 
     public void set() {
-        db = new DB(this);
+        db = new DBHelper(this);
 
         data_exist_layout = (RelativeLayout) findViewById(R.id.data_exist_layout);
         data_0_layout = (RelativeLayout) findViewById(R.id.data_0_layout);
