@@ -72,7 +72,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
 
-        <!-- BLE DATA RECEIVE, SET DB -->
+        <!-- BLE DATA RECEIVE, SET DBHelper -->
         <activity
             android:name=".activity.ReceiveDataActivity"
             android:screenOrientation="portrait"
@@ -132,36 +132,40 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
 
-
-        <!--스페이스탭레이아웃-->
-        <activity
-            android:name="com.dreamwalkers.elab_yang.mmk.activity.SpaceTabLayoutActivity"/>
+        <!-- 스페이스탭레이아웃 -->
+        <activity android:name=".activity.SpaceTabLayoutActivity" />
 
         <!-- 바텀바 확인용 -->
 
 
-        <!--BLE서비스-->
+        <!-- BLE서비스 -->
+
 
         <!-- 바텀바 확인용 -->
 
-        <!--<activity-->
-            <!--android:name=".activity.TabsHeaderActivity"-->
-            <!--android:screenOrientation="portrait"-->
-            <!--android:theme="@style/AppTheme" />-->
+
+        <!-- <activity -->
+        <!-- android:name=".activity.TabsHeaderActivity" -->
+        <!-- android:screenOrientation="portrait" -->
+        <!-- android:theme="@style/AppTheme" /> -->
 
         <activity
             android:name=".activity.SettingActivity"
             android:theme="@style/AppTheme.MaterialHome" />
+        <activity
+            android:name=".activity.appinfos.DeveloperActivity"
+            android:theme="@style/AppTheme.MaterialHome" />
+        <activity
+            android:name=".activity.WebViewActivity"
+            android:theme="@style/AppTheme.MaterialHome" />
 
-        <activity android:name=".activity.appinfos.DeveloperActivity" android:theme="@style/AppTheme.MaterialHome" />
-        <activity android:name=".activity.WebViewActivity" android:theme="@style/AppTheme.MaterialHome"/>
+        <activity android:name=".activity.appinfos.DBManagementActivity"
+            android:theme="@style/AppTheme.MaterialHome"/>
 
         <!-- BLE서비스 -->
-
         <service
             android:name=".service.knu.deviceneedle.BluetoothLeService"
             android:enabled="true" />
-
 
     </application>
 

@@ -209,11 +209,10 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.ViewHolder
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        CardView cardview;
 
+        CardView cardview;
         TextView deviceNameLabel;
         TextView deviceStatusLabel;
-
         TextView fetchActivityData;
         TextView showActivityTracks;
         ImageView deviceRemove;
@@ -221,7 +220,6 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.ViewHolder
         ViewHolder(View view) {
             super(view);
             cardview = view.findViewById(R.id.card_view);
-
             deviceNameLabel = view.findViewById(R.id.device_name);
             deviceStatusLabel = view.findViewById(R.id.device_status);
             fetchActivityData = view.findViewById(R.id.device_action_fetch_activity);

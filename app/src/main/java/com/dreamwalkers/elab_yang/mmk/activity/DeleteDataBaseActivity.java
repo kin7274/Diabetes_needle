@@ -13,12 +13,12 @@ import android.view.WindowManager;
 import android.widget.Button;
 
 import com.dreamwalkers.elab_yang.mmk.R;
-import com.dreamwalkers.elab_yang.mmk.model.DB;
+import com.dreamwalkers.elab_yang.mmk.database.insulin.DBHelper;
 
 public class DeleteDataBaseActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "DeleteDataBaseActivity";
     Context mContext;
-    DB db;
+    DBHelper db;
     SQLiteDatabase sql;
     Button btnbtn;
 
@@ -29,7 +29,7 @@ public class DeleteDataBaseActivity extends AppCompatActivity implements View.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deletedb);
         mContext = this;
-        db = new DB(this);
+        db = new DBHelper(this);
         setStatusbar();
         set();
     }
