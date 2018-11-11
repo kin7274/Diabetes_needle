@@ -25,7 +25,6 @@ import android.widget.Toast;
 
 import com.dreamwalkers.elab_yang.mmk.R;
 import com.dreamwalkers.elab_yang.mmk.activity.navi.AlyakActivity;
-import com.dreamwalkers.elab_yang.mmk.activity.navi.EditProfileActivity;
 import com.dreamwalkers.elab_yang.mmk.activity.navi.EduYoutubeActivity;
 import com.dreamwalkers.elab_yang.mmk.activity.navi.OneInsulinActivity;
 import com.dreamwalkers.elab_yang.mmk.activity.navi.ProfileActivity;
@@ -196,7 +195,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_edit_profile:
                 // 개인정보 입력
                 Log.d(TAG, "onNavigationItemSelected: nav_edit_profile");
-                startActivity(new Intent(MainActivity.this, EditProfileActivity.class));
+                startActivity(new Intent(MainActivity.this, SettingActivity.class));
                 break;
 
             case R.id.nav_delete_database:

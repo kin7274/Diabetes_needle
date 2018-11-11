@@ -1,8 +1,10 @@
 package com.dreamwalkers.elab_yang.mmk.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.dreamwalkers.elab_yang.mmk.R
+import com.dreamwalkers.elab_yang.mmk.activity.appinfos.DeveloperActivity
 import kotlinx.android.synthetic.main.activity_setting.*
 
 class SettingActivity : AppCompatActivity() {
@@ -13,5 +15,9 @@ class SettingActivity : AppCompatActivity() {
         db_management_button.setOnClickListener {
 
         }
+        developer_button.setOnClickListener {
+            startActivity(Intent(this, DeveloperActivity::class.java))
+        }
+
     }
 }
