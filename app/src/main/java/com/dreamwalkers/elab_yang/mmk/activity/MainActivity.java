@@ -24,6 +24,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.dreamwalkers.elab_yang.mmk.R;
+import com.dreamwalkers.elab_yang.mmk.activity.fragment.SpaceTabLayoutActivity;
 import com.dreamwalkers.elab_yang.mmk.activity.navi.AlyakActivity;
 import com.dreamwalkers.elab_yang.mmk.activity.navi.EditProfileActivity;
 import com.dreamwalkers.elab_yang.mmk.activity.navi.EduYoutubeActivity;
@@ -39,6 +40,7 @@ import java.util.HashSet;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import eu.long1.spacetablayout.SpaceTabLayout;
 import io.paperdb.Paper;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, IActivityBased {

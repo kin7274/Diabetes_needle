@@ -9,8 +9,6 @@ import com.dreamwalkers.elab_yang.mmk.activity.DeleteDataBaseActivity
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_db_management.*
 
-
-
 class DBManagementActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,7 +17,7 @@ class DBManagementActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         toolbar.setNavigationOnClickListener { v ->
-//            val builder = AlertDialog.Builder(this@DBManagementActivity)
+            //            val builder = AlertDialog.Builder(this@DBManagementActivity)
 //            builder.setTitle("알림")
 //            builder.setMessage("장비(지능형 식판) 검색을 종료하시겠어요?")
 //            builder.setPositiveButton(android.R.string.yes, { dialog, which -> finish() })
