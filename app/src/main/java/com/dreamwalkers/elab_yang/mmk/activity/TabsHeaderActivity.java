@@ -26,13 +26,22 @@ import java.util.List;
 
 public class TabsHeaderActivity extends AppCompatActivity {
 
+//    final Fragment fragment1 = new AddDeviceFragment();
+//    final Fragment fragment2 = new SetInsulinFragment();
+//    final Fragment fragment3 = new ConnectFragment();
+//    final Fragment fragment4 = new TodayDataFragment();
+//    final Fragment fragment5 = new TotalDataFragment();
+
+//    final FragmentManager fm = getSupportFragmentManager();
+    // default;
+//    Fragment active = fragment1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tabs_header);
         setToolbar();
         set();
-
     }
 
     @Override
@@ -40,6 +49,7 @@ public class TabsHeaderActivity extends AppCompatActivity {
         super.onStart();
     }
 
+    // 툴바
     private void setToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.htab_toolbar);
         setSupportActionBar(toolbar);
@@ -59,14 +69,19 @@ public class TabsHeaderActivity extends AppCompatActivity {
         final CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.htab_collapse_toolbar);
     }
 
+    // 뷰페이저 설정(5)
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFrag(new DummyFragment(
-                ContextCompat.getColor(this, R.color.ergo_colorPrimary)), "ergo_colorPrimary");
+                ContextCompat.getColor(this, R.color.ergo_colorPrimary)), "Add device");
         adapter.addFrag(new DummyFragment(
-                ContextCompat.getColor(this, R.color.weaker_blue)), "weaker_blue");
+                ContextCompat.getColor(this, R.color.weaker_blue)), "Set insulin");
         adapter.addFrag(new DummyFragment(
-                ContextCompat.getColor(this, R.color.colorAccent)), "colorAccent");
+                ContextCompat.getColor(this, R.color.colorAccent)), "Connect");
+        adapter.addFrag(new DummyFragment(
+                ContextCompat.getColor(this, R.color.lime)), "Recent");
+        adapter.addFrag(new DummyFragment(
+                ContextCompat.getColor(this, R.color.weaker_yellow)), "Database");
         viewPager.setAdapter(adapter);
     }
 
@@ -88,11 +103,13 @@ public class TabsHeaderActivity extends AppCompatActivity {
             return mFragmentList.size();
         }
 
+        // 추가
         public void addFrag(Fragment fragment, String title) {
             mFragmentList.add(fragment);
             mFragmentTitleList.add(title);
         }
 
+        // pos 반환
         @Override
         public CharSequence getPageTitle(int position) {
             return mFragmentTitleList.get(position);

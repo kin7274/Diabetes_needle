@@ -16,6 +16,7 @@ import com.dreamwalkers.elab_yang.mmk.R;
 public class BottomBarFragment extends Fragment {
 
     public static final String ARG_TITLE = "arg_title";
+//    public static final int ARG_NUM = 0;
 
     private TextView textView;
 
@@ -23,19 +24,17 @@ public class BottomBarFragment extends Fragment {
         // Required empty public constructor
     }
 
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_bottom_bar, container, false);
 
         textView = (TextView) rootView.findViewById(R.id.fragment_bottom_bar_text_activetab);
 
+//        String title = getArguments().getString(ARG_TITLE, "");
         String title = getArguments().getString(ARG_TITLE, "");
         textView.setText(title);
 
         return rootView;
     }
-
 }
