@@ -132,49 +132,32 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
 
-<<<<<<< HEAD
-<<<<<<< HEAD
+
         <!--스페이스탭레이아웃-->
         <activity
-            android:name="com.dreamwalkers.elab_yang.mmk.activity.SpaceTabLayoutActivity"
-=======
+            android:name="com.dreamwalkers.elab_yang.mmk.activity.SpaceTabLayoutActivity"/>
+
         <!-- 바텀바 확인용 -->
-        <activity
-            android:name=".activity.BottomBarActivity"
->>>>>>> a7cedc4e4496166e8d8087023123ce43d71581f6
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme" />
+
 
         <!--BLE서비스-->
-=======
+
         <!-- 바텀바 확인용 -->
+
+        <!--<activity-->
+            <!--android:name=".activity.TabsHeaderActivity"-->
+            <!--android:screenOrientation="portrait"-->
+            <!--android:theme="@style/AppTheme" />-->
+
         <activity
-<<<<<<< HEAD
-            android:name=".activity.BottomBarActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme" />
-        <activity
-            android:name=".activity.TabsHeaderActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme" />
-        <activity
-=======
-            android:name=".activity.TabsHeaderActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme" />
-        <activity
->>>>>>> a7cedc4e4496166e8d8087023123ce43d71581f6
             android:name=".activity.SettingActivity"
             android:theme="@style/AppTheme.MaterialHome" />
 
         <activity android:name=".activity.appinfos.DeveloperActivity" android:theme="@style/AppTheme.MaterialHome" />
-        <activity android:name=".activity.WebViewActivity" android:theme="@style/AppTheme.MaterialHome"></activity>
+        <activity android:name=".activity.WebViewActivity" android:theme="@style/AppTheme.MaterialHome"/>
 
         <!-- BLE서비스 -->
-<<<<<<< HEAD
->>>>>>> a7cedc4e4496166e8d8087023123ce43d71581f6
-=======
->>>>>>> a7cedc4e4496166e8d8087023123ce43d71581f6
+
         <service
             android:name=".service.knu.deviceneedle.BluetoothLeService"
             android:enabled="true" />

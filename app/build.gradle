@@ -53,19 +53,12 @@ dependencies {
     implementation 'com.roughike:bottom-bar:2.3.1'
     //
     implementation 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
-<<<<<<< HEAD
-<<<<<<< HEAD
-    //
+
     implementation 'eu.long1:spacetablayout:1.0.4'
-=======
-=======
->>>>>>> a7cedc4e4496166e8d8087023123ce43d71581f6
+
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "org.jetbrains.anko:anko-commons:$anko_version"
     implementation "org.jetbrains.anko:anko-design:$anko_version"
     implementation 'com.github.d-max:spots-dialog:1.1@aar'
-<<<<<<< HEAD
->>>>>>> a7cedc4e4496166e8d8087023123ce43d71581f6
-=======
->>>>>>> a7cedc4e4496166e8d8087023123ce43d71581f6
+
 }
