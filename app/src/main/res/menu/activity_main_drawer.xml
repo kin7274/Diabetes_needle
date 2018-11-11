@@ -62,19 +62,19 @@
             <item
                 android:id="@+id/nav_edit_profile"
                 android:icon="@drawable/ic_settings_black_24dp"
-                android:title="개인정보 설정" />
+                android:title="환경설정" />
 
-            <!--모든 기록 삭제-->
-            <item
-                android:icon="@drawable/ic_delete_forever_black_24dp"
-                android:id="@+id/nav_delete_database"
-                android:title="모든 기록 삭제" />
+            <!--&lt;!&ndash;모든 기록 삭제&ndash;&gt;-->
+            <!--<item-->
+                <!--android:icon="@drawable/ic_delete_forever_black_24dp"-->
+                <!--android:id="@+id/nav_delete_database"-->
+                <!--android:title="모든 기록 삭제" />-->
 
-            <!--개발자 정보-->
-            <item
-                android:icon="@drawable/ic_error_outline_black_24dp"
-                android:id="@+id/nav_its_me"
-                android:title="개발자 정보" />
+            <!--&lt;!&ndash;개발자 정보&ndash;&gt;-->
+            <!--<item-->
+                <!--android:icon="@drawable/ic_error_outline_black_24dp"-->
+                <!--android:id="@+id/nav_its_me"-->
+                <!--android:title="개발자 정보" />-->
         </menu>
     </item>
 </menu>
