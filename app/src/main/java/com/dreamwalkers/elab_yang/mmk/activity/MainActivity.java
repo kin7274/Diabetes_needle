@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.dreamwalkers.elab_yang.mmk.R;
 import com.dreamwalkers.elab_yang.mmk.activity.navi.AlyakActivity;
+import com.dreamwalkers.elab_yang.mmk.activity.navi.EditProfileActivity;
 import com.dreamwalkers.elab_yang.mmk.activity.navi.EduYoutubeActivity;
 import com.dreamwalkers.elab_yang.mmk.activity.navi.OneInsulinActivity;
 import com.dreamwalkers.elab_yang.mmk.activity.navi.ProfileActivity;
@@ -163,6 +164,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 String AAAA = pref.getString("PREF_STRNAME", "");
                 if (AAAA.equals("")) {
                     Snackbar.make(getWindow().getDecorView().getRootView(), "넌 이름이 뭐니.", 3000).setAction("확인", v -> {
+                        startActivity(new Intent(MainActivity.this, EditProfileActivity.class));
                     }).show();
                 } else {
                     startActivity(new Intent(MainActivity.this, ProfileActivity.class));

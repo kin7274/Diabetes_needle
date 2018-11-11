@@ -1,17 +1,17 @@
-package com.dreamwalkers.elab_yang.mmk.model;
+package com.dreamwalkers.elab_yang.mmk.database.insulin;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-public class DB extends SQLiteOpenHelper {
-    public DB(Context context) {
-        super(context, "needle", null, 1);
+public class DBHelper extends SQLiteOpenHelper {
+    public DBHelper(Context context) {
+        super(context, "needle.db", null, 1);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table tb_needle(_id Integer primary key autoincrement, time text, kind text, name text, unit text, state text)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS tb_needle(_id Integer primary key autoincrement, time text, kind text, name text, unit text, state text)");
     }
 
     @Override
