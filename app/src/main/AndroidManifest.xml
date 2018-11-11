@@ -134,8 +134,6 @@
 
 
         <!--스페이스탭레이아웃-->
-        <activity
-            android:name="com.dreamwalkers.elab_yang.mmk.activity.SpaceTabLayoutActivity"/>
 
         <!-- 바텀바 확인용 -->
 

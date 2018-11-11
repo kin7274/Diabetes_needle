@@ -16,6 +16,7 @@ class SettingActivity : AppCompatActivity() {
         db_management_button.setOnClickListener {
 
         }
+
         developer_button.setOnClickListener {
             startActivity(Intent(this, DeveloperActivity::class.java))
         }
