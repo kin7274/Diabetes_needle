@@ -88,9 +88,9 @@ public class AutoReceiveActivity extends AppCompatActivity {
                     text1.setVisibility(View.GONE);
                     text2.setVisibility(View.VISIBLE);
                     Intent intent = new Intent(AutoReceiveActivity.this, ReceiveDataActivity.class);
-                    // BLE == 받은 ble 데이터 전체;
+                    // 받은 ble 데이터 전체;
                     intent.putExtra("BLE", ble_data_append);
-                    // BLE == 받은 ble 데이터 전체;
+                    // 인슐린 갯수 플래그;
                     intent.putExtra("needle_cnt_flag", needle_cnt_flag);
                     receive_ble_data = "";
                     ble_data_append = "";
