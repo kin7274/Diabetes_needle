@@ -64,7 +64,7 @@ public class DeleteDataBaseActivity extends AppCompatActivity implements View.On
                         pref = getSharedPreferences("pref", MODE_PRIVATE);
                         SharedPreferences.Editor editor = pref.edit();
                         editor.putInt("i_start", 0);
-                        editor.putInt("i_end", 0);
+//                        editor.putInt("i_end", 0);
                         editor.apply();
                         finish();
                     })

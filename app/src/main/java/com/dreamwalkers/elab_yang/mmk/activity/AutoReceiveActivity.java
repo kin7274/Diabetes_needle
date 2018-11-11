@@ -16,44 +16,28 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
-import com.dreamwalkers.elab_yang.mmk.service.knu.deviceneedle.BluetoothLeService;
 import com.dreamwalkers.elab_yang.mmk.R;
+import com.dreamwalkers.elab_yang.mmk.service.knu.deviceneedle.BluetoothLeService;
 
+import static com.dreamwalkers.elab_yang.mmk.consts.IntentConst.DEVICEADDRESS;
 import static com.dreamwalkers.elab_yang.mmk.service.knu.deviceneedle.BluetoothLeService.ACTION_DATA_AVAILABLE;
 import static com.dreamwalkers.elab_yang.mmk.service.knu.deviceneedle.BluetoothLeService.ACTION_DATA_AVAILABLE_CHANGE;
 import static com.dreamwalkers.elab_yang.mmk.service.knu.deviceneedle.BluetoothLeService.EXTRA_DATA;
-import static com.dreamwalkers.elab_yang.mmk.consts.IntentConst.DEVICEADDRESS;
 
-// TimelineActivity
 public class AutoReceiveActivity extends AppCompatActivity {
-
     private final static String TAG = AutoReceiveActivity.class.getSimpleName();
     Context mContext;
     TextView text1, text2;
 
-    int flag = 0;
+    // 투약 갯수 플래그
+    int needle_cnt_flag = 0;
 
     String deviceAddress = "";
-//    String[] message;
-    String message = "";
-    String abc = "";
-    Handler handler = new Handler();
 
-    Runnable r = new Runnable() {
-        @Override
-        public void run() {
-            text1.setVisibility(View.GONE);
-            text2.setVisibility(View.VISIBLE);
-            Intent intent = new Intent(AutoReceiveActivity.this, ReceiveDataActivity.class);
-            intent.putExtra("BLE", abc);
-            intent.putExtra("flag", flag);
-//            message[0] ="";
-            message ="";
-            abc = "";
-            startActivity(intent);
-            finish();
-        }
-    };
+    String receive_ble_data = "";
+    String ble_data_append = "";
+
+    Handler mHandler;
 
     //
     BluetoothLeService mBluetoothLeService = new BluetoothLeService();
@@ -63,17 +47,12 @@ public class AutoReceiveActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             final String action = intent.getAction();
             if (ACTION_DATA_AVAILABLE_CHANGE.equals(action)) {
-                message = (intent.getStringExtra(EXTRA_DATA)).substring(0, 20);
-//                message = intent.getStringExtra(EXTRA_DATA).split("");
-//                Log.d(TAG, "message = " + message[1]);
-//                Log.d(TAG, "message = " + message[0]);
-                Log.d(TAG, "message = " + message);
-//                abc += message[1];
-//                abc += message[0];
-                abc += message;
+                receive_ble_data = (intent.getStringExtra(EXTRA_DATA)).substring(0, 20);
+                Log.d(TAG, "receive_ble_data = " + receive_ble_data);
+                ble_data_append += receive_ble_data;
             }
-            // 블루투스값 쭉 모음 = abc
-            Log.d(TAG, "abc = " + abc);
+            // 블루투스값 쭉 모음 = ble_data_append
+            Log.d(TAG, "ble_data_append = " + ble_data_append);
         }
     };
 
@@ -101,13 +80,34 @@ public class AutoReceiveActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_autoreceive);
         mContext = this;
-        // 상태바 제거
+        mHandler = new Handler();
+        runOnUiThread(() -> {
+            // 1초 후
+            mHandler.postDelayed(() -> {
+                try {
+                    text1.setVisibility(View.GONE);
+                    text2.setVisibility(View.VISIBLE);
+                    Intent intent = new Intent(AutoReceiveActivity.this, ReceiveDataActivity.class);
+                    // BLE == 받은 ble 데이터 전체;
+                    intent.putExtra("BLE", ble_data_append);
+                    // BLE == 받은 ble 데이터 전체;
+                    intent.putExtra("needle_cnt_flag", needle_cnt_flag);
+                    receive_ble_data = "";
+                    ble_data_append = "";
+                    startActivity(intent);
+                    finish();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }, 1000);
+        });
+
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setLottie();
         set();
         //
         deviceAddress = getIntent().getStringExtra(DEVICEADDRESS);
-        flag = getIntent().getIntExtra("flag", flag);
+//        flag = getIntent().getIntExtra("flag", flag);
 
         if (deviceAddress != null) {
             Log.d(TAG, "onCreate: " + deviceAddress);
@@ -118,25 +118,24 @@ public class AutoReceiveActivity extends AppCompatActivity {
         registerReceiver(mMessageReceiver, intentfilter);
         Intent gattServiceIntent = new Intent(this, BluetoothLeService.class);
         bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
-        //
-//        mBluetoothLeService.writeCharacteristic("o");
         // sd카드 데이터 read
         mBluetoothLeService.writeCharacteristic("a");
 //        mBluetoothLeService.writeCharacteristic("c");
     }
 
-    public void setLottie(){
+    public void setLottie() {
         LottieAnimationView animationView = (LottieAnimationView) findViewById(R.id.animation_view);
         animationView.loop(true);
         animationView.playAnimation();
     }
 
-    public void set(){
+    public void set() {
         text1 = (TextView) findViewById(R.id.text1);
         text2 = (TextView) findViewById(R.id.text2);
         text1.setVisibility(View.VISIBLE);
         text2.setVisibility(View.GONE);
     }
+
     // 종료ㅡ 서비스도
     @Override
     protected void onDestroy() {
@@ -149,14 +148,12 @@ public class AutoReceiveActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        // 2초 뒤에 Runnable 객체 수행
-        handler.postDelayed(r, 2000);
+//        handler.postDelayed(r, 2000);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        // 예약 취소
-        handler.removeCallbacks(r);
+//        handler.removeCallbacks(r);
     }
 }

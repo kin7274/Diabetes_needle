@@ -80,10 +80,15 @@ public class OneInsulinActivity extends AppCompatActivity implements View.OnClic
 //        text4 = (TextView) findViewById(R.id.text4);
 //        text4.setOnClickListener(this);
 
+        // TODO: 2018-11-12 2개에도 넣자
         checkbox1 = (CheckBox) findViewById(R.id.checkbox1);
+        checkbox1.setOnClickListener(this);
         checkbox2 = (CheckBox) findViewById(R.id.checkbox2);
+        checkbox2.setOnClickListener(this);
         checkbox3 = (CheckBox) findViewById(R.id.checkbox3);
+        checkbox3.setOnClickListener(this);
         checkbox4 = (CheckBox) findViewById(R.id.checkbox4);
+        checkbox4.setOnClickListener(this);
 
         // 저-장
         Button set_btn = (Button) findViewById(R.id.set_btn);
@@ -121,12 +126,6 @@ public class OneInsulinActivity extends AppCompatActivity implements View.OnClic
         // 임시사용
         final String[] items99;
         //////////////
-
-        if (checkbox1.isChecked() || checkbox2.isChecked() || checkbox3.isChecked() || checkbox4.isChecked()) {
-            card4.setBackgroundResource(R.color.lime);
-        } else {
-            card4.setBackgroundResource(R.color.white);
-        }
 
         // 스위치문
         switch (v.getId()) {
@@ -221,6 +220,38 @@ public class OneInsulinActivity extends AppCompatActivity implements View.OnClic
 //                builder14.create();
 //                builder14.show();
 //                break;
+
+            case R.id.checkbox1:
+                if (checkbox1.isChecked() || checkbox2.isChecked() || checkbox3.isChecked() || checkbox4.isChecked()) {
+                    card4.setBackgroundResource(R.color.lime);
+                } else {
+                    card4.setBackgroundResource(R.color.white);
+                }
+                break;
+
+            case R.id.checkbox2:
+                if (checkbox1.isChecked() || checkbox2.isChecked() || checkbox3.isChecked() || checkbox4.isChecked()) {
+                    card4.setBackgroundResource(R.color.lime);
+                } else {
+                    card4.setBackgroundResource(R.color.white);
+                }
+                break;
+
+            case R.id.checkbox3:
+                if (checkbox1.isChecked() || checkbox2.isChecked() || checkbox3.isChecked() || checkbox4.isChecked()) {
+                    card4.setBackgroundResource(R.color.lime);
+                } else {
+                    card4.setBackgroundResource(R.color.white);
+                }
+                break;
+
+            case R.id.checkbox4:
+                if (checkbox1.isChecked() || checkbox2.isChecked() || checkbox3.isChecked() || checkbox4.isChecked()) {
+                    card4.setBackgroundResource(R.color.lime);
+                } else {
+                    card4.setBackgroundResource(R.color.white);
+                }
+                break;
 
             // 저장
             case R.id.set_btn:

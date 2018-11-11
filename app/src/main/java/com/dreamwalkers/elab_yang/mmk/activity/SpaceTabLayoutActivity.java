@@ -1,4 +1,4 @@
-package com.dreamwalkers.elab_yang.mmk.activity.fragment;
+package com.dreamwalkers.elab_yang.mmk.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
@@ -12,6 +12,10 @@ import android.widget.Toast;
 
 import com.dreamwalkers.elab_yang.mmk.R;
 import com.dreamwalkers.elab_yang.mmk.activity.IActivityBased;
+import com.dreamwalkers.elab_yang.mmk.activity.fragment.FragmentA;
+import com.dreamwalkers.elab_yang.mmk.activity.fragment.FragmentB;
+import com.dreamwalkers.elab_yang.mmk.activity.fragment.FragmentC;
+import com.dreamwalkers.elab_yang.mmk.activity.fragment.FragmentD;
 
 import java.util.ArrayList;
 import java.util.List;

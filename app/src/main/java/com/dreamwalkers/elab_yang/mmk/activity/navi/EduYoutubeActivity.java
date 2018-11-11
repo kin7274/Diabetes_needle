@@ -66,10 +66,14 @@ public class EduYoutubeActivity extends AppCompatActivity implements YoutubeAdap
     // 1초 후 와이파이 권장 알람
     public void wifi_alarm() {
         mHandler = new Handler();
-        runOnUiThread(() -> {
-            // 1초 후
-            mHandler.postDelayed(() -> {
-                try {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                // 1초 후
+                mHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
 //                    AlertDialog.Builder dialog = new AlertDialog.Builder(mContext)
 //                            .setTitle("주의")
 //                            .setMessage("3G/4G환경에서는 데이터 요금이 발생할 수 있습니다.")
@@ -77,12 +81,14 @@ public class EduYoutubeActivity extends AppCompatActivity implements YoutubeAdap
 //                            });
 //                    dialog.create()
 //                            .show();
-                    Snackbar.make(getWindow().getDecorView().getRootView(), "3G/4G환경에서는 데이터 요금이 발생할 수 있습니다.", 3000).setAction("확인", v -> {
-                    }).show();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }, 1000);
+                            Snackbar.make(EduYoutubeActivity.this.getWindow().getDecorView().getRootView(), "3G/4G환경에서는 데이터 요금이 발생할 수 있습니다.", 3000).setAction("확인", v -> {
+                            }).show();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, 1000);
+            }
         });
     }
 

@@ -62,7 +62,7 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.ViewHolder
     ArrayList<Device> deviceArrayList;
 
     // 투약 갯수 플래그
-    int flag = 0;
+    int needle_cnt_flag = 0;
 
     public DeviceAdapter(Context context, List<Device> deviceList) {
         this.context = context;
@@ -125,7 +125,7 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.ViewHolder
 
             } else if (only_one_needle_data.equals("") && (two_needle1_data != "" || two_needle2_data != "" || two_needle3_data != "" || two_needle4_data != "")) {
                 // 2개네 \\\
-                flag = 2;
+                needle_cnt_flag = 2;
                 Log.d(TAG, "onBindViewHolder: 2개 사용하네");
 //                Snackbar.make(v, "인슐린 2개 사용", 3000).setAction("YES", v1 -> {
 //                }).show();
@@ -133,7 +133,7 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.ViewHolder
                 intent.putExtra(DEVICEADDRESS, deviceAddress);
                 context.startActivity(intent);
             } else {
-                flag = 1;
+                needle_cnt_flag = 1;
                 Log.d(TAG, "onBindViewHolder: 1개 사용하네");
 //                Snackbar.make(v, "인슐린 1개 사용", 3000).setAction("YES", v1 -> {
 //                }).show();
@@ -146,8 +146,8 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.ViewHolder
             // 인텐트
 //            Intent intent = new Intent(context, DeviceControlActivity.class);
 //            intent.putExtra(DEVICEADDRESS, deviceAddress);
-//            // flag = 1 : 1개 사용
-//            // flag = 2 : 2개 사용
+//            // needle_cnt_flag = 1 : 1개 사용
+//            // needle_cnt_flag = 2 : 2개 사용
 //            context.startActivity(intent);
 
 //            if (AAAA.equals("")) {
@@ -168,7 +168,7 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.ViewHolder
         holder.fetchActivityData.setOnClickListener(v -> {
             Intent intent = new Intent(context, AutoReceiveActivity.class);
             intent.putExtra(DEVICEADDRESS, deviceAddress);
-            intent.putExtra("flag", flag);
+            intent.putExtra("needle_cnt_flag", needle_cnt_flag);
             context.startActivity(intent);
         });
 

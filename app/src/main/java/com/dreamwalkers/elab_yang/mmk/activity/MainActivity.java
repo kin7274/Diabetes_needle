@@ -24,7 +24,6 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.dreamwalkers.elab_yang.mmk.R;
-import com.dreamwalkers.elab_yang.mmk.activity.fragment.SpaceTabLayoutActivity;
 import com.dreamwalkers.elab_yang.mmk.activity.navi.AlyakActivity;
 import com.dreamwalkers.elab_yang.mmk.activity.navi.EditProfileActivity;
 import com.dreamwalkers.elab_yang.mmk.activity.navi.EduYoutubeActivity;
@@ -40,7 +39,6 @@ import java.util.HashSet;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import eu.long1.spacetablayout.SpaceTabLayout;
 import io.paperdb.Paper;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, IActivityBased {
@@ -163,8 +161,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 // 호구조사
                 Log.d(TAG, "onNavigationItemSelected: nav_profile");
 //                Toast.makeText(getApplicationContext(),"장치 추가", Toast.LENGTH_SHORT).show();
-                String AAAA = pref.getString("PREF_STRNAME", "");
-                if (AAAA.equals("")) {
+                String cache_user_data = pref.getString("user_data0", "");
+                if (cache_user_data.equals("")) {
+                    // 데이터가 없네 저장부터하셈ㅡㅡ
                     Snackbar.make(getWindow().getDecorView().getRootView(), "넌 이름이 뭐니.", 3000).setAction("확인", v -> {
                         startActivity(new Intent(MainActivity.this, EditProfileActivity.class));
                     }).show();

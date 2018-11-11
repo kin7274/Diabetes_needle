@@ -134,7 +134,7 @@
 
         <!--스페이스탭레이아웃-->
         <activity
-            android:name=".activity.fragment.SpaceTabLayoutActivity"
+            android:name=".activity.SpaceTabLayoutActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
 

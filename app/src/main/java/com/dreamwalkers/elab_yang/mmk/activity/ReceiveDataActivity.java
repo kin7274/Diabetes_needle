@@ -19,15 +19,16 @@ import java.util.List;
 
 public class ReceiveDataActivity extends AppCompatActivity {
     private final static String TAG = ReceiveDataActivity.class.getSimpleName();
-
+    private MyRecyclerAdapter mAdapter;
+    RecyclerView recycler_view;
     DBHelper db;
     SQLiteDatabase sql;
 
-    String data = "";
-    String abc = "";
+    String ble_data_append = "";
+    String time = "";
     List<CardItem> lists;
-    private MyRecyclerAdapter mAdapter;
-    RecyclerView recycler_view;
+
+    int ble_cnt = 0;
     String[] data_detail = {"", "", "", ""};
 //    String[] data_detail2 = {"", "", "", ""};
     // data_detail[0] = 품목;
@@ -35,306 +36,275 @@ public class ReceiveDataActivity extends AppCompatActivity {
     // data_detail[2] = 단위;
     // data_detail[3] = 투약시간;
 
-    int hh = 0;
-    int flag = 0;
+    // 시간 비교용 시간값
+    int hour_value = 0;
+
+    // 투약 갯수 플래그
+    int needle_cnt_flag = 0;
+
     int time_flag = 0;
 
-    String time_now = "";
+    String state = "";
 
     String morning = "";
     String afternoon = "";
     String dinner = "";
     String night = "";
 
+    // ble 시작 인덱스
+    int i_start;
+
     String[] hr = {"", ""};
     String[] hrr = {"", "", "", ""};
     String[] hrr2 = {"", "", "", ""};
+
+    SharedPreferences pref;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_getdb);
 //        setRecyclerView();
-        flag = getIntent().getIntExtra("flag", flag);
+        init();
+    }
+
+
+    public void init() {
+        needle_one_or_two();
+        get_start_index();
+        db = new DBHelper(this);
+        intent_receive();
+        ble_data_cnt();
+    }
+
+    // 사용하는 니들이 한개야? 두개야?
+    public void needle_one_or_two() {
+        needle_cnt_flag = getIntent().getIntExtra("needle_cnt_flag", needle_cnt_flag);
 //        flag = 1 : 1개 사용
 //        flag = 2 : 2개 사용
+        Log.d(TAG, "onCreate: flag " + needle_cnt_flag);
+    }
 
-        Log.d(TAG, "onCreate: flag " + flag);
-
-        SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
-        int i_start = pref.getInt("INDEX", 0);
+    // 시작 인덱스를 cache에서 가져온다
+    public void get_start_index() {
+        pref = getSharedPreferences("pref", MODE_PRIVATE);
+        i_start = pref.getInt("INDEX", 0);
         Log.d(TAG, "i_start = " + i_start);
         Log.d(TAG, i_start + "번째부터 블루투스값 받으면 돼");
+    }
 
-        db = new DBHelper(this);
-        Intent intent = getIntent();
-        data = intent.getStringExtra("BLE");
-        // & = end bit로 구분
-        Log.d(TAG, "data = " + data);
+    // ble값 가져와
+    public void intent_receive() {
+        ble_data_append = getIntent().getStringExtra("BLE");
+        Log.d(TAG, "ble_data_append = " + ble_data_append);
+    }
 
-        int i = getCharNumber(data, '&');
-        Log.d(TAG, "몇개의 데이터가 있을까? : " + i + "개 데이터 존재");
+    public void ble_data_cnt() {
+        // ble 갯수를 세보자
+        ble_cnt = getCharNumber(ble_data_append, '&');
+        Log.d(TAG, "몇개의 데이터가 있을까? : " + ble_cnt + "개 데이터 존재");
+        int i_end = getCharNumber(ble_data_append, '&');
 
-        int i_end = getCharNumber(data, '&');
-
+        // 어디까지 읽어오는지 그 인덱스를 저-장
         SharedPreferences.Editor editor = pref.edit();
         editor.putInt("INDEX", i_end);
         Log.d(TAG, "INDEX = " + i_end + "번째 데이터까지 읽어왔어.. 기억하자");
         editor.apply();
+        //
 
+        // 받을 데이터가 있는지 인덱스값 확인
         if (i_start == i_end) {
+            // 시작 == 끝?
             // 동기화할 데이터가 없음
             Toast.makeText(getApplicationContext(), "동기화할 데이터가 없습니다.", Toast.LENGTH_SHORT).show();
             Log.d(TAG, "onCreate: 동기화할 거 없음");
             finish();
         } else {
-            String[] str = data.split("&");
-            sql = db.getWritableDatabase();
+            // 틀리면 데이터 받아야지 암!
+            connect();
+        }
+    }
 
-            // str = 201811062153
+    // 실제 받는 부분
+    public void connect() {
+        // ble_data_unit_1 == 한 세트
+        String[] ble_data_unit_1 = ble_data_append.split("&");
+        // ble_data_unit_1 = 201811062153
+        sql = db.getWritableDatabase();
 
-            for (int y = i_start; y < i; y++) {
-                Log.d(TAG, "지금 " + (y + 1) + "번째 진행중");
-                Log.d(TAG, "str[y] 전체 = " + str[y]);
-                Log.d(TAG, "str[y] 년도 = " + str[y].substring(0, 4));
-                Log.d(TAG, "str[y] 월   = " + str[y].substring(4, 6));
-                Log.d(TAG, "str[y] 일   = " + str[y].substring(6, 8));
-                Log.d(TAG, "str[y] 시   = " + str[y].substring(8, 10));
-                Log.d(TAG, "str[y] 분   = " + str[y].substring(10, 12));
+        for (int y = i_start; y < ble_cnt; y++) {
+            Log.d(TAG, "지금 " + (y + ble_cnt) + "번째 진행중");
+            Log.d(TAG, "str[y] 전체 = " + ble_data_unit_1[y]);
+            Log.d(TAG, "str[y] 년도 = " + ble_data_unit_1[y].substring(0, 4));
+            Log.d(TAG, "str[y] 월   = " + ble_data_unit_1[y].substring(4, 6));
+            Log.d(TAG, "str[y] 일   = " + ble_data_unit_1[y].substring(6, 8));
+            Log.d(TAG, "str[y] 시   = " + ble_data_unit_1[y].substring(8, 10));
+            Log.d(TAG, "str[y] 분   = " + ble_data_unit_1[y].substring(10, 12));
 
-                abc = str[y].substring(0, 4) + "." + str[y].substring(4, 6) + "." + str[y].substring(6, 8) + " " + str[y].substring(8, 10) + ":" + str[y].substring(10, 12);
-                //                   년도                       월                             일                             시                               분
+            time = ble_data_unit_1[y].substring(0, 4) + "." + ble_data_unit_1[y].substring(4, 6) + "."
+                    + ble_data_unit_1[y].substring(6, 8) + " " + ble_data_unit_1[y].substring(8, 10) + ":" + ble_data_unit_1[y].substring(10, 12);
+            //                   년도                       월                             일                             시                               분
 
-                if ((hh >= 5) && (hh < 11)) {
-                    // 아침
-                    time_now = "아침전";
+            if (needle_cnt_flag == 1) {
+                // 난 인슐린 한개만 쓰는거야
+                String set_data = "";
+                String only_one_needle_data = "";
 
-                } else if ((hh >= 11) && (hh < 16)) {
-                    // 점심
-                    time_now = "점심전";
+                only_one_needle_data = pref.getString("SET_DATA", set_data);
 
-                } else if ((hh >= 16) && (hh < 21)) {
-                    // 저녁
-                    time_now = "저녁전";
-                } else {
-                    // 취침전
-                    time_now = "취침전";
-                }
+                Log.d(TAG, "onCreate: only_one_needle_data " + only_one_needle_data);
 
-                if (flag == 1) {
-                    // 난 인슐린 한개만 쓰는거야
-                    String set_data = "";
-                    String only_one_needle_data = "";
-
-                    only_one_needle_data = pref.getString("SET_DATA", set_data);
-
-                    Log.d(TAG, "onCreate: only_one_needle_data " + only_one_needle_data);
-
-                    data_detail = only_one_needle_data.split("#");
+                data_detail = only_one_needle_data.split("#");
 //            data_detail[0] = 품목
 //            data_detail[1] = 품명
 //            data_detail[2] = 단위
 
-                    // 지금 시간 = str[y].substring(8, 10)
+                // 지금 시간 = str[y].substring(8, 10)
 
-                    // 21-05(8h) : 취침전;
-                    // 05-11(6h) : 아침식전;
-                    // 11-16(5h) : 점심식전;
-                    // 16-21(5h) : 저녁식전;
-                    hh = Integer.parseInt(str[y].substring(8, 10));
-                    Log.d(TAG, "onCreate: hh = " + hh);
+                // 21-05(8h) : 취침전;
+                // 05-11(6h) : 아침식전;
+                // 11-16(5h) : 점심식전;
+                // 16-21(5h) : 저녁식전;
+                hour_value = Integer.parseInt(ble_data_unit_1[y].substring(8, 10));
+                Log.d(TAG, "onCreate: hour_value = " + hour_value);
 
-                    setDB(abc, data_detail[0], data_detail[1], data_detail[2], time_now);
-                    abc = "";
-                    data = "";
+                setDB(time, data_detail[0], data_detail[1], data_detail[2], state);
+                time = "";
+                ble_data_append = "";
 
-                } else if (flag == 2) {
-                    // 난 2개 써
-                    String a1 = "";
-                    String a2 = "";
-                    String a3 = "";
-                    String a4 = "";
+            } else if (needle_cnt_flag == 2) {
+                // 난 2개 써
+                String a1 = "";
+                String a2 = "";
+                String a3 = "";
+                String a4 = "";
 
+                morning = pref.getString("cache_data_1", a1);
+                afternoon = pref.getString("cache_data_2", a2);
+                dinner = pref.getString("cache_data_3", a3);
+                night = pref.getString("cache_data_4", a4);
+
+                // 아침 값들
+                Log.d(TAG, "onCreate: morning " + morning);
+                // 점심 값들
+                Log.d(TAG, "onCreate: afternoon " + afternoon);
+                // 저녁 값들
+                Log.d(TAG, "onCreate: dinner " + dinner);
+                // 취침 값들
+                Log.d(TAG, "onCreate: night " + night);
+
+                // TODO: 2018-11-12 date로..
+                // 받아 이걸 시간값을
+                hour_value = Integer.parseInt(ble_data_unit_1[y].substring(8, 10));
+                Log.d(TAG, "onCreate: hour_value = " + hour_value);
+
+
+//                hr == 그 사용 시간대에 쓰는게 2개인 경우 스트링 묶은 값
+//                hr[0]은 그때 앞에꺼, hr[1]은 그때 뒤에꺼
+//                hrr[0] ~ [2] : 앞에꺼 데이터
+//                hrr2[0] ~ [2] : 뒤에꺼 데이터
+
+                if ((hour_value >= 5) && (hour_value < 11)) {
+                    // 아침
                     morning = pref.getString("cache_data_1", a1);
-                    afternoon = pref.getString("cache_data_2", a2);
-                    dinner = pref.getString("cache_data_3", a3);
-                    night = pref.getString("cache_data_4", a4);
+                    if (morning.contains("&&")) {
+                        // 중복인거고
+                        hr = morning.split("&&");
+                        hrr = hr[0].split("/");
+                        hrr2 = hr[1].split("/");
+                        setDB(time, hrr[0] + "/" + hrr2[0], hrr[1] + "/" + hrr2[1], hrr[2] + "/" + hrr2[2], state);
 
-                    Log.d(TAG, "onCreate: morning " + morning);
-                    Log.d(TAG, "onCreate: afternoon " + afternoon);
-                    Log.d(TAG, "onCreate: dinner " + dinner);
-                    Log.d(TAG, "onCreate: night " + night);
-
-                    hh = Integer.parseInt(str[y].substring(8, 10));
-//                Log.d(TAG, "onCreate: hh = " + hh);
-
-                    if ((hh >= 5) && (hh < 11)) {
-                        // 아침
-                        morning = pref.getString("cache_data_1", a1);
-                        if (morning.contains("&&")) {
-                            // 중복인거고
-                            hr = morning.split("&&");
-                            hrr = hr[0].split("/");
-                            hrr2 = hr[1].split("/");
-                            setDB(abc, hrr[0] + "/" + hrr2[0], hrr[1] + "/" + hrr2[1], hrr[2] + "/" + hrr2[2], time_now);
-
-                        } else if (morning.startsWith("&")) {
-                            // true 라면 이건 &품목/품명/단위 라는거고
-                            hr = morning.split("&");
-                            hrr = hr[1].split("/");
-                            setDB(abc, hrr[0], hrr[1], hrr[2], time_now);
-
-                        } else {
-                            // 이건 풍목/품명/단위&
-                            hr = morning.split("&");
-                            hrr = hr[0].split("/");
-                            setDB(abc, hrr[0], hrr[1], hrr[2], time_now);
-
-                        }
-
-                    } else if ((hh >= 11) && (hh < 16)) {
-                        // 점심
-                        afternoon = pref.getString("cache_data_2", a2);
-                        if (afternoon.contains("&&")) {
-                            // 중복인거고
-                            hr = afternoon.split("&&");
-                            hrr = hr[0].split("/");
-                            hrr2 = hr[1].split("/");
-                            setDB(abc, hrr[0] + "/" + hrr2[0], hrr[1] + "/" + hrr2[1], hrr[2] + "/" + hrr2[2], time_now);
-
-                        } else if (afternoon.startsWith("&")) {
-                            // true 라면 이건 &품목/품명/단위 라는거고
-                            hr = afternoon.split("&");
-                            hrr = hr[1].split("/");
-                            setDB(abc, hrr[0], hrr[1], hrr[2], time_now);
-
-                        } else {
-                            // 이건 풍목/품명/단위&
-                            hr = afternoon.split("&");
-                            hrr = hr[0].split("/");
-                            setDB(abc, hrr[0], hrr[1], hrr[2], time_now);
-                        }
-
-                    } else if ((hh >= 16) && (hh < 21)) {
-                        // 저녁
-                        dinner = pref.getString("cache_data_3", a3);
-                        if (dinner.contains("&&")) {
-                            // 중복인거고
-                            hr = dinner.split("&&");
-                            hrr = hr[0].split("/");
-                            hrr2 = hr[1].split("/");
-                            setDB(abc, hrr[0] + "/" + hrr2[0], hrr[1] + "/" + hrr2[1], hrr[2] + "/" + hrr2[2], time_now);
-
-                        } else if (dinner.startsWith("&")) {
-                            // true 라면 이건 &품목/품명/단위 라는거고
-                            hr = dinner.split("&");
-                            hrr = hr[1].split("/");
-                            setDB(abc, hrr[0], hrr[1], hrr[2], time_now);
-
-                        } else {
-                            // 이건 풍목/품명/단위&
-                            hr = dinner.split("&");
-                            hrr = hr[0].split("/");
-                            setDB(abc, hrr[0], hrr[1], hrr[2], time_now);
-                        }
-
+                    } else if (morning.startsWith("&")) {
+                        // true 라면 이건 &품목/품명/단위 라는거고
+                        hr = morning.split("&");
+                        hrr = hr[1].split("/");
+                        setDB(time, hrr[0], hrr[1], hrr[2], state);
 
                     } else {
-                        // 취침전
-                        night = pref.getString("cache_data_4", a4);
-                        if (night.contains("&&")) {
-                            // 중복인거고
-                            hr = night.split("&&");
-                            hrr = hr[0].split("/");
-                            hrr2 = hr[1].split("/");
-                            setDB(abc, hrr[0] + "/" + hrr2[0], hrr[1] + "/" + hrr2[1], hrr[2] + "/" + hrr2[2], time_now);
+                        // 이건 풍목/품명/단위&
+                        hr = morning.split("&");
+                        hrr = hr[0].split("/");
+                        setDB(time, hrr[0], hrr[1], hrr[2], state);
 
-                        } else if (night.startsWith("&")) {
-                            // true 라면 이건 &품목/품명/단위 라는거고
-                            hr = night.split("&");
-                            hrr = hr[1].split("/");
-                            setDB(abc, hrr[0], hrr[1], hrr[2], time_now);
-
-                        } else {
-                            // 이건 풍목/품명/단위&
-                            hr = night.split("&");
-                            hrr = hr[0].split("/");
-                            setDB(abc, hrr[0], hrr[1], hrr[2], time_now);
-                        }
                     }
-//                setDB(abc, null, null, null, null);
+
+                } else if ((hour_value >= 11) && (hour_value < 16)) {
+                    // 점심
+                    afternoon = pref.getString("cache_data_2", a2);
+                    if (afternoon.contains("&&")) {
+                        // 중복인거고
+                        hr = afternoon.split("&&");
+                        hrr = hr[0].split("/");
+                        hrr2 = hr[1].split("/");
+                        setDB(time, hrr[0] + "/" + hrr2[0], hrr[1] + "/" + hrr2[1], hrr[2] + "/" + hrr2[2], state);
+
+                    } else if (afternoon.startsWith("&")) {
+                        // true 라면 이건 &품목/품명/단위 라는거고
+                        hr = afternoon.split("&");
+                        hrr = hr[1].split("/");
+                        setDB(time, hrr[0], hrr[1], hrr[2], state);
+
+                    } else {
+                        // 이건 풍목/품명/단위&
+                        hr = afternoon.split("&");
+                        hrr = hr[0].split("/");
+                        setDB(time, hrr[0], hrr[1], hrr[2], state);
+                    }
+
+                } else if ((hour_value >= 16) && (hour_value < 21)) {
+                    // 저녁
+                    dinner = pref.getString("cache_data_3", a3);
+                    if (dinner.contains("&&")) {
+                        // 중복인거고
+                        hr = dinner.split("&&");
+                        hrr = hr[0].split("/");
+                        hrr2 = hr[1].split("/");
+                        setDB(time, hrr[0] + "/" + hrr2[0], hrr[1] + "/" + hrr2[1], hrr[2] + "/" + hrr2[2], state);
+
+                    } else if (dinner.startsWith("&")) {
+                        // true 라면 이건 &품목/품명/단위 라는거고
+                        hr = dinner.split("&");
+                        hrr = hr[1].split("/");
+                        setDB(time, hrr[0], hrr[1], hrr[2], state);
+
+                    } else {
+                        // 이건 풍목/품명/단위&
+                        hr = dinner.split("&");
+                        hrr = hr[0].split("/");
+                        setDB(time, hrr[0], hrr[1], hrr[2], state);
+                    }
+
+
+                } else {
+                    // 취침전
+                    night = pref.getString("cache_data_4", a4);
+                    if (night.contains("&&")) {
+                        // 중복인거고
+                        hr = night.split("&&");
+                        hrr = hr[0].split("/");
+                        hrr2 = hr[1].split("/");
+                        setDB(time, hrr[0] + "/" + hrr2[0], hrr[1] + "/" + hrr2[1], hrr[2] + "/" + hrr2[2], state);
+
+                    } else if (night.startsWith("&")) {
+                        // true 라면 이건 &품목/품명/단위 라는거고
+                        hr = night.split("&");
+                        hrr = hr[1].split("/");
+                        setDB(time, hrr[0], hrr[1], hrr[2], state);
+
+                    } else {
+                        // 이건 풍목/품명/단위&
+                        hr = night.split("&");
+                        hrr = hr[0].split("/");
+                        setDB(time, hrr[0], hrr[1], hrr[2], state);
+                    }
                 }
-                abc = "";
-                data = "";
             }
-//        abc = "";
-//        data = "";
-            finish();
+            time = "";
+            ble_data_append = "";
         }
+        finish();
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//        if (flag == 1) {
-//            // 난 인슐린 한개만 쓰는거야
-//            String set_data = "";
-//            String only_one_needle_data = "";
-//
-//            only_one_needle_data = pref.getString("SET_DATA", set_data);
-//
-//            Log.d(TAG, "onCreate: only_one_needle_data " + only_one_needle_data);
-//
-//            data_detail = only_one_needle_data.split("/");
-////            data_detail[0] = 품목
-////            data_detail[1] = 품명
-////            data_detail[2] = 단위
-//
-//        } else if (flag == 2) {
-//            // 난 2개 써
-//            String a1 = "";
-//            String a2 = "";
-//            String a3 = "";
-//            String a4 = "";
-//
-//            morning = pref.getString("cache_data_1", a1);
-//            afternoon = pref.getString("cache_data_2", a2);
-//            dinner = pref.getString("cache_data_3", a3);
-//            night = pref.getString("cache_data_4", a4);
-//
-//            Log.d(TAG, "onCreate: morning " + morning);
-//            Log.d(TAG, "onCreate: afternoon " + afternoon);
-//            Log.d(TAG, "onCreate: dinner " + dinner);
-//            Log.d(TAG, "onCreate: night " + night);
-//
-//        }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-//    // 시간에 따른 식사상태 구분;
-//    // 형식 : 00 ~ 24시
-//    // 21-05(8h) : 취침전;
-//    // 05-11(6h) : 아침식전;
-//    // 11-16(5h) : 점심식전;
-//    // 16-21(5h) : 저녁식전;
-//    public String what_hh(int hh) {
-//        if ((hh >= 05) && (hh < 11)) {
-//            return "아침식전";
-//        } else if ((hh >= 11) && (hh < 16)) {
-//            return "점심식전";
-//        } else if ((hh >= 16) && (hh < 21)) {
-//            return "저녁식전";
-//        } else {
-//            return "취침전";
-//        }
-//    }
 
     // 특정문자 반복 갯수 확인
     int getCharNumber(String str, char c) {
@@ -346,12 +316,7 @@ public class ReceiveDataActivity extends AppCompatActivity {
         return cnt;
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.menu, menu);
-//        return true;
-//    }
-
+    // DB에 저장
     public void setDB(String str1, String str2, String str3, String str4, String str5) {
         sql = db.getWritableDatabase();
         sql.execSQL(String.format("INSERT INTO tb_needle VALUES(null, '%s', '%s', '%s', '%s', '%s')", str1, str2, str3, str4, str5));
