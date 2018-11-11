@@ -10,8 +10,8 @@ import kotlinx.android.synthetic.main.activity_developer.*
 
 class DeveloperActivity : AppCompatActivity() {
 
-    lateinit var developerAdapter : DeveloperAdapter
-    lateinit var developerList : ArrayList<Developer>
+    lateinit var developerAdapter: DeveloperAdapter
+    lateinit var developerList: ArrayList<Developer>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,16 +20,16 @@ class DeveloperActivity : AppCompatActivity() {
         developerList = getDeveloper()
         developerAdapter = DeveloperAdapter(this, developerList)
 
-        with(recycler_view){
+        with(recycler_view) {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(this.context)
             adapter = developerAdapter
         }
     }
 
-    private fun getDeveloper() : ArrayList<Developer>{
+    private fun getDeveloper(): ArrayList<Developer> {
         return arrayListOf(Developer("Dreamwalker", "https://github.com/JAICHANGPARK"),
-                Developer("Dreamwalker", "https://github.com/JAICHANGPARK")
-                )
+                Developer("kin7274", "https://github.com/kin7274")
+        )
     }
 }

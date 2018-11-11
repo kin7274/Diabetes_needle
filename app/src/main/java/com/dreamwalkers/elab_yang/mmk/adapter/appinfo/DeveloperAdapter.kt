@@ -1,6 +1,7 @@
 package com.dreamwalkers.elab_yang.mmk.adapter.appinfo
 
 import android.content.Context
+import android.content.Intent
 import android.support.design.button.MaterialButton
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -8,6 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.dreamwalkers.elab_yang.mmk.R
+import com.dreamwalkers.elab_yang.mmk.activity.WebViewActivity
+import com.dreamwalkers.elab_yang.mmk.consts.IntentConst
 import com.dreamwalkers.elab_yang.mmk.model.appinfos.Developer
 
 class DeveloperAdapter(val context: Context, private val developerList: ArrayList<Developer>) : RecyclerView.Adapter<DeveloperAdapter.DeveloperViewHolder>() {
@@ -22,8 +25,12 @@ class DeveloperAdapter(val context: Context, private val developerList: ArrayLis
     }
 
     override fun onBindViewHolder(p0: DeveloperViewHolder, p1: Int) {
-            p0.itemName.text = developerList[p1].name
-        p0.itemGithub.text = developerList[p1].githubLink
+        p0.itemName.text = developerList[p1].name
+        p0.itemGithub.setOnClickListener {
+            val intent = Intent(context, WebViewActivity::class.java)
+            intent.putExtra(IntentConst.WEB_URL, developerList[p1].githubLink)
+        }
+
     }
 
     inner class DeveloperViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
