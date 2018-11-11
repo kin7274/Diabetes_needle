@@ -29,6 +29,7 @@ class DeveloperAdapter(val context: Context, private val developerList: ArrayLis
         p0.itemGithub.setOnClickListener {
             val intent = Intent(context, WebViewActivity::class.java)
             intent.putExtra(IntentConst.WEB_URL, developerList[p1].githubLink)
+            context.startActivity(intent)
         }
 
     }
