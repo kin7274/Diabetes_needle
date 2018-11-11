@@ -53,7 +53,7 @@ public class SpaceTabLayoutActivity extends AppCompatActivity implements IActivi
         fragmentList.add(new FragmentB());
         fragmentList.add(new FragmentC());
         fragmentList.add(new FragmentD());
-        fragmentList.add(new FragmentE());
+//        fragmentList.add(new FragmentE());
 
         // set
         final CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id.activity_main);
