@@ -37,12 +37,15 @@ import com.dreamwalkers.elab_yang.mmk.model.Device;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import io.paperdb.Paper;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private static final String TAG = "MainActivity";
     SharedPreferences pref;
     Context mContext;
+    @BindView(R.id.drawer_layout)
     DrawerLayout drawer;
     RecyclerView recyclerView;
     DeviceAdapter deviceAdapter;
@@ -58,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
         mContext = this;
         setStatusbar();
         set();

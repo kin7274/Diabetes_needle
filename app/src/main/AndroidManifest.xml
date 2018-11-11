@@ -135,18 +135,14 @@
             android:name="com.dreamwalkers.elab_yang.mmk.activity.BottomBarActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
-
-
         <activity
             android:name="com.dreamwalkers.elab_yang.mmk.activity.TabsHeaderActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
-
         <!--BLE서비스-->
         <service
             android:name="com.dreamwalkers.elab_yang.mmk.service.BluetoothLeService"
             android:enabled="true" />
-
 
     </application>
 
