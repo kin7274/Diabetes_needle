@@ -54,4 +54,6 @@ dependencies {
     //
     implementation 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.anko:anko-commons:$anko_version"
+    implementation "org.jetbrains.anko:anko-design:$anko_version"
 }

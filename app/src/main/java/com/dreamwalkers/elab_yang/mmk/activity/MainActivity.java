@@ -190,14 +190,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_education:
                 // 유튜브 영상 페이지 설정
                 Log.d(TAG, "onNavigationItemSelected: nav_education");
-//                Toast.makeText(getApplicationContext(), "인슐린 설정", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(MainActivity.this, EduYoutubeActivity.class));
                 break;
 
             case R.id.nav_edit_profile:
                 // 개인정보 입력
                 Log.d(TAG, "onNavigationItemSelected: nav_edit_profile");
-//                Toast.makeText(getApplicationContext(), "개인정보 입력", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(MainActivity.this, EditProfileActivity.class));
                 break;
 
@@ -205,7 +203,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 // DATABASE + CACHE CLEAR;
                 Log.d(TAG, "onNavigationItemSelected: nav_delete_database");
                 Toast.makeText(getApplicationContext(), "DATABASE + CACHE CLEAR", Toast.LENGTH_SHORT).show();
-//                startActivity(new Intent(MainActivity.this, SettingActivity.class));
                 startActivity(new Intent(MainActivity.this, DeleteDataBaseActivity.class));
                 break;
 
@@ -213,7 +210,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 // 개발자 정보
                 Log.d(TAG, "onNavigationItemSelected: nav_its_me");
                 Toast.makeText(getApplicationContext(), "개발자 정보", Toast.LENGTH_SHORT).show();
-//                startActivity(new Intent(MainActivity.this, SettingActivity.class));
                 break;
 
 //            case R.id.nav_setting:
