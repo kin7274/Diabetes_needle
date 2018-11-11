@@ -16,13 +16,13 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
-import com.dreamwalkers.elab_yang.mmk.service.BluetoothLeService;
+import com.dreamwalkers.elab_yang.mmk.service.knu.deviceneedle.BluetoothLeService;
 import com.dreamwalkers.elab_yang.mmk.R;
 
-import static com.dreamwalkers.elab_yang.mmk.service.BluetoothLeService.ACTION_DATA_AVAILABLE;
-import static com.dreamwalkers.elab_yang.mmk.service.BluetoothLeService.ACTION_DATA_AVAILABLE_CHANGE;
-import static com.dreamwalkers.elab_yang.mmk.service.BluetoothLeService.EXTRA_DATA;
-import static com.dreamwalkers.elab_yang.mmk.model.IntentConst.DEVICEADDRESS;
+import static com.dreamwalkers.elab_yang.mmk.service.knu.deviceneedle.BluetoothLeService.ACTION_DATA_AVAILABLE;
+import static com.dreamwalkers.elab_yang.mmk.service.knu.deviceneedle.BluetoothLeService.ACTION_DATA_AVAILABLE_CHANGE;
+import static com.dreamwalkers.elab_yang.mmk.service.knu.deviceneedle.BluetoothLeService.EXTRA_DATA;
+import static com.dreamwalkers.elab_yang.mmk.consts.IntentConst.DEVICEADDRESS;
 
 // TimelineActivity
 public class AutoReceiveActivity extends AppCompatActivity {

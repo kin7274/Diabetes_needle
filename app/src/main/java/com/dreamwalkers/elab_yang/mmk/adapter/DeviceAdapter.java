@@ -18,6 +18,7 @@
 package com.dreamwalkers.elab_yang.mmk.adapter;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
@@ -31,10 +32,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.dreamwalkers.elab_yang.mmk.activity.DeviceControlActivity;
 import com.dreamwalkers.elab_yang.mmk.R;
 import com.dreamwalkers.elab_yang.mmk.activity.AutoReceiveActivity;
+import com.dreamwalkers.elab_yang.mmk.activity.DeviceControlActivity;
+import com.dreamwalkers.elab_yang.mmk.activity.navi.AlyakActivity;
+import com.dreamwalkers.elab_yang.mmk.activity.navi.OneInsulinActivity;
+import com.dreamwalkers.elab_yang.mmk.activity.navi.TwoInsulinActivity;
 import com.dreamwalkers.elab_yang.mmk.model.Device;
 
 import java.util.ArrayList;
@@ -44,7 +49,7 @@ import java.util.List;
 import io.paperdb.Paper;
 
 import static android.content.Context.MODE_PRIVATE;
-import static com.dreamwalkers.elab_yang.mmk.model.IntentConst.DEVICEADDRESS;
+import static com.dreamwalkers.elab_yang.mmk.consts.IntentConst.DEVICEADDRESS;
 
 public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.ViewHolder> {
     private final Context context;
@@ -110,13 +115,15 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.ViewHolder
             two_needle4_data = pref.getString("cache_data_4", two_needle4);
 
 
-            if (only_one_needle_data == "" && two_needle1_data == "" && two_needle2_data == "" && two_needle3_data == "" && two_needle4_data == "") {
+            if (only_one_needle_data.equals("") && two_needle1_data.equals("")
+                    && two_needle2_data.equals("") && two_needle3_data.equals("") && two_needle4_data.equals("")) {
                 // 다 공백이면 설정을 안한거야
                 Log.d(TAG, "onBindViewHolder: 설정값 없음");
                 Snackbar.make(v, "인슐린을 설정해주세요", 3000).setAction("YES", v1 -> {
+                    onCreateDialog();
                 }).show();
 
-            } else if (only_one_needle_data == "" && (two_needle1_data != "" || two_needle2_data != "" || two_needle3_data != "" || two_needle4_data != "")) {
+            } else if (only_one_needle_data.equals("") && (two_needle1_data != "" || two_needle2_data != "" || two_needle3_data != "" || two_needle4_data != "")) {
                 // 2개네 \\\
                 flag = 2;
                 Log.d(TAG, "onBindViewHolder: 2개 사용하네");
@@ -221,5 +228,28 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.ViewHolder
             showActivityTracks = view.findViewById(R.id.device_action_show_activity_tracks);
             deviceRemove = view.findViewById(R.id.device_info_trashcan);
         }
+    }
+
+    private void onCreateDialog() {
+        final String[] items = {"인슐린 1개", "인슐린 2개", "알ㅡ약"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("선택해")
+//                .setCancelable(false)
+                .setSingleChoiceItems(items, 0, (DialogInterface dialog, int which) -> {
+                    Toast.makeText(context, items[which], Toast.LENGTH_SHORT).show();
+                    if (which == 0) {
+                        // 약 1개
+                        context.startActivity(new Intent(context, OneInsulinActivity.class));
+                    } else if (which == 1) {
+                        // 약 2개
+                        context.startActivity(new Intent(context, TwoInsulinActivity.class));
+                    } else {
+                        // 알약
+                        context.startActivity(new Intent(context, AlyakActivity.class));
+
+                    }
+                    dialog.dismiss(); // 누르면 바로 닫히는 형태
+                })
+                .show();
     }
 }
