@@ -2,7 +2,6 @@ package com.dreamwalkers.elab_yang.mmk.activity;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -24,7 +23,18 @@ import com.dreamwalkers.elab_yang.mmk.adapter.DessertAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TabsHeaderActivity extends AppCompatActivity {
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+public class TabsHeaderActivity extends AppCompatActivity implements IActivityBased {
+
+    @BindView(R.id.htab_toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.htab_viewpager)
+    ViewPager viewPager;
+    @BindView(R.id.htab_tabs)
+    TabLayout tabLayout;
+
 
 //    final Fragment fragment1 = new AddDeviceFragment();
 //    final Fragment fragment2 = new SetInsulinFragment();
@@ -40,6 +50,21 @@ public class TabsHeaderActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tabs_header);
+
+        initSetting();
+
+
+    }
+
+    @Override
+    public void bindView() {
+        ButterKnife.bind(this);
+
+    }
+
+    @Override
+    public void initSetting() {
+        bindView();
         setToolbar();
         set();
     }
@@ -51,7 +76,6 @@ public class TabsHeaderActivity extends AppCompatActivity {
 
     // 툴바
     private void setToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.htab_toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle("대한민국의 어머니들");
@@ -60,13 +84,10 @@ public class TabsHeaderActivity extends AppCompatActivity {
     }
 
     private void set() {
-        final ViewPager viewPager = (ViewPager) findViewById(R.id.htab_viewpager);
         setupViewPager(viewPager);
-
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.htab_tabs);
         tabLayout.setupWithViewPager(viewPager);
 
-        final CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.htab_collapse_toolbar);
+//        final CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.htab_collapse_toolbar);
     }
 
     // 뷰페이저 설정(5)
@@ -84,6 +105,7 @@ public class TabsHeaderActivity extends AppCompatActivity {
                 ContextCompat.getColor(this, R.color.weaker_yellow)), "Database");
         viewPager.setAdapter(adapter);
     }
+
 
     private static class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();

@@ -23,10 +23,8 @@
     <!--</style>-->
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark">
-    <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowContentOverlay">@null</item>
     </style>
-
-    출처: http://softwaree.tistory.com/28 [Owl Life]>
 
     <style name="button_style">
         <item name="android:layout_height">match_parent</item>
@@ -35,4 +33,24 @@
         <item name="android:padding">20dp</item>
         <item name="android:textSize">20sp</item>
     </style>
+
+
+    <style name="ClickableImageView">
+        <item name="android:clickable">true</item>
+        <item name="android:background">?android:selectableItemBackgroundBorderless</item>
+    </style>
+
+
+    <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">30sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="AppTheme.MaterialHome" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryDark">@color/white</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="viewInflaterClass">androidx.appcompat.app.AppCompatViewInflater</item>
+    </style>
+
 </resources>

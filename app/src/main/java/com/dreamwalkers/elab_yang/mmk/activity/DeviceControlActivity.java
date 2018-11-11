@@ -36,14 +36,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dreamwalkers.elab_yang.mmk.R;
-import com.dreamwalkers.elab_yang.mmk.service.BluetoothLeService;
-import com.dreamwalkers.elab_yang.mmk.service.SampleGattAttributes;
+import com.dreamwalkers.elab_yang.mmk.service.knu.deviceneedle.BluetoothLeService;
+import com.dreamwalkers.elab_yang.mmk.service.knu.deviceneedle.SampleGattAttributes;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import static com.dreamwalkers.elab_yang.mmk.model.IntentConst.DEVICEADDRESS;
+import static com.dreamwalkers.elab_yang.mmk.consts.IntentConst.DEVICEADDRESS;
 
 /**
  * For a given BLE device, this Activity provides the user interface to connect, display data,
