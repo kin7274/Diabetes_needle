@@ -49,7 +49,7 @@ import java.util.List;
 import io.paperdb.Paper;
 
 import static android.content.Context.MODE_PRIVATE;
-import static com.dreamwalkers.elab_yang.mmk.model.IntentConst.DEVICEADDRESS;
+import static com.dreamwalkers.elab_yang.mmk.consts.IntentConst.DEVICEADDRESS;
 
 public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.ViewHolder> {
     private final Context context;

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.dreamwalkers.elab_yang.mmk.service;
+package com.dreamwalkers.elab_yang.mmk.service.knu.deviceneedle;
 
 import java.util.HashMap;
 

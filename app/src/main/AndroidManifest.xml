@@ -141,15 +141,16 @@
             android:name=".activity.TabsHeaderActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
+        <activity
+            android:name=".activity.SettingActivity"
+            android:theme="@style/AppTheme.MaterialHome" />
 
-        <activity android:name=".activity.SettingActivity"
-            android:theme="@style/AppTheme.MaterialHome">
-
-        </activity>
+        <activity android:name=".activity.appinfos.DeveloperActivity" android:theme="@style/AppTheme.MaterialHome" />
+        <activity android:name=".activity.WebViewActivity" android:theme="@style/AppTheme.MaterialHome"></activity>
 
         <!-- BLE서비스 -->
         <service
-            android:name=".service.BluetoothLeService"
+            android:name=".service.knu.deviceneedle.BluetoothLeService"
             android:enabled="true" />
 
 
