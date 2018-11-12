@@ -43,11 +43,20 @@ import io.paperdb.Paper;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, IActivityBased {
     private static final String TAG = "MainActivity";
-    SharedPreferences pref;
-    Context mContext;
+
     @BindView(R.id.drawer_layout)
     DrawerLayout drawer;
+    @BindView(R.id.my_toolbar)
+    Toolbar myToolbar;
+    @BindView(R.id.nav_view)
+    NavigationView navigationView;
+
+    @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
+
+    SharedPreferences pref;
+    Context mContext;
+
     DeviceAdapter deviceAdapter;
     HashSet<Device> deviceDatabase = new HashSet<>();
     ArrayList<Device> deviceArrayList;
@@ -107,22 +116,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     // 네비게이션메뉴 설정
     public void setNavi() {
-        Toolbar mytoolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        setSupportActionBar(mytoolbar);
+        setSupportActionBar(myToolbar);
         getSupportActionBar().setTitle("");
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, mytoolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, myToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
 
     // deviceAdapter 불러오기
     public void setDevice() {
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
         deviceDatabase = Paper.book("device").read("user_device");
@@ -239,24 +245,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         final String[] items = {"인슐린 1개", "인슐린 2개", "알ㅡ약"};
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle("선택해")
-//                .setCancelable(false)
                 .setSingleChoiceItems(items, 0, (DialogInterface dialog, int which) -> {
                     Toast.makeText(MainActivity.this, items[which], Toast.LENGTH_SHORT).show();
                     if (which == 0) {
                         // 약 1개
-//                    Toast.makeText(getApplicationContext(),"인슐린 1개", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(MainActivity.this, OneInsulinActivity.class));
                     } else if (which == 1) {
                         // 약 2개
-//                    Toast.makeText(getApplicationContext(),"인슐린 2개", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(MainActivity.this, TwoInsulinActivity.class));
                     } else {
                         // 알약
-//                    Toast.makeText(getApplicationContext(),"알약설정페이지로", Toast.LENGTH_SHORT).show();
-//                        Toast.makeText(getApplicationContext(), "만드는 중", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(MainActivity.this, AlyakActivity.class));
-//                    startActivity(new Intent(MainActivity.this, SettingInsulinActivity.class));
-
                     }
                     dialog.dismiss(); // 누르면 바로 닫히는 형태
                 })
