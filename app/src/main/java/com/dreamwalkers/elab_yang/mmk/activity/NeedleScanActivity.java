@@ -61,6 +61,10 @@ public class NeedleScanActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Boolean flag_toFragment = false;
+        Intent intent = getIntent();
+        flag_toFragment = intent.getBooleanExtra("flag_toFragment", false);
         setContentView(R.layout.activity_needle_scan);
         setStatusbar();
         pref = getSharedPreferences("ActivityPREF", Context.MODE_PRIVATE);

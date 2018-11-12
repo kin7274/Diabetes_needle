@@ -23,7 +23,6 @@ public class AppIntroVerticalActivity extends VerticalIntro {
         check_first();
     }
 
-
     @Override
     protected void init() {
         // 상태바 제거

@@ -1,18 +1,18 @@
 package com.dreamwalkers.elab_yang.mmk.activity.fragment;
 
+<<<<<<< HEAD
 import android.content.Intent;
+=======
+>>>>>>> refs/remotes/kin7274/master
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.widget.RelativeLayout;
 
 import com.dreamwalkers.elab_yang.mmk.R;
-import com.dreamwalkers.elab_yang.mmk.activity.NeedleScanActivity;
 
+<<<<<<< HEAD
 import butterknife.ButterKnife;
 
 import static android.support.constraint.Constraints.TAG;
@@ -20,10 +20,15 @@ import static android.support.constraint.Constraints.TAG;
 public class FragmentB extends Fragment implements View.OnClickListener{
 
     private Animation fab_open, fab_close;
+=======
+>>>>>>> refs/remotes/kin7274/master
 
+public class FragmentB extends Fragment {
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+<<<<<<< HEAD
         View view = inflater.inflate(R.layout.fragment_b, container, false);
         ButterKnife.bind(this, view);
 //        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
@@ -35,10 +40,9 @@ public class FragmentB extends Fragment implements View.OnClickListener{
         });
 
         return view;
+=======
+        return inflater.inflate(R.layout.fragment_b, container, false);
+>>>>>>> refs/remotes/kin7274/master
     }
 
-    @Override
-    public void onClick(View v) {
-
-    }
 }
