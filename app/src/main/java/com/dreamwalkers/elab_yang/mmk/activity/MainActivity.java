@@ -1,8 +1,31 @@
 package com.dreamwalkers.elab_yang.mmk.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.internal.NavigationMenu;
+import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.Button;
+
+import com.dreamwalkers.elab_yang.mmk.R;
+import com.dreamwalkers.elab_yang.mmk.activity.navi.EditProfileActivity;
+import com.dreamwalkers.elab_yang.mmk.activity.navi.ProfileActivity;
+import com.dreamwalkers.elab_yang.mmk.activity.select.SelectDrugActivity;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import io.paperdb.Paper;
 
 //
 //import android.content.Context;
@@ -47,27 +70,27 @@ import android.support.v7.app.AppCompatActivity;
 //import butterknife.ButterKnife;
 //import io.paperdb.Paper;
 //
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, IActivityBased {
     private static final String TAG = "MainActivity";
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-}
-////    @BindView(R.id.drawer_layout)
-////    DrawerLayout drawer;
-////    @BindView(R.id.my_toolbar)
-////    Toolbar myToolbar;
-////    @BindView(R.id.nav_view)
-////    NavigationView navigationView;
-////
-////    @BindView(R.id.recycler_view)
+//    @Override
+//    protected void onCreate(@Nullable Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+
+    @BindView(R.id.drawer_layout)
+    DrawerLayout drawer;
+    @BindView(R.id.my_toolbar)
+    Toolbar myToolbar;
+    @BindView(R.id.nav_view)
+    NavigationView navigationView;
+    //
+//    @BindView(R.id.recycler_view)
 ////    RecyclerView recyclerView;
 ////
 ////    SharedPreferences pref;
-////    Context mContext;
-////
+    Context mContext;
+
+    ////
 ////    DeviceAdapter deviceAdapter;
 ////    HashSet<Device> deviceDatabase = new HashSet<>();
 ////    ArrayList<Device> deviceArrayList;
@@ -77,32 +100,35 @@ public class MainActivity extends AppCompatActivity {
 //////    Boolean first_clear_flag = false;
 ////    AlertDialog alert;
 //
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_main);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 //
-////        mContext = this;
-////        initSetting();
+        mContext = this;
+        initSetting();
 //////        hoxy_first();
-//    }
+    }
+
+    //
 //
-//
-////    @Override
-////    public void bindView() {
-////        ButterKnife.bind(this);
-////    }
-////
-////    @Override
-////    public void initSetting() {
-////        Paper.init(this);
-////        bindView();
-////        setStatusbar();
-////        set();
-////        setNavi();
-////        setDevice();
-////    }
-////
+    @Override
+    public void bindView() {
+        ButterKnife.bind(this);
+    }
+
+    //
+    @Override
+    public void initSetting() {
+        Paper.init(this);
+        bindView();
+//        setStatusbar();
+        set();
+        setNavi();
+//        setDevice();
+    }
+
+    ////
 ////    // 상태바
 ////    public void setStatusbar() {
 //////        Window window = getWindow();
@@ -116,47 +142,49 @@ public class MainActivity extends AppCompatActivity {
 ////        getWindow().setStatusBarColor(getResources().getColor(R.color.background));
 ////    }
 ////
-////    public void set() {
-////        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-////
-////        Button test1 = (Button) findViewById(R.id.test1);
-////        test1.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, SpaceTabLayoutActivity.class)));
-////
-////        Button test2 = (Button) findViewById(R.id.test2);
-//////        test2.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, TabsHeaderActivity.class)));
-////    }
-////
-////    // 네비게이션메뉴 설정
-////    public void setNavi() {
-////        setSupportActionBar(myToolbar);
-////        getSupportActionBar().setTitle("");
-////
-////        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, myToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-////        drawer.addDrawerListener(toggle);
-////        toggle.syncState();
-////
-////        navigationView.setNavigationItemSelectedListener(this);
-////    }
-////
-////    // deviceAdapter 불러오기
-////    public void setDevice() {
-////
-////        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-////        recyclerView.setHasFixedSize(true);
-////        deviceDatabase = Paper.book("device").read("user_device");
-////        if (deviceDatabase != null) {
-////            if (deviceDatabase.size() != 0) {
-////                deviceArrayList = new ArrayList<>(deviceDatabase);
-////                deviceAdapter = new DeviceAdapter(this, deviceArrayList);
-////                recyclerView.setAdapter(deviceAdapter);
-////                for (int i = 0; i < deviceArrayList.size(); i++) {
-////                    Device device = deviceArrayList.get(i);
-////                }
-////            }
-////        } else {
-////            Log.d(TAG, "setDevice: 장치x");
-////        }
-////    }
+    public void set() {
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+//        Button test1 = (Button) findViewById(R.id.test1);
+//        test1.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, SpaceTabLayoutActivity.class)));
+
+//        Button test2 = (Button) findViewById(R.id.test2);
+//        test2.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, TabsHeaderActivity.class)));
+    }
+
+    ////
+    // 네비게이션메뉴 설정
+    public void setNavi() {
+        setSupportActionBar(myToolbar);
+        getSupportActionBar().setTitle("");
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, myToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    ////
+//    // deviceAdapter 불러오기
+//    public void setDevice() {
+//
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        recyclerView.setHasFixedSize(true);
+//        deviceDatabase = Paper.book("device").read("user_device");
+//        if (deviceDatabase != null) {
+//            if (deviceDatabase.size() != 0) {
+//                deviceArrayList = new ArrayList<>(deviceDatabase);
+//                deviceAdapter = new DeviceAdapter(this, deviceArrayList);
+//                recyclerView.setAdapter(deviceAdapter);
+//                for (int i = 0; i < deviceArrayList.size(); i++) {
+//                    Device device = deviceArrayList.get(i);
+//                }
+//            }
+//        } else {
+//            Log.d(TAG, "setDevice: 장치x");
+//        }
+//    }
 ////
 ////    // 뒤로가기 버튼 클릭시
 ////    @Override
@@ -169,25 +197,39 @@ public class MainActivity extends AppCompatActivity {
 ////        }
 ////    }
 ////
-////    // 네비게이션메뉴 클릭 이벤트
-////    @Override
-////    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-////        pref = getSharedPreferences("pref", MODE_PRIVATE);
-////        int id = menuItem.getItemId();
-////        switch (id) {
-////            case R.id.nav_profile:
-////                // 호구조사
-////                Log.d(TAG, "onNavigationItemSelected: nav_profile");
-//////                Toast.makeText(getApplicationContext(),"장치 추가", Toast.LENGTH_SHORT).show();
-////                String cache_user_data = pref.getString("user_data0", "");
-////                if (cache_user_data.equals("")) {
-////                    // 데이터가 없네 저장부터하셈ㅡㅡ
-////                    Snackbar.make(getWindow().getDecorView().getRootView(), "넌 이름이 뭐니.", 3000).setAction("확인", v -> {
-////                        startActivity(new Intent(MainActivity.this, EditProfileActivity.class));
-////                    }).show();
-////                } else {
-////                    startActivity(new Intent(MainActivity.this, ProfileActivity.class));
-////                }
+    // 네비게이션메뉴 클릭 이벤트
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+//        pref = getSharedPreferences("pref", MODE_PRIVATE);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        int id = menuItem.getItemId();
+        switch (id) {
+//            case R.id.nav_profile:
+//                // 호구조사
+//                Log.d(TAG, "onNavigationItemSelected: nav_profile");
+////                Toast.makeText(getApplicationContext(),"장치 추가", Toast.LENGTH_SHORT).show();
+//                String cache_user_data = pref.getString("user_data0", "");
+//                if (cache_user_data.equals("")) {
+//                    // 데이터가 없네 저장부터하셈ㅡㅡ
+//                    Snackbar.make(getWindow().getDecorView().getRootView(), "넌 이름이 뭐니.", 3000).setAction("확인", v -> {
+//                        startActivity(new Intent(MainActivity.this, EditProfileActivity.class));
+//                    }).show();
+//                } else {
+//                    startActivity(new Intent(MainActivity.this, ProfileActivity.class));
+//                }
+//                break;
+
+            case R.id.nav_set_insulin:
+                // 장치 추가
+//                Toast.makeText(getApplicationContext(),"장치 추가", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(MainActivity.this, SelectDrugActivity.class));
+                break;
+        }
+
+        drawer.closeDrawer(GravityCompat.START);
+        return false;
+    }
+}
 //
 //    // 상태바
 //    public void setStatusbar() {

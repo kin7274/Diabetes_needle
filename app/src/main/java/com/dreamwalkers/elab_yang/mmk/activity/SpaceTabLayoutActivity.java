@@ -1,5 +1,6 @@
 package com.dreamwalkers.elab_yang.mmk.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -22,6 +23,7 @@ import com.dreamwalkers.elab_yang.mmk.activity.fragment.FragmentB;
 import com.dreamwalkers.elab_yang.mmk.activity.fragment.FragmentC;
 import com.dreamwalkers.elab_yang.mmk.activity.fragment.FragmentD;
 import com.dreamwalkers.elab_yang.mmk.activity.navi.EduYoutubeActivity;
+import com.dreamwalkers.elab_yang.mmk.activity.select.SelectDrugActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +35,7 @@ import io.paperdb.Paper;
 
 public class SpaceTabLayoutActivity extends AppCompatActivity implements IActivityBased, NavigationView.OnNavigationItemSelectedListener {
     private static final String TAG = "SpaceTabLayoutActivity";
+    Context mContext;
 
     @BindView(R.id.drawer_layout)
     DrawerLayout drawer;
@@ -60,6 +63,7 @@ public class SpaceTabLayoutActivity extends AppCompatActivity implements IActivi
 
     @Override
     public void initSetting() {
+        mContext = this;
         Paper.init(this);
         bindView();
         setStatusbar();
@@ -74,6 +78,7 @@ public class SpaceTabLayoutActivity extends AppCompatActivity implements IActivi
     }
 
     private void set() {
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         //add the fragments you want to display in a List == 내가 원하면 추가가능하다~ 이말이야
         List<Fragment> fragmentList = new ArrayList<>();
         // 홈 = 기록보기
@@ -101,12 +106,18 @@ public class SpaceTabLayoutActivity extends AppCompatActivity implements IActivi
             tabLayout.setOnClickListener(view -> {
                 Toast.makeText(getApplication(), "" + tabLayout.getCurrentPosition(), Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "set: tabLayout.getCurrentPosition() = " + tabLayout.getCurrentPosition());
+                if (tabLayout.getCurrentPosition() == 1) {
+                    Log.d(TAG, "set: 여기!!");
+                    Intent intent = new Intent(this, SelectDrugActivity.class);
+                    startActivity(intent);
+                    intent.putExtra("SelectDrugActivity", false);
+                }
+
                 if (tabLayout.getCurrentPosition() == 2) {
                     Log.d(TAG, "set: 여기!!");
                     Intent intent = new Intent(this, NeedleScanActivity.class);
                     startActivity(intent);
                     intent.putExtra("flag_toFragment", false);
-
                 }
             });
         });
@@ -122,6 +133,17 @@ public class SpaceTabLayoutActivity extends AppCompatActivity implements IActivi
         navigationView.setNavigationItemSelectedListener(this);
     }
 
+    // 뒤로가기 버튼 클릭시
+    @Override
+    public void onBackPressed() {
+        // 네비 접힘
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
     // 네비게이션메뉴 클릭 이벤트
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -133,6 +155,12 @@ public class SpaceTabLayoutActivity extends AppCompatActivity implements IActivi
                 startActivity(new Intent(this, EduYoutubeActivity.class));
                 break;
 
+            case R.id.nav_set_insulin:
+                // 장치 추가
+                Log.d(TAG, "onNavigationItemSelected: 띠용");
+//                Toast.makeText(getApplicationContext(),"장치 추가", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this, SelectDrugActivity.class));
+                break;
 //            case R.id.nav_delete_database:
 //                // DATABASE + CACHE CLEAR;
 //                Log.d(TAG, "onNavigationItemSelected: nav_delete_database");
