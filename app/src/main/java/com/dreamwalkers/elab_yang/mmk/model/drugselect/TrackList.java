@@ -12,12 +12,13 @@ import java.util.List;
 public class TrackList {
     public final static List<Track> TRACKS = new ArrayList<Track>() {{
         add(new Track("노보믹스30", "혼합형", R.drawable.ic_syringe_mix));
-        add(new Track("노보믹스50", "혼합형", R.drawable.ic_syringe_long));
-        add(new Track("노보믹스70", "혼합형", R.drawable.ic_syringe_long));
-        add(new Track("믹스타드30", "혼합형", R.drawable.ic_syringe_long));
-        add(new Track("휴마로그믹스25", "혼합형", R.drawable.ic_syringe_long));
-        add(new Track("휴마로그믹스50", "혼합형", R.drawable.ic_syringe_long));
-        add(new Track("휴물린70/30", "혼합형", R.drawable.ic_syringe_long));
+        add(new Track("노보믹스50", "혼합형", R.drawable.ic_syringe_mix));
+        add(new Track("노보믹스70", "혼합형", R.drawable.ic_syringe_mix));
+        add(new Track("믹스타드30", "혼합형", R.drawable.ic_syringe_mix));
+        add(new Track("휴마로그믹스25", "혼합형", R.drawable.ic_syringe_mix));
+        add(new Track("휴마로그믹스50", "혼합형", R.drawable.ic_syringe_mix));
+        add(new Track("휴물린70/30", "혼합형", R.drawable.ic_syringe_mix));
+        
         add(new Track("노보래피드", "초속효성", R.drawable.ic_syringe_rrpid));
         add(new Track("휴마로그", "초속효성", R.drawable.ic_syringe_rrpid));
         add(new Track("애피드라", "초속효성", R.drawable.ic_syringe_rrpid));

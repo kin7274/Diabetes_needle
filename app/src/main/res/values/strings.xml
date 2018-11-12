@@ -87,8 +87,8 @@
     <string name="nothing_selected">Don\'t you like anything? :\'(</string>
 
     <plurals name="you_selected_x_songs">
-        <item quantity="one">You selected %d song. Good taste!</item>
-        <item quantity="other">You selected %d songs. Good taste!</item>
+        <item quantity="one">You selected %d . Good taste!</item>
+        <item quantity="other">You selected %d . Good taste!</item>
     </plurals>
 
 </resources>
