@@ -16,6 +16,7 @@ import android.widget.Toast
 import com.dreamwalkers.elab_yang.mmk.R
 import com.dreamwalkers.elab_yang.mmk.consts.IntentConst.DEVICEADDRESS
 import com.dreamwalkers.elab_yang.mmk.service.knu.deviceneedle.NeedleBLEService
+import kotlinx.android.synthetic.main.activity_data_sync.*
 
 class DataSyncActivity : AppCompatActivity() {
 
@@ -49,85 +50,56 @@ class DataSyncActivity : AppCompatActivity() {
     private val mGattUpdateReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             val action = intent.action
-            if (NeedleBLEService.ACTION_GATT_CONNECTED == action) {
-                mConnected = true
-//                textView.append("연결됨" + "\n")
-//                updateConnectionState(R.string.connected)
-                invalidateOptionsMenu()
-            } else if (NeedleBLEService.ACTION_GATT_DISCONNECTED == action) {
-                mConnected = false
-//                textView.append("연결 해제"+ "\n")
-//                updateConnectionState(R.string.disconnected)
-                invalidateOptionsMenu()
-//                clearUI()
-            } else if (NeedleBLEService.ACTION_GATT_SERVICES_DISCOVERED == action) {
-                // Show all the supported services and characteristics on the user interface.
-//                displayGattServices(mBluetoothLeService.getSupportedGattServices())
-//                textView.append("서비스 특성 탐색 완료" + "\n")
-            } else if (NeedleBLEService.ACTION_DATA_AVAILABLE == action) {
-                val values = intent.getStringExtra(NeedleBLEService.EXTRA_DATA)
+            when (action) {
+                NeedleBLEService.ACTION_GATT_CONNECTED -> {
+                    mConnected = true
+    //                textView.append("연결됨" + "\n")
+    //                updateConnectionState(R.string.connected)
+                    invalidateOptionsMenu()
+                }
+                NeedleBLEService.ACTION_GATT_DISCONNECTED -> {
+                    mConnected = false
+                    animation_view.setAnimation(R.raw.cloud_disconnection)
+                    animation_view.playAnimation()
+                    msg_text_view.text = "연결 실패.. 다시 시도해주세요"
+    //                textView.append("연결 해제"+ "\n")
+    //                updateConnectionState(R.string.disconnected)
+                    invalidateOptionsMenu()
+    //                clearUI()
+                }
+                NeedleBLEService.ACTION_GATT_SERVICES_DISCOVERED -> {
+                    // Show all the supported services and characteristics on the user interface.
+    //                displayGattServices(mBluetoothLeService.getSupportedGattServices())
+    //                textView.append("서비스 특성 탐색 완료" + "\n")
+                }
 
-//                if (values != null){
-//                    val trimsValue = values.split(",")
-//                    realTimeList.clear()
-//                    realTimeList.add(RealTime("밥", "쌀밥", trimsValue[0]))
-//                    realTimeList.add(RealTime("국", "된장국", trimsValue[1]))
-//                    realTimeList.add(RealTime("반찬A", "감자조림", trimsValue[2]))
-//                    realTimeList.add(RealTime("반찬B", "배추김치", trimsValue[3]))
-//                    realTimeList.add(RealTime("반찬C", "샐러드", trimsValue[4]))
-//                    realTimeList.add(RealTime("반찬D", "제육볶음", trimsValue[5]))
-//                    realTimeAdapter.notifyDataSetChanged()
-//
-//                    entries.add(Entry(count.toFloat(), trimsValue[0].toFloat()))
-//                    dataSet = LineDataSet(entries, "Label")
-//                    val lineData = LineData(dataSet)
-//                    line_chart.data = lineData
-//                    line_chart.invalidate() // refresh
-//                    count++
-//                }
-//
-////                textView.append(intent.getStringExtra(RealTimeBluetoothLeService.EXTRA_DATA) + "\n")
-////                displayData(intent.getStringExtra(BluetoothLeService.EXTRA_DATA))
-//            } else if (RealTimeBluetoothLeService.ACTION_REAL_TIME_START_PHASE == action) {
-////                Toast.makeText(applicationContext, "인증 시작 ", Toast.LENGTH_SHORT).show()
-//            } else if (RealTimeBluetoothLeService.ACTION_REAL_TIME_FIRST_PHASE == action) {
-////                Toast.makeText(applicationContext, "암호화 인증 완료 ", Toast.LENGTH_SHORT).show()
-//            } else if (RealTimeBluetoothLeService.ACTION_REAL_TIME_SECOND_PHASE == action) {
-////                Toast.makeText(applicationContext, "시간 동기화 완료 ", Toast.LENGTH_SHORT).show()
-//            } else if (RealTimeBluetoothLeService.ACTION_REAL_TIME_FINAL_PHASE == action) {
-//                toast("모든 인증 처리 완료 ")
-//                animation_view.setAnimation(R.raw.process_complete)
-//                animation_view.repeatCount = 0
-//                animation_view.playAnimation()
-//                val listener = object : Animator.AnimatorListener {
-//                    override fun onAnimationRepeat(animation: Animator?) {
-//                        toast("onAnimationRepeat ")
-//                    }
-//
-//                    override fun onAnimationCancel(animation: Animator?) {
-//                        toast("onAnimationCancel ")
-//                        animation_layout.visibility = View.GONE
-//                        data_layout.visibility = View.VISIBLE
-//                    }
-//
-//                    override fun onAnimationStart(animation: Animator?) {
-//                        toast("onAnimationStart ")
-//                        val msg = "인증 완료! 최적화 중... \n 잠시만 기다려주세요"
-//                        animation_text_view.text = msg
-//
-//                    }
-//
-//                    override fun onAnimationEnd(animation: Animator?) {
-//                        toast("완료 모두 완료 ")
-//                        animation_view.cancelAnimation()
-//                    }
-//
-//                }
-//
-//                animation_view.addAnimatorListener(listener)
-////                Toasty.success(context, "모든 인증 처리 완료 ", Toast.LENGTH_SHORT).show()
-////                Toast.makeText(applicationContext, "모든 인증 처리 완료 ", Toast.LENGTH_SHORT).show()
+                NeedleBLEService.ACTION_DATA_AVAILABLE -> {
+                    val values = intent.getStringExtra(NeedleBLEService.EXTRA_DATA)
+                }
+
+                NeedleBLEService.ACTION_REAL_TIME_START_PHASE -> {
+                    msg_text_view.text = "신호 동기화 및 인증 시작 중.."
+                }
+
+                NeedleBLEService.ACTION_REAL_TIME_FIRST_PHASE -> {
+                    msg_text_view.text = "데이터 수신중..."
+                }
+
+                NeedleBLEService.ACTION_REAL_TIME_SECOND_PHASE -> {
+                    msg_text_view.text = "수신완료.. 처리중.."
+                }
+
+                NeedleBLEService.ACTION_SYNC_DONE -> {
+                    val values = intent.getStringExtra(NeedleBLEService.EXTRA_DATA)
+    //                toast(values)
+                    val intentDone =Intent(this@DataSyncActivity, SyncResultActivity::class.java)
+                    intentDone.putExtra("SyncValue", values)
+                    startActivity(intentDone)
+                    finish()
+                }
             }
+
+
         }
     }
 
@@ -184,6 +156,8 @@ class DataSyncActivity : AppCompatActivity() {
         intentFilter.addAction(NeedleBLEService.ACTION_REAL_TIME_FIRST_PHASE)
         intentFilter.addAction(NeedleBLEService.ACTION_REAL_TIME_SECOND_PHASE)
         intentFilter.addAction(NeedleBLEService.ACTION_REAL_TIME_FINAL_PHASE)
+        intentFilter.addAction(NeedleBLEService.ACTION_SYNC_DONE)
+
         return intentFilter
     }
 

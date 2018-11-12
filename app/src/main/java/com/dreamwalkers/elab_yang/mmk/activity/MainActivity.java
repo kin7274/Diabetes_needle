@@ -31,6 +31,7 @@ import com.dreamwalkers.elab_yang.mmk.activity.navi.OneInsulinActivity;
 import com.dreamwalkers.elab_yang.mmk.activity.navi.ProfileActivity;
 import com.dreamwalkers.elab_yang.mmk.activity.navi.TwoInsulinActivity;
 import com.dreamwalkers.elab_yang.mmk.activity.navi.ViewInsulinActivity;
+import com.dreamwalkers.elab_yang.mmk.activity.select.SelectDrugActivity;
 import com.dreamwalkers.elab_yang.mmk.adapter.DeviceAdapter;
 import com.dreamwalkers.elab_yang.mmk.model.Device;
 
@@ -76,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
 ////        hoxy_first();
     }
 
+<<<<<<< HEAD
 //    @Override
 //    public void bindView() {
 //        ButterKnife.bind(this);
@@ -176,6 +178,142 @@ public class MainActivity extends AppCompatActivity {
 //                } else {
 //                    startActivity(new Intent(MainActivity.this, ProfileActivity.class));
 //                }
+=======
+    // 상태바
+    public void setStatusbar() {
+//        Window window = getWindow();
+//        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+//        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//        window.setStatusBarColor(getResources().getColor(R.color.ella_background));
+
+        // 앱 아이콘 검정색으로 변경
+        View view = getWindow().getDecorView();
+        view.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        getWindow().setStatusBarColor(getResources().getColor(R.color.background));
+    }
+
+    public void set() {
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        Button test1 = (Button) findViewById(R.id.test1);
+        test1.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, SpaceTabLayoutActivity.class)));
+
+        Button test2 = (Button) findViewById(R.id.test2);
+//        test2.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, TabsHeaderActivity.class)));
+    }
+
+    // 네비게이션메뉴 설정
+    public void setNavi() {
+        setSupportActionBar(myToolbar);
+        getSupportActionBar().setTitle("");
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, myToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    // deviceAdapter 불러오기
+    public void setDevice() {
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setHasFixedSize(true);
+        deviceDatabase = Paper.book("device").read("user_device");
+        if (deviceDatabase != null) {
+            if (deviceDatabase.size() != 0) {
+                deviceArrayList = new ArrayList<>(deviceDatabase);
+                deviceAdapter = new DeviceAdapter(this, deviceArrayList);
+                recyclerView.setAdapter(deviceAdapter);
+                for (int i = 0; i < deviceArrayList.size(); i++) {
+                    Device device = deviceArrayList.get(i);
+                }
+            }
+        } else {
+            Log.d(TAG, "setDevice: 장치x");
+        }
+    }
+
+    // 뒤로가기 버튼 클릭시
+    @Override
+    public void onBackPressed() {
+        // 네비 접힘
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    // 네비게이션메뉴 클릭 이벤트
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        pref = getSharedPreferences("pref", MODE_PRIVATE);
+        int id = menuItem.getItemId();
+        switch (id) {
+            case R.id.nav_profile:
+                // 호구조사
+                Log.d(TAG, "onNavigationItemSelected: nav_profile");
+//                Toast.makeText(getApplicationContext(),"장치 추가", Toast.LENGTH_SHORT).show();
+                String cache_user_data = pref.getString("user_data0", "");
+                if (cache_user_data.equals("")) {
+                    // 데이터가 없네 저장부터하셈ㅡㅡ
+                    Snackbar.make(getWindow().getDecorView().getRootView(), "넌 이름이 뭐니.", 3000).setAction("확인", v -> {
+                        startActivity(new Intent(MainActivity.this, EditProfileActivity.class));
+                    }).show();
+                } else {
+                    startActivity(new Intent(MainActivity.this, ProfileActivity.class));
+                }
+                break;
+
+            case R.id.nav_view_insulin:
+                // 인슐린 보기
+                Log.d(TAG, "onNavigationItemSelected: nav_view_insulin");
+//                Toast.makeText(getApplicationContext(),"인슐린 보기", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(MainActivity.this, ViewInsulinActivity.class));
+                break;
+
+            case R.id.nav_set_insulin:
+                // 인슐린 설정
+                Log.d(TAG, "onNavigationItemSelected: nav_set_insulin");
+//                onCreateDialog();
+
+                startActivity(new Intent(this, SelectDrugActivity.class));
+                Toast.makeText(getApplicationContext(), "인슐린 설정", Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.nav_add_device:
+                // 장치 추가
+                Log.d(TAG, "onNavigationItemSelected: nav_add_device");
+                Toast.makeText(getApplicationContext(), "장치 추가", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(MainActivity.this, NeedleScanActivity.class));
+                break;
+
+            case R.id.nav_view_database:
+                // VIEW DATABASE
+                Log.d(TAG, "onNavigationItemSelected: nav_view_database");
+                Toast.makeText(getApplicationContext(), "VIEW DATABASE", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(MainActivity.this, DataBaseActivity.class));
+                break;
+
+            case R.id.nav_education:
+                // 유튜브 영상 페이지 설정
+                Log.d(TAG, "onNavigationItemSelected: nav_education");
+                startActivity(new Intent(MainActivity.this, EduYoutubeActivity.class));
+                break;
+
+            case R.id.nav_edit_profile:
+                // 개인정보 입력
+                Log.d(TAG, "onNavigationItemSelected: nav_edit_profile");
+                startActivity(new Intent(MainActivity.this, SettingActivity.class));
+                break;
+
+//            case R.id.nav_delete_database:
+//                // DATABASE + CACHE CLEAR;
+//                Log.d(TAG, "onNavigationItemSelected: nav_delete_database");
+//                Toast.makeText(getApplicationContext(), "DATABASE + CACHE CLEAR", Toast.LENGTH_SHORT).show();
+//                startActivity(new Intent(MainActivity.this, DeleteDataBaseActivity.class));
+>>>>>>> master
 //                break;
 //
 //            case R.id.nav_view_insulin:

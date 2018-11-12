@@ -1,0 +1,26 @@
+[
+    {
+        "outputFile": "C:\\Users\\ELAB_YANG\\Documents\\GitHub\\CosmoCalendar\\cosmocalendar\\build\\intermediates\\incremental\\mergeReleaseResources\\merged.dir\\values-ldltr-v21\\values-ldltr-v21.xml",
+        "map": [
+            {
+                "to": {
+                    "startLine": 2,
+                    "startColumn": 4,
+                    "startOffset": 55,
+                    "endColumn": 112,
+                    "endOffset": 163
+                },
+                "from": {
+                    "file": "C:\\Users\\ELAB_YANG\\.android\\build-cache\\4b96dcf6cb6b7be8ee532146198be0fc3aea09b6\\output\\res\\values-ldltr-v21\\values-ldltr-v21.xml",
+                    "position": {
+                        "startLine": 2,
+                        "startColumn": 4,
+                        "startOffset": 55,
+                        "endColumn": 112,
+                        "endOffset": 163
+                    }
+                }
+            }
+        ]
+    }
+]
