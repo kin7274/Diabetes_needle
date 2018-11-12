@@ -17,7 +17,7 @@ import com.dreamwalkers.elab_yang.mmk.model.drugselect.TrackList
 class SelectDrugActivity : AppCompatActivity() {
 
     private var mMultiSelect: MultiSelect<Track>? = null
-    
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_select_drug)
@@ -52,8 +52,9 @@ class SelectDrugActivity : AppCompatActivity() {
     }
 
     private fun setUpToolbar(toolbar: Toolbar) {
-        toolbar.inflateMenu(R.menu.menu)
+        toolbar.inflateMenu(R.menu.menu_drug_select)
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp)
+
         toolbar.setOnMenuItemClickListener { item ->
             if (item.itemId == R.id.select) {
                 val items = mMultiSelect!!.selectedItems
@@ -67,11 +68,10 @@ class SelectDrugActivity : AppCompatActivity() {
                     mMultiSelect!!.showSelectedPage()
                 }
                 Snackbar.make(toolbar, msg, Snackbar.LENGTH_LONG).show()
-                return@setOnMenuItemClickListener true
+                true
             } else {
-                return@setOnMenuItemClickListener false
+               false
             }
         }
-
     }
 }
