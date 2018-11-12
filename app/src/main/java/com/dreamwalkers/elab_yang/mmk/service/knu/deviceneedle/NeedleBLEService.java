@@ -232,7 +232,7 @@ public class NeedleBLEService extends Service {
 
             if (data != null && data.length > 0) {
                 for (byte b : data) {
-                    Log.e(TAG, "broadcastUpdate: " + b);
+                    Log.e(TAG, "broadcastUpdate: " + String.format("0x%x", b));
                 }
 
                 if (firstPhaseCheckerFlag){
@@ -242,7 +242,6 @@ public class NeedleBLEService extends Service {
                 }
 
                 if (secondPhaseCheckerFlag){
-
                     if (data[data.length-1] == 0x03){
                         broadcastUpdate(ACTION_FIRST_PHASE_DONE);
                     }
