@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/my_font_family"
             android:gravity="center"
-            android:text="SD카드로부터 DATA 받는 중..."
+            android:text="장비와 연결 중..."
             android:textColor="@color/black"
             android:textSize="20sp" />
 

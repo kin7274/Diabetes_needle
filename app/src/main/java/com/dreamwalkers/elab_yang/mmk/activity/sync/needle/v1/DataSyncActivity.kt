@@ -59,6 +59,9 @@ class DataSyncActivity : AppCompatActivity() {
                 }
                 NeedleBLEService.ACTION_GATT_DISCONNECTED -> {
                     mConnected = false
+                    animation_view.setAnimation(R.raw.cloud_disconnection)
+                    animation_view.playAnimation()
+                    msg_text_view.text = "연결 실패.. 다시 시도해주세요"
     //                textView.append("연결 해제"+ "\n")
     //                updateConnectionState(R.string.disconnected)
                     invalidateOptionsMenu()
