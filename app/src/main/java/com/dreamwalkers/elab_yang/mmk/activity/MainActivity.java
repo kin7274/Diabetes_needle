@@ -31,6 +31,7 @@ import com.dreamwalkers.elab_yang.mmk.activity.navi.OneInsulinActivity;
 import com.dreamwalkers.elab_yang.mmk.activity.navi.ProfileActivity;
 import com.dreamwalkers.elab_yang.mmk.activity.navi.TwoInsulinActivity;
 import com.dreamwalkers.elab_yang.mmk.activity.navi.ViewInsulinActivity;
+import com.dreamwalkers.elab_yang.mmk.activity.select.SelectDrugActivity;
 import com.dreamwalkers.elab_yang.mmk.adapter.DeviceAdapter;
 import com.dreamwalkers.elab_yang.mmk.model.Device;
 
@@ -188,7 +189,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_set_insulin:
                 // 인슐린 설정
                 Log.d(TAG, "onNavigationItemSelected: nav_set_insulin");
-                onCreateDialog();
+//                onCreateDialog();
+
+                startActivity(new Intent(this, SelectDrugActivity.class));
                 Toast.makeText(getApplicationContext(), "인슐린 설정", Toast.LENGTH_SHORT).show();
                 break;
 

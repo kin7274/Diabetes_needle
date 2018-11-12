@@ -38,5 +38,7 @@
 
     <color name="divider">@color/black_translucent_12</color>
 
+    <color name="darkish">#161618</color>
+
 
 </resources>
