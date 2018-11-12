@@ -1,6 +1,5 @@
 package com.dreamwalkers.elab_yang.mmk.activity;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -83,6 +82,7 @@ public class ReceiveDataActivity extends AppCompatActivity {
         db = new DBHelper(this);
         intent_receive();
         ble_data_cnt();
+        check_index();
     }
 
     // 사용하는 니들이 한개야? 두개야?
@@ -158,17 +158,17 @@ public class ReceiveDataActivity extends AppCompatActivity {
             Log.d(TAG, "str[y] 시   = " + ble_data_unit_1[y].substring(8, 10));
             Log.d(TAG, "str[y] 분   = " + ble_data_unit_1[y].substring(10, 12));
 
+            //  0000.00.00 00:00;
             time = ble_data_unit_1[y].substring(0, 4) + "." + ble_data_unit_1[y].substring(4, 6) + "."
                     + ble_data_unit_1[y].substring(6, 8) + " " + ble_data_unit_1[y].substring(8, 10) + ":" + ble_data_unit_1[y].substring(10, 12);
-            //                   년도                       월                             일                             시                               분
 
+            //
             if (needle_cnt_flag == 1) {
                 // 난 인슐린 한개만 쓰는거야
                 String set_data = "";
                 String only_one_needle_data = "";
 
                 only_one_needle_data = pref.getString("SET_DATA", set_data);
-
                 Log.d(TAG, "onCreate: only_one_needle_data " + only_one_needle_data);
 
                 data_detail = only_one_needle_data.split("#");
@@ -188,6 +188,7 @@ public class ReceiveDataActivity extends AppCompatActivity {
                 setDB(time, data_detail[0], data_detail[1], data_detail[2], state);
                 time = "";
                 ble_data_append = "";
+
             } else if (needle_cnt_flag == 2) {
                 // 난 2개 써
                 String a1 = "";
@@ -214,106 +215,30 @@ public class ReceiveDataActivity extends AppCompatActivity {
                 hour_value = Integer.parseInt(ble_data_unit_1[y].substring(8, 10));
                 Log.d(TAG, "onCreate: hour_value = " + hour_value);
 
-//                hr == 그 사용 시간대에 쓰는게 2개인 경우 스트링 묶은 값
-//                hr[0]은 그때 앞에꺼, hr[1]은 그때 뒤에꺼
-//                hrr[0] ~ [2] : 앞에꺼 데이터
-//                hrr2[0] ~ [2] : 뒤에꺼 데이터
-
+//                one_and_two == 그 사용 시간대에 쓰는게 2개인 경우 스트링 묶은 값
+//                one_and_two[0]은 그때 앞에꺼, one_and_two[1]은 그때 뒤에꺼
+//                one[0] ~ [2] : 앞에꺼 데이터
+//                tow[0] ~ [2] : 뒤에꺼 데이터
                 // 아침
                 if ((hour_value >= 5) && (hour_value < 11)) {
-                    if (morning.contains("&&")) {
-                        // && 두개라면 2가지 다 사용하는거고중복인거고
-                        one_and_two = morning.split("&&");
-                        one = one_and_two[0].split("/");
-                        two = one_and_two[1].split("/");
-                        setDB(time, one[0] + "/" + two[0], one[1] + "/" + two[1], one[2] + "/" + two[2], state);
-
-                    } else if (morning.startsWith("&")) {
-                        // true 라면 이건 &품목/품명/단위 라는거고
-                        one_and_two = morning.split("&");
-                        two = one_and_two[1].split("/");
-                        setDB(time, two[0], two[1], two[2], state);
-
-                    } else {
-                        // 이건 풍목/품명/단위&
-                        one_and_two = morning.split("&");
-                        one = one_and_two[0].split("/");
-                        setDB(time, one[0], one[1], one[2], state);
-                    }
-
-                    // 점심
-                } else if ((hour_value >= 11) && (hour_value < 16)) {
-                    afternoon = pref.getString("cache_data_2", a2);
-                    if (afternoon.contains("&&")) {
-                        // 중복인거고
-                        one_and_two = afternoon.split("&&");
-                        one = one_and_two[0].split("/");
-                        two = one_and_two[1].split("/");
-                        setDB(time, one[0] + "/" + two[0], one[1] + "/" + two[1], one[2] + "/" + two[2], state);
-
-                    } else if (afternoon.startsWith("&")) {
-                        // true 라면 이건 &품목/품명/단위 라는거고
-                        one_and_two = afternoon.split("&");
-                        two = one_and_two[1].split("/");
-                        setDB(time, two[0], two[1], two[2], state);
-
-                    } else {
-                        // 이건 풍목/품명/단위&
-                        one_and_two = afternoon.split("&");
-                        one = one_and_two[0].split("/");
-                        setDB(time, one[0], one[1], one[2], state);
-                    }
-
-                    // 저녁
-                } else if ((hour_value >= 16) && (hour_value < 21)) {
-                    dinner = pref.getString("cache_data_3", a3);
-                    if (dinner.contains("&&")) {
-                        // 중복인거고
-                        one_and_two = dinner.split("&&");
-                        one = one_and_two[0].split("/");
-                        two = one_and_two[1].split("/");
-                        setDB(time, one[0] + "/" + two[0], one[1] + "/" + two[1], one[2] + "/" + two[2], state);
-
-                    } else if (dinner.startsWith("&")) {
-                        // true 라면 이건 &품목/품명/단위 라는거고
-                        one_and_two = dinner.split("&");
-                        two = one_and_two[1].split("/");
-                        setDB(time, two[0], two[1], two[2], state);
-
-                    } else {
-                        // 이건 풍목/품명/단위&
-                        one_and_two = dinner.split("&");
-                        one = one_and_two[0].split("/");
-                        setDB(time, one[0], one[1], one[2], state);
-                    }
-
-                    // 취침전
-                } else {
-                    night = pref.getString("cache_data_4", a4);
-                    if (night.contains("&&")) {
-                        // 중복인거고
-                        one_and_two = night.split("&&");
-                        one = one_and_two[0].split("/");
-                        two = one_and_two[1].split("/");
-                        setDB(time, one[0] + "/" + two[0], one[1] + "/" + two[1], one[2] + "/" + two[2], state);
-
-                    } else if (night.startsWith("&")) {
-                        // true 라면 이건 &품목/품명/단위 라는거고
-                        one_and_two = night.split("&");
-                        two = one_and_two[1].split("/");
-                        setDB(time, two[0], two[1], two[2], state);
-
-                    } else {
-                        // 이건 풍목/품명/단위&
-                        one_and_two = night.split("&");
-                        one = one_and_two[0].split("/");
-                        setDB(time, one[0], one[1], one[2], state);
-                    }
+                    setDB_to_hour(morning);
                 }
+                // 점심
+            } else if ((hour_value >= 11) && (hour_value < 16)) {
+                setDB_to_hour(afternoon);
+
+                // 저녁
+            } else if ((hour_value >= 16) && (hour_value < 21)) {
+                setDB_to_hour(dinner);
+
+                // 취침전
+            } else {
+                setDB_to_hour(night);
             }
-            time = "";
-            ble_data_append = "";
         }
+        time = "";
+        ble_data_append = "";
+        //
         finish();
     }
 
@@ -335,5 +260,31 @@ public class ReceiveDataActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), "동기화햇구요", Toast.LENGTH_SHORT).show();
         sql.close();
         finish();
+    }
+
+
+    // state에 따라 db저장
+    public void setDB_to_hour(String data) {
+        if (data.contains("&&")) {
+            // && 두개라면 2가지 다 사용하는거고중복인거고
+            one_and_two = data.split("&&");
+            one = one_and_two[0].split("/");
+            two = one_and_two[1].split("/");
+            setDB(time, one[0] + "/" + two[0], one[1] + "/" + two[1], one[2] + "/" + two[2], state);
+
+        } else if (data.startsWith("&")) {
+            // true 라면 이건 &품목/품명/단위 라는거고
+            // 즉 2번 투약
+            one_and_two = data.split("&");
+            two = one_and_two[1].split("/");
+            setDB(time, two[0], two[1], two[2], state);
+
+        } else {
+            // 이건 풍목/품명/단위&
+            // 즉 1번 투약
+            one_and_two = data.split("&");
+            one = one_and_two[0].split("/");
+            setDB(time, one[0], one[1], one[2], state);
+        }
     }
 }
