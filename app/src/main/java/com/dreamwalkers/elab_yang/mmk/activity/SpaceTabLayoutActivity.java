@@ -28,7 +28,7 @@ import eu.long1.spacetablayout.SpaceTabLayout;
 
 public class SpaceTabLayoutActivity extends AppCompatActivity implements IActivityBased {
     private static final String TAG = "SpaceTabLayoutActivity";
-    
+
     @BindView(R.id.spaceTabLayout)
     SpaceTabLayout tabLayout;
 

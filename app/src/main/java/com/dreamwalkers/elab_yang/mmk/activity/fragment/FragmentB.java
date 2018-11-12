@@ -24,21 +24,20 @@ public class FragmentB extends Fragment implements View.OnClickListener{
     private Animation fab_open, fab_close;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_b, container, false);
         ButterKnife.bind(this, view);
 //        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
 
-        RelativeLayout scan_device = (RelativeLayout) view.findViewById(R.id.scan_device);
-        scan_device.setOnClickListener(v -> {
-            Log.d(TAG, "onClick: 띠용");
-            startActivity(new Intent(getActivity(), NeedleScanActivity.class));
-        });
+//        RelativeLayout scan_device = (RelativeLayout) view.findViewById(R.id.scan_device);
+//        scan_device.setOnClickListener(v -> {
+//            Log.d(TAG, "onClick: 띠용");
+//            startActivity(new Intent(getActivity(), NeedleScanActivity.class));
+//        });
 
         return view;
-        return inflater.inflate(R.layout.fragment_b, container, false);
+//        return inflater.inflate(R.layout.fragment_b, container, false);
     }
 
     @Override
