@@ -34,7 +34,6 @@ public class SpaceTabLayoutActivity extends AppCompatActivity implements IActivi
 
     @Override
     public void bindView() {
-
     }
 
     @Override
@@ -53,11 +52,14 @@ public class SpaceTabLayoutActivity extends AppCompatActivity implements IActivi
     private void set() {
         //add the fragments you want to display in a List == 내가 원하면 추가가능하다~ 이말이야
         List<Fragment> fragmentList = new ArrayList<>();
+        // 홈 = 기록보기
         fragmentList.add(new FragmentA());
+        // 장치 관리 + 동기화
         fragmentList.add(new FragmentB());
+        //
         fragmentList.add(new FragmentC());
+        // 프로필
         fragmentList.add(new FragmentD());
-//        fragmentList.add(new FragmentE());
 
         // set
         final CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id.activity_main);
