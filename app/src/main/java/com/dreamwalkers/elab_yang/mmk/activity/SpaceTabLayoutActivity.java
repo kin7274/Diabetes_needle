@@ -9,7 +9,10 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+<<<<<<< HEAD
+=======
 import android.util.Log;
+>>>>>>> refs/remotes/kin7274/master
 import android.view.View;
 import android.widget.Toast;
 
@@ -22,10 +25,17 @@ import com.dreamwalkers.elab_yang.mmk.activity.fragment.FragmentD;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import eu.long1.spacetablayout.SpaceTabLayout;
 
 public class SpaceTabLayoutActivity extends AppCompatActivity implements IActivityBased {
+<<<<<<< HEAD
+
+    @BindView(R.id.spaceTabLayout)
+=======
     private static final String TAG = "SpaceTabLayoutActivity";
+>>>>>>> refs/remotes/kin7274/master
     SpaceTabLayout tabLayout;
 
     @Override
@@ -37,11 +47,12 @@ public class SpaceTabLayoutActivity extends AppCompatActivity implements IActivi
 
     @Override
     public void bindView() {
+        ButterKnife.bind(this);
     }
 
     @Override
     public void initSetting() {
-//        bindView();
+        bindView();
         setStatusbar();
         set();
     }
@@ -68,10 +79,17 @@ public class SpaceTabLayoutActivity extends AppCompatActivity implements IActivi
         final CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id.activity_main);
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
-        tabLayout = (SpaceTabLayout) findViewById(R.id.spaceTabLayout);
+
 
         tabLayout.initialize(viewPager, getSupportFragmentManager(), fragmentList, null);
 
+<<<<<<< HEAD
+        tabLayout.setTabOneOnClickListener(v -> {
+            Snackbar.make(coordinatorLayout, "Welcome to SpaceTabLayout", Snackbar.LENGTH_SHORT).show();
+        });
+        tabLayout.setOnClickListener(v -> {
+            Toast.makeText(this, "" + tabLayout.getCurrentPosition(), Toast.LENGTH_SHORT).show();
+=======
         tabLayout.setTabOneOnClickListener(v -> Snackbar.make(coordinatorLayout, "안녕", Snackbar.LENGTH_SHORT).show());
         tabLayout.setOnClickListener((View v) -> {
             Toast.makeText(getApplication(), "" + tabLayout.getCurrentPosition(), Toast.LENGTH_SHORT).show();
@@ -83,6 +101,7 @@ public class SpaceTabLayoutActivity extends AppCompatActivity implements IActivi
                 intent.putExtra("flag_toFragment", false);
 
             }
+>>>>>>> refs/remotes/kin7274/master
         });
     }
 }

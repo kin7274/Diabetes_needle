@@ -68,13 +68,13 @@
 
         <!-- 니들 서비스 연결 액티비티 -->
         <activity
-            android:name=".activity.AutoReceiveActivity"
+            android:name=".activity.sync.needle.v1.AutoReceiveActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
 
         <!-- BLE DATA RECEIVE, SET DBHelper -->
         <activity
-            android:name=".activity.ReceiveDataActivity"
+            android:name=".activity.sync.needle.v1.ReceiveDataActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
 
@@ -132,12 +132,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
 
-        <!--스페이스탭레이아웃-->
+        <!-- 스페이스탭레이아웃 -->
         <activity
             android:name=".activity.SpaceTabLayoutActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
-
         <activity
             android:name=".activity.SettingActivity"
             android:theme="@style/AppTheme.MaterialHome" />
@@ -147,16 +146,20 @@
         <activity
             android:name=".activity.WebViewActivity"
             android:theme="@style/AppTheme.MaterialHome" />
-
         <activity
             android:name=".activity.appinfos.DBManagementActivity"
             android:theme="@style/AppTheme.MaterialHome" />
+
+
+        <activity android:name=".activity.sync.needle.v1.DataSyncActivity" />
+        <activity android:name=".activity.sync.needle.v1.SyncResultActivity"></activity>
+
 
         <!-- BLE서비스 -->
         <service
             android:name=".service.knu.deviceneedle.BluetoothLeService"
             android:enabled="true" />
-
+        <service android:name=".service.knu.deviceneedle.NeedleBLEService" android:enabled="true"/>
     </application>
 
 </manifest>
