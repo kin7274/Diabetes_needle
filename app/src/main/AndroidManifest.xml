@@ -146,10 +146,7 @@
             android:theme="@style/AppTheme.MaterialHome" />
         <activity android:name=".activity.sync.needle.v1.DataSyncActivity" />
         <activity android:name=".activity.sync.needle.v1.SyncResultActivity" />
-<<<<<<< HEAD
 
-=======
->>>>>>> master
 
         <!-- BLE서비스 -->
         <service
@@ -158,11 +155,9 @@
         <service
             android:name=".service.knu.deviceneedle.NeedleBLEService"
             android:enabled="true" />
-<<<<<<< HEAD
-=======
 
         <activity android:name=".activity.select.SelectDrugActivity"></activity>
->>>>>>> master
+
     </application>
 
 </manifest>
