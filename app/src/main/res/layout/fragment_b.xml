@@ -3,4 +3,12 @@
     android:layout_height="match_parent"
     android:background="@color/background">
 
+    <TextView
+        android:text="달력 꾸아아아앙ㅇ!"
+        android:textColor="@color/black"
+        android:textSize="50sp"
+        android:gravity="center_horizontal|center_vertical"
+        android:fontFamily="@font/my_font_family"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </RelativeLayout>

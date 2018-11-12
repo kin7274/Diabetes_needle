@@ -21,6 +21,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.paperdb.Paper;
 
+// 장치를 추가하고 데이터를 받습니다!
 public class FragmentC extends Fragment implements IActivityBased {
     private static final String TAG = "FragmentC";
 
@@ -36,10 +37,11 @@ public class FragmentC extends Fragment implements IActivityBased {
         // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_c, container, false);
+        // TODO: 2018-11-12 view. 없이 버터나이프로 걸면 왜 오류가 뜰까요?
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
 
         setDevice();
-//        ButterKnife.bind(view);
+//        ButterKnife.bind(this, view);
         return view;
     }
 
@@ -64,6 +66,7 @@ public class FragmentC extends Fragment implements IActivityBased {
 
     @Override
     public void bindView() {
+
     }
 
     @Override
