@@ -150,13 +150,16 @@
             android:name=".activity.appinfos.DBManagementActivity"
             android:theme="@style/AppTheme.MaterialHome" />
 
+
+        <activity android:name=".activity.sync.needle.v1.DataSyncActivity" />
+        <activity android:name=".activity.sync.needle.v1.SyncResultActivity"></activity>
+
+
         <!-- BLE서비스 -->
         <service
             android:name=".service.knu.deviceneedle.BluetoothLeService"
             android:enabled="true" />
-
-        <activity android:name=".activity.sync.needle.v1.DataSyncActivity" />
-        <activity android:name=".activity.sync.needle.v1.SyncResultActivity"></activity>
+        <service android:name=".service.knu.deviceneedle.NeedleBLEService" android:enabled="true"/>
     </application>
 
 </manifest>
