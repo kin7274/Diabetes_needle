@@ -100,7 +100,7 @@ public class NeedleBLEService extends Service {
 
             switch (action) {
                 case ACTION_SERVICE_START_SIGNAL:
-
+                    broadcastUpdate(ACTION_REAL_TIME_START_PHASE);
                     new Handler().postDelayed(() -> {
                         if (mNeedleCharacteristic != null) {
                             firstPhaseCheckerFlag = startSignal(mNeedleCharacteristic);
@@ -111,6 +111,7 @@ public class NeedleBLEService extends Service {
 
                     break;
                 case ACTION_SERVICE_SCAN_DONE:
+                    broadcastUpdate(ACTION_REAL_TIME_FIRST_PHASE);
 
                     new Handler().postDelayed(() -> {
                         if (mNeedleCharacteristic != null) {
@@ -123,6 +124,7 @@ public class NeedleBLEService extends Service {
                     break;
 
                 case ACTION_FIRST_PHASE_DONE:
+                    broadcastUpdate(ACTION_REAL_TIME_SECOND_PHASE);
                     receivedData = stringBuilder.toString();
                     Log.e(TAG, "onReceive: before " + receivedData);
                     receivedData = receivedData.substring(0, receivedData.length() - 1);

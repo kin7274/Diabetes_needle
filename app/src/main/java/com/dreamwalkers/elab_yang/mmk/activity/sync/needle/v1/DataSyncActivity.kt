@@ -16,6 +16,7 @@ import android.widget.Toast
 import com.dreamwalkers.elab_yang.mmk.R
 import com.dreamwalkers.elab_yang.mmk.consts.IntentConst.DEVICEADDRESS
 import com.dreamwalkers.elab_yang.mmk.service.knu.deviceneedle.NeedleBLEService
+import kotlinx.android.synthetic.main.activity_data_sync.*
 
 class DataSyncActivity : AppCompatActivity() {
 
@@ -49,34 +50,53 @@ class DataSyncActivity : AppCompatActivity() {
     private val mGattUpdateReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             val action = intent.action
-            if (NeedleBLEService.ACTION_GATT_CONNECTED == action) {
-                mConnected = true
-//                textView.append("연결됨" + "\n")
-//                updateConnectionState(R.string.connected)
-                invalidateOptionsMenu()
-            } else if (NeedleBLEService.ACTION_GATT_DISCONNECTED == action) {
-                mConnected = false
-//                textView.append("연결 해제"+ "\n")
-//                updateConnectionState(R.string.disconnected)
-                invalidateOptionsMenu()
-//                clearUI()
-            } else if (NeedleBLEService.ACTION_GATT_SERVICES_DISCOVERED == action) {
-                // Show all the supported services and characteristics on the user interface.
-//                displayGattServices(mBluetoothLeService.getSupportedGattServices())
-//                textView.append("서비스 특성 탐색 완료" + "\n")
-            } else if (NeedleBLEService.ACTION_DATA_AVAILABLE == action) {
-                val values = intent.getStringExtra(NeedleBLEService.EXTRA_DATA)
+            when (action) {
+                NeedleBLEService.ACTION_GATT_CONNECTED -> {
+                    mConnected = true
+    //                textView.append("연결됨" + "\n")
+    //                updateConnectionState(R.string.connected)
+                    invalidateOptionsMenu()
+                }
+                NeedleBLEService.ACTION_GATT_DISCONNECTED -> {
+                    mConnected = false
+    //                textView.append("연결 해제"+ "\n")
+    //                updateConnectionState(R.string.disconnected)
+                    invalidateOptionsMenu()
+    //                clearUI()
+                }
+                NeedleBLEService.ACTION_GATT_SERVICES_DISCOVERED -> {
+                    // Show all the supported services and characteristics on the user interface.
+    //                displayGattServices(mBluetoothLeService.getSupportedGattServices())
+    //                textView.append("서비스 특성 탐색 완료" + "\n")
+                }
 
+                NeedleBLEService.ACTION_DATA_AVAILABLE -> {
+                    val values = intent.getStringExtra(NeedleBLEService.EXTRA_DATA)
+                }
+
+                NeedleBLEService.ACTION_REAL_TIME_START_PHASE -> {
+                    msg_text_view.text = "신호 동기화 및 인증 시작 중.."
+                }
+
+                NeedleBLEService.ACTION_REAL_TIME_FIRST_PHASE -> {
+                    msg_text_view.text = "데이터 수신중..."
+                }
+
+                NeedleBLEService.ACTION_REAL_TIME_SECOND_PHASE -> {
+                    msg_text_view.text = "수신완료.. 처리중.."
+                }
+
+                NeedleBLEService.ACTION_SYNC_DONE -> {
+                    val values = intent.getStringExtra(NeedleBLEService.EXTRA_DATA)
+    //                toast(values)
+                    val intentDone =Intent(this@DataSyncActivity, SyncResultActivity::class.java)
+                    intentDone.putExtra("SyncValue", values)
+                    startActivity(intentDone)
+                    finish()
+                }
             }
 
-            else if(NeedleBLEService.ACTION_SYNC_DONE == action){
-                val values = intent.getStringExtra(NeedleBLEService.EXTRA_DATA)
-//                toast(values)
-                val intent =Intent(this@DataSyncActivity, SyncResultActivity::class.java)
-                intent.putExtra("SyncValue", values)
-                startActivity(intent)
-                finish()
-            }
+
         }
     }
 
