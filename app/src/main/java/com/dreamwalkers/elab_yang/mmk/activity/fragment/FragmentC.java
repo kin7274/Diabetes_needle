@@ -24,7 +24,7 @@ import io.paperdb.Paper;
 public class FragmentC extends Fragment implements IActivityBased {
     private static final String TAG = "FragmentC";
 
-    @BindView(R.id.recycler_view)
+//    @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
 
     DeviceAdapter deviceAdapter;
@@ -36,13 +36,16 @@ public class FragmentC extends Fragment implements IActivityBased {
         // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_c, container, false);
-        ButterKnife.bind(view);
+        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+
+        setDevice();
+//        ButterKnife.bind(view);
         return view;
     }
 
     public void setDevice() {
-        recyclerView = (RecyclerView) getView().findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+//        recyclerView = (RecyclerView) getView().findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setHasFixedSize(true);
         deviceDatabase = Paper.book("device").read("user_device");
         if (deviceDatabase != null) {
