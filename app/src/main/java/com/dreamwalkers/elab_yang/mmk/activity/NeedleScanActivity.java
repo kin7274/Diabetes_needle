@@ -25,7 +25,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -63,19 +62,19 @@ public class NeedleScanActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Boolean flag_toFragment = true;
-        Intent intent = getIntent();
-        flag_toFragment = intent.getBooleanExtra("flag_toFragment", true);
-        Log.d(TAG, "onCreate: flag_toFragment = " + flag_toFragment);
-        if (!flag_toFragment) {
-            Log.d(TAG, "onCreate: 1");
-            setContentView(R.layout.fragment_c);
-        } else {
-            Log.d(TAG, "onCreate: 1");
-            setContentView(R.layout.activity_needle_scan);
-        }
-        flag_toFragment = true;
-        Log.d(TAG, "onCreate: 2231312312321321flag_toFragment = " + flag_toFragment);
+//        Boolean flag_toFragment = true;
+//        Intent intent = getIntent();
+//        flag_toFragment = intent.getBooleanExtra("flag_toFragment", true);
+//        Log.d(TAG, "onCreate: flag_toFragment = " + flag_toFragment);
+//        if (!flag_toFragment) {
+//            Log.d(TAG, "onCreate: 1");
+//            setContentView(R.layout.fragment_c);
+//        } else {
+//            Log.d(TAG, "onCreate: 1");
+        setContentView(R.layout.activity_needle_scan);
+//        }
+//        flag_toFragment = true;
+//        Log.d(TAG, "onCreate: 2231312312321321flag_toFragment = " + flag_toFragment);
 
         setStatusbar();
         pref = getSharedPreferences("ActivityPREF", Context.MODE_PRIVATE);

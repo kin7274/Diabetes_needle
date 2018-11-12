@@ -42,13 +42,13 @@ import static android.content.Context.MODE_PRIVATE;
 public class FragmentD extends Fragment {
 
     //    @BindView(R.id.animation_view)
-    LottieAnimationView animation_view;
+//    LottieAnimationView animation_view;
 
     //    @BindView(R.id.normallayout)
-    ConstraintLayout normallayout;
+//    ConstraintLayout normallayout;
 
     //    @BindView(R.id.lottielayout)
-    RelativeLayout lottielayout;
+//    RelativeLayout lottielayout;
 
 
     @Override
@@ -56,35 +56,34 @@ public class FragmentD extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_d, container, false);
         // set
-        animation_view = (LottieAnimationView) view.findViewById(R.id.animation_view);
-        normallayout = (ConstraintLayout) view.findViewById(R.id.normallayout);
-        lottielayout = (RelativeLayout) view.findViewById(R.id.lottielayout);
-        setLottie();
-        getProfile();
+//        animation_view = (LottieAnimationView) view.findViewById(R.id.animation_view);
+//        normallayout = (ConstraintLayout) view.findViewById(R.id.normallayout);
+//        lottielayout = (RelativeLayout) view.findViewById(R.id.lottielayout);
+//        setLottie();
+//        getProfile();
 
         return view;
 //        return inflater.inflate(R.layout.fragment_d, container, false);
     }
 
-    public void setLottie() {
-        animation_view.setAnimation("man_and_phone.json");
-        animation_view.loop(true);
-        animation_view.playAnimation();
-    }
+//    public void setLottie() {
+//        animation_view.setAnimation("man_and_phone.json");
+//        animation_view.loop(true);
+//        animation_view.playAnimation();
+//    }
 
-    public void getProfile() {
-        SharedPreferences pref;
-        pref = getContext().getSharedPreferences("pref", MODE_PRIVATE);
-        String cache_user_data = pref.getString("user_data0", "");
-        if (cache_user_data.equals("")) {
-            // 비어있다면 로티를 열자
-            normallayout.setVisibility(View.GONE);
-            lottielayout.setVisibility(View.VISIBLE);
-
-        } else {
-            normallayout.setVisibility(View.VISIBLE);
-            lottielayout.setVisibility(View.GONE);
-        }
-    }
-
+//    public void getProfile() {
+//        SharedPreferences pref;
+//        pref = getContext().getSharedPreferences("pref", MODE_PRIVATE);
+//        String cache_user_data = pref.getString("user_data0", "");
+//        if (cache_user_data.equals("")) {
+//            // 비어있다면 로티를 열자
+//            normallayout.setVisibility(View.GONE);
+//            lottielayout.setVisibility(View.VISIBLE);
+//
+//        } else {
+//            normallayout.setVisibility(View.VISIBLE);
+//            lottielayout.setVisibility(View.GONE);
+//        }
+//    }
 }

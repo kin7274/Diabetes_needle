@@ -1,15 +1,18 @@
 package com.dreamwalkers.elab_yang.mmk.activity;
 
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.Snackbar;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -18,6 +21,7 @@ import com.dreamwalkers.elab_yang.mmk.activity.fragment.FragmentA;
 import com.dreamwalkers.elab_yang.mmk.activity.fragment.FragmentB;
 import com.dreamwalkers.elab_yang.mmk.activity.fragment.FragmentC;
 import com.dreamwalkers.elab_yang.mmk.activity.fragment.FragmentD;
+import com.dreamwalkers.elab_yang.mmk.activity.navi.EduYoutubeActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,9 +29,19 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import eu.long1.spacetablayout.SpaceTabLayout;
+import io.paperdb.Paper;
 
-public class SpaceTabLayoutActivity extends AppCompatActivity implements IActivityBased {
+public class SpaceTabLayoutActivity extends AppCompatActivity implements IActivityBased, NavigationView.OnNavigationItemSelectedListener {
     private static final String TAG = "SpaceTabLayoutActivity";
+
+    @BindView(R.id.drawer_layout)
+    DrawerLayout drawer;
+
+    @BindView(R.id.my_toolbar)
+    Toolbar myToolbar;
+
+    @BindView(R.id.nav_view)
+    NavigationView navigationView;
 
     @BindView(R.id.spaceTabLayout)
     SpaceTabLayout tabLayout;
@@ -46,9 +60,11 @@ public class SpaceTabLayoutActivity extends AppCompatActivity implements IActivi
 
     @Override
     public void initSetting() {
+        Paper.init(this);
         bindView();
         setStatusbar();
         set();
+        setNavi();
     }
 
     public void setStatusbar() {
@@ -62,7 +78,7 @@ public class SpaceTabLayoutActivity extends AppCompatActivity implements IActivi
         List<Fragment> fragmentList = new ArrayList<>();
         // 홈 = 기록보기
         fragmentList.add(new FragmentA());
-        //
+        // 캘린더
         fragmentList.add(new FragmentB());
         // 장치 관리 + 동기화
         fragmentList.add(new FragmentC());
@@ -70,19 +86,18 @@ public class SpaceTabLayoutActivity extends AppCompatActivity implements IActivi
         fragmentList.add(new FragmentD());
 
         // set
-        final CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id.activity_main);
+//        final CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id.activity_main);
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
-
 
         tabLayout.initialize(viewPager, getSupportFragmentManager(), fragmentList, null);
 
         tabLayout.setTabOneOnClickListener(v -> {
-            Snackbar.make(coordinatorLayout, "Welcome to SpaceTabLayout", Snackbar.LENGTH_SHORT).show();
+//            Snackbar.make(coordinatorLayout, "Welcome to SpaceTabLayout", Snackbar.LENGTH_SHORT).show();
         });
         tabLayout.setOnClickListener(v -> {
             Toast.makeText(this, "" + tabLayout.getCurrentPosition(), Toast.LENGTH_SHORT).show();
-            tabLayout.setTabOneOnClickListener(view -> Snackbar.make(coordinatorLayout, "안녕", Snackbar.LENGTH_SHORT).show());
+//            tabLayout.setTabOneOnClickListener(view -> Snackbar.make(coordinatorLayout, "안녕", Snackbar.LENGTH_SHORT).show());
             tabLayout.setOnClickListener(view -> {
                 Toast.makeText(getApplication(), "" + tabLayout.getCurrentPosition(), Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "set: tabLayout.getCurrentPosition() = " + tabLayout.getCurrentPosition());
@@ -95,6 +110,50 @@ public class SpaceTabLayoutActivity extends AppCompatActivity implements IActivi
                 }
             });
         });
+    }
+
+    // 네비게이션메뉴 설정
+    public void setNavi() {
+        setSupportActionBar(myToolbar);
+        getSupportActionBar().setTitle("");
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, myToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+        navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    // 네비게이션메뉴 클릭 이벤트
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        int id = menuItem.getItemId();
+        switch (id) {
+            case R.id.nav_education:
+                // 유튜브 영상 페이지 설정
+                Log.d(TAG, "onNavigationItemSelected: nav_education");
+                startActivity(new Intent(this, EduYoutubeActivity.class));
+                break;
+
+//            case R.id.nav_delete_database:
+//                // DATABASE + CACHE CLEAR;
+//                Log.d(TAG, "onNavigationItemSelected: nav_delete_database");
+//                Toast.makeText(getApplicationContext(), "DATABASE + CACHE CLEAR", Toast.LENGTH_SHORT).show();
+//                startActivity(new Intent(MainActivity.this, DeleteDataBaseActivity.class));
+//                break;
+//
+//            case R.id.nav_its_me:
+//                // 개발자 정보
+//                Log.d(TAG, "onNavigationItemSelected: nav_its_me");
+//                Toast.makeText(getApplicationContext(), "개발자 정보", Toast.LENGTH_SHORT).show();
+//                break;
+
+//            case R.id.nav_setting:
+//                //환경설정
+////                Toast.makeText(getApplicationContext(),"환경설정", Toast.LENGTH_SHORT).show();
+//                startActivity(new Intent(MainActivity.this, SettingActivity.class));
+//                break;
+        }
+        drawer.closeDrawer(GravityCompat.START);
+        return false;
     }
 }
 

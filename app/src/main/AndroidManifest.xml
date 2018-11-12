@@ -28,11 +28,11 @@
             </intent-filter>
         </activity>
 
-        <!-- 버티컬 인트로 -->
-        <!-- <activity -->
-        <!-- android:name=".activity.AppIntroVerticalActivity" -->
-        <!-- android:screenOrientation="portrait" -->
-        <!-- android:theme="@style/Theme.AppCompat.Light.NoActionBar" /> -->
+        <!--spacetablayout -->
+        <activity
+            android:name=".activity.SpaceTabLayoutActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
 
         <!-- 메인 -->
@@ -132,11 +132,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
 
-        <!-- 스페이스탭레이아웃 -->
-        <activity
-            android:name=".activity.SpaceTabLayoutActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme" />
         <activity
             android:name=".activity.SettingActivity"
             android:theme="@style/AppTheme.MaterialHome" />
@@ -152,14 +147,16 @@
 
 
         <activity android:name=".activity.sync.needle.v1.DataSyncActivity" />
-        <activity android:name=".activity.sync.needle.v1.SyncResultActivity"></activity>
+        <activity android:name=".activity.sync.needle.v1.SyncResultActivity" />
 
 
         <!-- BLE서비스 -->
         <service
             android:name=".service.knu.deviceneedle.BluetoothLeService"
             android:enabled="true" />
-        <service android:name=".service.knu.deviceneedle.NeedleBLEService" android:enabled="true"/>
+        <service
+            android:name=".service.knu.deviceneedle.NeedleBLEService"
+            android:enabled="true" />
     </application>
 
 </manifest>

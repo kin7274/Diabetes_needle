@@ -20,7 +20,7 @@ import com.dreamwalkers.elab_yang.mmk.service.knu.deviceneedle.NeedleBLEService
 class DataSyncActivity : AppCompatActivity() {
 
     private val REQUEST_PERMISSION_ACCESS_COARSE_LOCATION = 1000
-    
+
     lateinit var mDeviceAddress: String
     private var mBluetoothLeService: NeedleBLEService? = null
     private var mBluetoothAdapter: BluetoothAdapter? = null

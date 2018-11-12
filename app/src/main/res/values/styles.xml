@@ -9,7 +9,7 @@
     </style>
 
     <!--네비게이션메뉴-->
-    <style name="AppTheme.AppBarOverlay" parent="android:Theme.Holo.Light.DarkActionBar">
+    <style name="AppTheme.AppBarOverlay" parent="android:Theme.Holo.NoActionBar">
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:elevation">0dp</item>
     </style>

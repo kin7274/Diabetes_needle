@@ -20,6 +20,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <include
+        layout="@layout/app_bar_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
     <android.support.constraint.ConstraintLayout
         android:id="@+id/normallayout"
         android:layout_width="match_parent"
@@ -169,19 +174,4 @@
 
         </android.support.v7.widget.CardView>
     </android.support.constraint.ConstraintLayout>
-
-    <RelativeLayout
-        android:id="@+id/lottielayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/animation_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:lottie_autoPlay="true"
-            app:lottie_fileName="man_and_phone.json"
-            app:lottie_loop="true" />
-
-    </RelativeLayout>
 </FrameLayout>
