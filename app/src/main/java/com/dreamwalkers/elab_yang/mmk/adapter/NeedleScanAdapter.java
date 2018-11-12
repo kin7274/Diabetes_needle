@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.dreamwalkers.elab_yang.mmk.R;
 import com.dreamwalkers.elab_yang.mmk.activity.MainActivity;
+import com.dreamwalkers.elab_yang.mmk.activity.SpaceTabLayoutActivity;
 import com.dreamwalkers.elab_yang.mmk.model.Device;
 
 import java.util.ArrayList;
@@ -94,7 +95,7 @@ public class NeedleScanAdapter extends RecyclerView.Adapter<NeedleScanViewHolder
                     deviceDatabase.add(new Device(deviceName, deviceAddress));
                     Paper.book("device").write("user_device", deviceDatabase);
                 }
-                Intent intent = new Intent(context, MainActivity.class);
+                Intent intent = new Intent(context, SpaceTabLayoutActivity.class);
                 context.startActivity(intent);
                 ((Activity) context).finish();
             });
