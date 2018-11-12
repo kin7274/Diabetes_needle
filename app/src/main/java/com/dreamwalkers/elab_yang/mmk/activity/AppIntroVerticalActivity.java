@@ -100,7 +100,7 @@ public class AppIntroVerticalActivity extends VerticalIntro {
         // first_or_second = true;
         check_exec();
         // 전환
-        startActivity(new Intent(this, MainActivity.class));
+        startActivity(new Intent(this, SpaceTabLayoutActivity.class));
         Log.d(TAG, "onDonePressed: AppIntroVerticalActivity -> MainActivity");
         finish();
     }

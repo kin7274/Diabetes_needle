@@ -32,7 +32,7 @@ import android.widget.RelativeLayout;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.dreamwalkers.elab_yang.mmk.R;
-import com.dreamwalkers.elab_yang.mmk.activity.MainActivity;
+//import com.dreamwalkers.elab_yang.mmk.activity.MainActivity;
 import com.dreamwalkers.elab_yang.mmk.activity.navi.EditProfileActivity;
 import com.dreamwalkers.elab_yang.mmk.activity.navi.ProfileActivity;
 

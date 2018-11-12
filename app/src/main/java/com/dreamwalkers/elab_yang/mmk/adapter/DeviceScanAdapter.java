@@ -14,8 +14,9 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.dreamwalkers.elab_yang.mmk.activity.MainActivity;
+//import com.dreamwalkers.elab_yang.mmk.activity.MainActivity;
 import com.dreamwalkers.elab_yang.mmk.R;
+import com.dreamwalkers.elab_yang.mmk.activity.MainActivity;
 import com.dreamwalkers.elab_yang.mmk.model.Device;
 
 import java.util.ArrayList;
