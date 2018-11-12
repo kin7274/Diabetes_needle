@@ -35,11 +35,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dreamwalkers.elab_yang.mmk.R;
-import com.dreamwalkers.elab_yang.mmk.activity.AutoReceiveActivity;
 import com.dreamwalkers.elab_yang.mmk.activity.DeviceControlActivity;
 import com.dreamwalkers.elab_yang.mmk.activity.navi.AlyakActivity;
 import com.dreamwalkers.elab_yang.mmk.activity.navi.OneInsulinActivity;
 import com.dreamwalkers.elab_yang.mmk.activity.navi.TwoInsulinActivity;
+import com.dreamwalkers.elab_yang.mmk.activity.sync.needle.v1.DataSyncActivity;
 import com.dreamwalkers.elab_yang.mmk.model.Device;
 
 import java.util.ArrayList;
@@ -166,7 +166,8 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.ViewHolder
 
         // 서비스 연결
         holder.fetchActivityData.setOnClickListener(v -> {
-            Intent intent = new Intent(context, AutoReceiveActivity.class);
+//            Intent intent = new Intent(context, AutoReceiveActivity.class);
+            Intent intent = new Intent(context, DataSyncActivity.class);
             intent.putExtra(DEVICEADDRESS, deviceAddress);
             intent.putExtra("needle_cnt_flag", needle_cnt_flag);
             context.startActivity(intent);
