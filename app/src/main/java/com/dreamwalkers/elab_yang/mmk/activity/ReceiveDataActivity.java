@@ -41,8 +41,6 @@ public class ReceiveDataActivity extends AppCompatActivity {
     // 투약 갯수 플래그
     int needle_cnt_flag = 0;
 
-    int time_flag = 0;
-
     // 투약상태
     String state = "";
 
@@ -58,6 +56,8 @@ public class ReceiveDataActivity extends AppCompatActivity {
     // ble 종료 인덱스
     int i_end = 0;
 
+    String[] ble_data_unit_1;
+    int y = 0;
 
     // 1번과 2번 모두 존재
     String[] one_and_two = {"", ""};
@@ -74,7 +74,6 @@ public class ReceiveDataActivity extends AppCompatActivity {
 //        setRecyclerView();
         init();
     }
-
 
     public void init() {
         needle_one_or_two();
@@ -138,15 +137,31 @@ public class ReceiveDataActivity extends AppCompatActivity {
 
     // 실제 받는 부분
     public void connect() {
+        connect_start();
+        // 난 인슐린 한개만 쓰는거야
+        if (needle_cnt_flag == 1) {
+            use_needle_one();
+
+            // 난 2개 써
+        } else if (needle_cnt_flag == 2) {
+            use_needle_two();
+        }
+        time = "";
+        ble_data_append = "";
+        //
+        finish();
+    }
+
+    public void connect_start() {
         Log.d(TAG, "connect: 받으러 여 메서드에 들어왔다 체크");
 
         sql = db.getWritableDatabase();
 
         // ble_data_unit_1 == 블루투스 한 뭉텅이
-        String[] ble_data_unit_1 = ble_data_append.split("&");
+        ble_data_unit_1 = ble_data_append.split("&");
         // ble_data_unit_1 == 201811062153
         // start -> end 반복하며 저장
-        for (int y = i_start; y < ble_cnt; y++) {
+        for (y = i_start; y < ble_cnt; y++) {
             Log.d(TAG, "지금 " + (y + ble_cnt) + "번째 진행중");
             Log.d(TAG, "str[y] 전체 = " + ble_data_unit_1[y]);
             // ble_data_unit_1[y] == 20181106
@@ -161,97 +176,83 @@ public class ReceiveDataActivity extends AppCompatActivity {
             //  0000.00.00 00:00;
             time = ble_data_unit_1[y].substring(0, 4) + "." + ble_data_unit_1[y].substring(4, 6) + "."
                     + ble_data_unit_1[y].substring(6, 8) + " " + ble_data_unit_1[y].substring(8, 10) + ":" + ble_data_unit_1[y].substring(10, 12);
+        }
+    }
 
-            //
-            if (needle_cnt_flag == 1) {
-                // 난 인슐린 한개만 쓰는거야
-                String set_data = "";
-                String only_one_needle_data = "";
+    public void use_needle_one() {
 
-                only_one_needle_data = pref.getString("SET_DATA", set_data);
-                Log.d(TAG, "onCreate: only_one_needle_data " + only_one_needle_data);
+        String set_data = "";
+        String only_one_needle_data = "";
 
-                data_detail = only_one_needle_data.split("#");
+        only_one_needle_data = pref.getString("SET_DATA", set_data);
+        Log.d(TAG, "onCreate: only_one_needle_data " + only_one_needle_data);
+
+        data_detail = only_one_needle_data.split("#");
 //            data_detail[0] = 품목
 //            data_detail[1] = 품명
 //            data_detail[2] = 단위
 
-                // 지금 시간 = str[y].substring(8, 10)
+        // 지금 시간 = str[y].substring(8, 10)
 
-                // 21-05(8h) : 취침전;
-                // 05-11(6h) : 아침식전;
-                // 11-16(5h) : 점심식전;
-                // 16-21(5h) : 저녁식전;
-                hour_value = Integer.parseInt(ble_data_unit_1[y].substring(8, 10));
-                Log.d(TAG, "onCreate: hour_value = " + hour_value);
+        // 21-05(8h) : 취침전;
+        // 05-11(6h) : 아침식전;
+        // 11-16(5h) : 점심식전;
+        // 16-21(5h) : 저녁식전;
+        hour_value = Integer.parseInt(ble_data_unit_1[y].substring(8, 10));
+        Log.d(TAG, "onCreate: hour_value = " + hour_value);
 
-                setDB(time, data_detail[0], data_detail[1], data_detail[2], state);
-                time = "";
-                ble_data_append = "";
+        setDB(time, data_detail[0], data_detail[1], data_detail[2], state);
+        time = "";
+        ble_data_append = "";
 
-            } else if (needle_cnt_flag == 2) {
-                // 난 2개 써
-                String a1 = "";
-                String a2 = "";
-                String a3 = "";
-                String a4 = "";
+    }
 
-                morning = pref.getString("cache_data_1", a1);  // 아침일경우
-                afternoon = pref.getString("cache_data_2", a2);  // 점심
-                dinner = pref.getString("cache_data_3", a3);  // 저녁
-                night = pref.getString("cache_data_4", a4);  // 취침
+    public void use_needle_two() {
+        String a1 = "";
+        String a2 = "";
+        String a3 = "";
+        String a4 = "";
 
-                // 아침 값들
-                Log.d(TAG, "onCreate: morning " + morning);
-                // 점심 값들
-                Log.d(TAG, "onCreate: afternoon " + afternoon);
-                // 저녁 값들
-                Log.d(TAG, "onCreate: dinner " + dinner);
-                // 취침 값들
-                Log.d(TAG, "onCreate: night " + night);
+        morning = pref.getString("cache_data_1", a1);  // 아침일경우
+        afternoon = pref.getString("cache_data_2", a2);  // 점심
+        dinner = pref.getString("cache_data_3", a3);  // 저녁
+        night = pref.getString("cache_data_4", a4);  // 취침
 
-                // TODO: 2018-11-12 date로..
-                // 받아 이걸 시간값을
-                hour_value = Integer.parseInt(ble_data_unit_1[y].substring(8, 10));
-                Log.d(TAG, "onCreate: hour_value = " + hour_value);
+        // 아침 값들
+        Log.d(TAG, "onCreate: morning " + morning);
+        // 점심 값들
+        Log.d(TAG, "onCreate: afternoon " + afternoon);
+        // 저녁 값들
+        Log.d(TAG, "onCreate: dinner " + dinner);
+        // 취침 값들
+        Log.d(TAG, "onCreate: night " + night);
+
+        // TODO: 2018-11-12 date로..
+        // 받아 이걸 시간값을
+        hour_value = Integer.parseInt(ble_data_unit_1[y].substring(8, 10));
+        Log.d(TAG, "onCreate: hour_value = " + hour_value);
 
 //                one_and_two == 그 사용 시간대에 쓰는게 2개인 경우 스트링 묶은 값
 //                one_and_two[0]은 그때 앞에꺼, one_and_two[1]은 그때 뒤에꺼
 //                one[0] ~ [2] : 앞에꺼 데이터
 //                tow[0] ~ [2] : 뒤에꺼 데이터
-                // 아침
-                if ((hour_value >= 5) && (hour_value < 11)) {
-                    setDB_to_hour(morning);
-                }
-                // 점심
-            } else if ((hour_value >= 11) && (hour_value < 16)) {
-                setDB_to_hour(afternoon);
+        // 아침
+        if ((hour_value >= 5) && (hour_value < 11)) {
+            setDB_to_hour(morning);
+            // 점심
+        } else if ((hour_value >= 11) && (hour_value < 16)) {
+            setDB_to_hour(afternoon);
 
-                // 저녁
-            } else if ((hour_value >= 16) && (hour_value < 21)) {
-                setDB_to_hour(dinner);
+            // 저녁
+        } else if ((hour_value >= 16) && (hour_value < 21)) {
+            setDB_to_hour(dinner);
 
-                // 취침전
-            } else {
-                setDB_to_hour(night);
-            }
+            // 취침전
+        } else {
+            setDB_to_hour(night);
         }
-        time = "";
-        ble_data_append = "";
-        //
-        finish();
     }
 
-
-    // 특정문자 반복 갯수 확인
-    int getCharNumber(String str, char c) {
-        int cnt = 0;
-        for (int i = 0; i < str.length(); i++) {
-            if (str.charAt(i) == c)
-                cnt++;
-        }
-        return cnt;
-    }
 
     // DB에 저장
     public void setDB(String str1, String str2, String str3, String str4, String str5) {
@@ -286,5 +287,15 @@ public class ReceiveDataActivity extends AppCompatActivity {
             one = one_and_two[0].split("/");
             setDB(time, one[0], one[1], one[2], state);
         }
+    }
+
+    // 특정문자 반복 갯수 확인
+    int getCharNumber(String str, char c) {
+        int cnt = 0;
+        for (int i = 0; i < str.length(); i++) {
+            if (str.charAt(i) == c)
+                cnt++;
+        }
+        return cnt;
     }
 }
