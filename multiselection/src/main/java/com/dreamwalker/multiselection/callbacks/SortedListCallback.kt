@@ -1,4 +1,4 @@
-package com.yalantis.multiselection.lib.callbacks
+package com.dreamwalker.multiselection.callbacks
 
 import android.support.v7.util.SortedList.Callback
 

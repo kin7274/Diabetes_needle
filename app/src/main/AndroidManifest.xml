@@ -149,17 +149,18 @@
         <activity
             android:name=".activity.appinfos.DBManagementActivity"
             android:theme="@style/AppTheme.MaterialHome" />
-
-
         <activity android:name=".activity.sync.needle.v1.DataSyncActivity" />
-        <activity android:name=".activity.sync.needle.v1.SyncResultActivity"></activity>
-
+        <activity android:name=".activity.sync.needle.v1.SyncResultActivity" />
 
         <!-- BLE서비스 -->
         <service
             android:name=".service.knu.deviceneedle.BluetoothLeService"
             android:enabled="true" />
-        <service android:name=".service.knu.deviceneedle.NeedleBLEService" android:enabled="true"/>
+        <service
+            android:name=".service.knu.deviceneedle.NeedleBLEService"
+            android:enabled="true" />
+
+        <activity android:name=".activity.select.SelectDrugActivity"></activity>
     </application>
 
 </manifest>

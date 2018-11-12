@@ -1,4 +1,4 @@
-package com.yalantis.multiselection.lib
+package com.dreamwalker.multiselection
 
 import android.content.Context
 import android.support.v4.view.ViewPager
@@ -6,9 +6,6 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
 
-/**
- * Created by Artem Kholodnyi on 9/2/16.
- */
 
 class MultiSelectViewPager : ViewPager {
 

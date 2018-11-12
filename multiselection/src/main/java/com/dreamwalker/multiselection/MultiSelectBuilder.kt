@@ -1,12 +1,10 @@
-package com.yalantis.multiselection.lib
+package com.dreamwalker.multiselection
 
 import android.content.Context
-import android.support.annotation.LayoutRes
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
-import com.yalantis.multiselection.R
-import com.yalantis.multiselection.lib.adapter.BaseLeftAdapter
-import com.yalantis.multiselection.lib.adapter.BaseRightAdapter
+import com.dreamwalker.multiselection.adapter.BaseLeftAdapter
+import com.dreamwalker.multiselection.adapter.BaseRightAdapter
 
 /**
  * Created by Artem Kholodnyi on 9/17/16.

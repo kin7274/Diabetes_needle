@@ -1,9 +1,9 @@
-package com.yalantis.multiselection.lib.util
+package com.dreamwalker.multiselection.util
 
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
-import kotlin.jvm.internal.Lambda
+
 
 /**
  * Created by Artem Kholodnyi on 8/23/16.

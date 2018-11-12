@@ -1,10 +1,8 @@
-package com.yalantis.multiselection.lib.adapter
+package com.dreamwalker.multiselection.adapter
 
 import android.support.v7.widget.RecyclerView
 
-/**
- * Created by Artem Kholodnyi on 9/6/16.
- */
+
 
 abstract class BaseRightAdapter<I, VH : RecyclerView.ViewHolder> : BaseAdapter<I, VH>() {
 

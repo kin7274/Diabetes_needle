@@ -1,12 +1,9 @@
-package com.yalantis.multiselection.lib.adapter
+package com.dreamwalker.multiselection.adapter
 
 import android.support.annotation.CallSuper
 import android.support.v7.widget.RecyclerView
 import android.view.View
 
-/**
- * Created by Artem Kholodnyi on 9/6/16.
- */
 abstract class BaseAdapter<I, VH : RecyclerView.ViewHolder> : RecyclerView.Adapter<VH>() {
 
     val hiddenItems = mutableSetOf<I>()

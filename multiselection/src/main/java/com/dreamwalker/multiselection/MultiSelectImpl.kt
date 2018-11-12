@@ -1,4 +1,5 @@
-package com.yalantis.multiselection.lib
+package com.dreamwalker.multiselection
+
 
 import android.animation.Animator
 import android.animation.ValueAnimator
@@ -15,13 +16,12 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.view.animation.OvershootInterpolator
 import android.widget.FrameLayout
-import com.yalantis.multiselection.R
-import com.yalantis.multiselection.lib.adapter.BaseAdapter
-import com.yalantis.multiselection.lib.adapter.BaseLeftAdapter
-import com.yalantis.multiselection.lib.adapter.BaseRightAdapter
-import com.yalantis.multiselection.lib.adapter.ViewPagerAdapter
-import com.yalantis.multiselection.lib.util.getLocationOnScreen
-import com.yalantis.multiselection.lib.util.removeFromParent
+import com.dreamwalker.multiselection.adapter.BaseAdapter
+import com.dreamwalker.multiselection.adapter.BaseLeftAdapter
+import com.dreamwalker.multiselection.adapter.BaseRightAdapter
+import com.dreamwalker.multiselection.adapter.ViewPagerAdapter
+import com.dreamwalker.multiselection.util.getLocationOnScreen
+import com.dreamwalker.multiselection.util.removeFromParent
 import java.io.Serializable
 
 /**

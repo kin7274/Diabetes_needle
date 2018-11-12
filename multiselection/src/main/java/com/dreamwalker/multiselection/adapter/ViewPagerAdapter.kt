@@ -1,13 +1,11 @@
-package com.yalantis.multiselection.lib.adapter
+package com.dreamwalker.multiselection.adapter
 
 import android.support.v4.view.PagerAdapter
 import android.support.v4.view.ViewPager
 import android.view.View
 import android.view.ViewGroup
 
-/**
- * Created by Artem Kholodnyi on 8/17/16.
- */
+
 class ViewPagerAdapter(val pageWidth: Float) : PagerAdapter() {
 
     lateinit var pageLeft: View

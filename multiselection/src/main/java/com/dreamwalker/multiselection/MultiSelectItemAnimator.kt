@@ -1,4 +1,4 @@
-package com.yalantis.multiselection.lib
+package com.dreamwalker.multiselection
 
 import android.support.v4.view.ViewCompat
 import android.support.v4.view.ViewPropertyAnimatorListener

@@ -1,12 +1,9 @@
-package com.yalantis.multiselection.lib.adapter
+package com.dreamwalker.multiselection.adapter
 
 import android.support.v7.util.SortedList
 import android.support.v7.widget.RecyclerView
-import com.yalantis.multiselection.lib.callbacks.SortedListCallback
+import com.dreamwalker.multiselection.callbacks.SortedListCallback
 
-/**
- * Created by Artem Kholodnyi on 9/3/16.
- */
 abstract class BaseLeftAdapter<I : Comparable<I>, VH : RecyclerView.ViewHolder>
 : BaseAdapter<I, VH> {
 

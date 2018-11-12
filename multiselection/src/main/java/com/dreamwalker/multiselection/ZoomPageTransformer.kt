@@ -1,10 +1,11 @@
-package com.yalantis.multiselection.lib
+package com.dreamwalker.multiselection
 
 import android.support.v4.view.ViewPager
 import android.view.View
-import com.yalantis.multiselection.lib.util.mix
-import com.yalantis.multiselection.lib.util.setScaleXY
-import com.yalantis.multiselection.lib.util.smoothstep
+import com.dreamwalker.multiselection.util.mix
+import com.dreamwalker.multiselection.util.setScaleXY
+import com.dreamwalker.multiselection.util.smoothstep
+
 
 class ZoomPageTransformer(val pageWidth: Float) : ViewPager.PageTransformer {
 
