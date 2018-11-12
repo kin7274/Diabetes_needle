@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.suppot.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent" >
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -20,16 +20,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
                 android:fontFamily="@font/my_font_family"
-                android:text="대한민국의 어머니들"
+                android:text="@string/app_name"
                 android:textColor="@color/black"
-                android:textSize="30sp" />
+                android:textSize="24sp" />
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
 
-    <!--<include layout="@layout/content_main" />-->
+    <include layout="@layout/content_main" />
 
-</android.suppot.design.widget.CoordinatorLayout>
+</android.support.design.widget.CoordinatorLayout>

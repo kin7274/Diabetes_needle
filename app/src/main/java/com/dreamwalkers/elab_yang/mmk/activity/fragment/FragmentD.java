@@ -16,6 +16,7 @@
 
 package com.dreamwalkers.elab_yang.mmk.activity.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutCompat;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,7 +56,14 @@ public class FragmentD extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_d, container, false);
+//        View view = inflater.inflate(R.layout.fragment_d, container, false);
+        final Context contextThemeWrapper = new ContextThemeWrapper(getActivity(), R.style.Theme_MaterialComponents_Light_NoActionBar);
+
+        LayoutInflater localInflater = inflater.cloneInContext(contextThemeWrapper);
+
+        // inflate the layout using the cloned inflater, not default inflater
+        return localInflater.inflate(R.layout.fragment_d, container, false);
+
         // set
 //        animation_view = (LottieAnimationView) view.findViewById(R.id.animation_view);
 //        normallayout = (ConstraintLayout) view.findViewById(R.id.normallayout);
@@ -62,7 +71,7 @@ public class FragmentD extends Fragment {
 //        setLottie();
 //        getProfile();
 
-        return view;
+//        return view;
 //        return inflater.inflate(R.layout.fragment_d, container, false);
     }
 

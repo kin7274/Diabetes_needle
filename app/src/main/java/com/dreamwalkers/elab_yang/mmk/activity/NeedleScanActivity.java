@@ -110,7 +110,7 @@ public class NeedleScanActivity extends AppCompatActivity {
         Window window = getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        window.setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
+        window.setStatusBarColor(getResources().getColor(R.color.background));
     }
 
     // 확인 4종세트
@@ -149,13 +149,10 @@ public class NeedleScanActivity extends AppCompatActivity {
 
     private void scanLeDevice(final boolean enable) {
         if (enable) {
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mScanning = false;
-                    bluetoothLeScanner.stopScan(leScanCallback);
-                    button.setText("SCAN");
-                }
+            handler.postDelayed(() -> {
+                mScanning = false;
+                bluetoothLeScanner.stopScan(leScanCallback);
+                button.setText("SCAN");
             }, SCAN_PERIOD);
             mScanning = true;
             startNEWBTLEDiscovery();

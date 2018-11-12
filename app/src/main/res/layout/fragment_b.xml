@@ -1,14 +1,11 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background">
+    android:background="@color/background"
+    android:orientation="vertical">
 
-    <TextView
-        android:text="달력 꾸아아아앙ㅇ!"
-        android:textColor="@color/black"
-        android:textSize="50sp"
-        android:gravity="center_horizontal|center_vertical"
-        android:fontFamily="@font/my_font_family"
+    <com.applikeysolutions.cosmocalendar.view.CalendarView
+        android:id="@+id/calendar_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-</RelativeLayout>
+        android:layout_height="wrap_content" />
+</LinearLayout>
