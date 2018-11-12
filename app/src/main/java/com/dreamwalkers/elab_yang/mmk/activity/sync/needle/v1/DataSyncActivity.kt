@@ -67,66 +67,15 @@ class DataSyncActivity : AppCompatActivity() {
             } else if (NeedleBLEService.ACTION_DATA_AVAILABLE == action) {
                 val values = intent.getStringExtra(NeedleBLEService.EXTRA_DATA)
 
-//                if (values != null){
-//                    val trimsValue = values.split(",")
-//                    realTimeList.clear()
-//                    realTimeList.add(RealTime("밥", "쌀밥", trimsValue[0]))
-//                    realTimeList.add(RealTime("국", "된장국", trimsValue[1]))
-//                    realTimeList.add(RealTime("반찬A", "감자조림", trimsValue[2]))
-//                    realTimeList.add(RealTime("반찬B", "배추김치", trimsValue[3]))
-//                    realTimeList.add(RealTime("반찬C", "샐러드", trimsValue[4]))
-//                    realTimeList.add(RealTime("반찬D", "제육볶음", trimsValue[5]))
-//                    realTimeAdapter.notifyDataSetChanged()
-//
-//                    entries.add(Entry(count.toFloat(), trimsValue[0].toFloat()))
-//                    dataSet = LineDataSet(entries, "Label")
-//                    val lineData = LineData(dataSet)
-//                    line_chart.data = lineData
-//                    line_chart.invalidate() // refresh
-//                    count++
-//                }
-//
-////                textView.append(intent.getStringExtra(RealTimeBluetoothLeService.EXTRA_DATA) + "\n")
-////                displayData(intent.getStringExtra(BluetoothLeService.EXTRA_DATA))
-//            } else if (RealTimeBluetoothLeService.ACTION_REAL_TIME_START_PHASE == action) {
-////                Toast.makeText(applicationContext, "인증 시작 ", Toast.LENGTH_SHORT).show()
-//            } else if (RealTimeBluetoothLeService.ACTION_REAL_TIME_FIRST_PHASE == action) {
-////                Toast.makeText(applicationContext, "암호화 인증 완료 ", Toast.LENGTH_SHORT).show()
-//            } else if (RealTimeBluetoothLeService.ACTION_REAL_TIME_SECOND_PHASE == action) {
-////                Toast.makeText(applicationContext, "시간 동기화 완료 ", Toast.LENGTH_SHORT).show()
-//            } else if (RealTimeBluetoothLeService.ACTION_REAL_TIME_FINAL_PHASE == action) {
-//                toast("모든 인증 처리 완료 ")
-//                animation_view.setAnimation(R.raw.process_complete)
-//                animation_view.repeatCount = 0
-//                animation_view.playAnimation()
-//                val listener = object : Animator.AnimatorListener {
-//                    override fun onAnimationRepeat(animation: Animator?) {
-//                        toast("onAnimationRepeat ")
-//                    }
-//
-//                    override fun onAnimationCancel(animation: Animator?) {
-//                        toast("onAnimationCancel ")
-//                        animation_layout.visibility = View.GONE
-//                        data_layout.visibility = View.VISIBLE
-//                    }
-//
-//                    override fun onAnimationStart(animation: Animator?) {
-//                        toast("onAnimationStart ")
-//                        val msg = "인증 완료! 최적화 중... \n 잠시만 기다려주세요"
-//                        animation_text_view.text = msg
-//
-//                    }
-//
-//                    override fun onAnimationEnd(animation: Animator?) {
-//                        toast("완료 모두 완료 ")
-//                        animation_view.cancelAnimation()
-//                    }
-//
-//                }
-//
-//                animation_view.addAnimatorListener(listener)
-////                Toasty.success(context, "모든 인증 처리 완료 ", Toast.LENGTH_SHORT).show()
-////                Toast.makeText(applicationContext, "모든 인증 처리 완료 ", Toast.LENGTH_SHORT).show()
+            }
+
+            else if(NeedleBLEService.ACTION_SYNC_DONE == action){
+                val values = intent.getStringExtra(NeedleBLEService.EXTRA_DATA)
+//                toast(values)
+                val intent =Intent(this@DataSyncActivity, SyncResultActivity::class.java)
+                intent.putExtra("SyncValue", values)
+                startActivity(intent)
+                finish()
             }
         }
     }
@@ -184,6 +133,8 @@ class DataSyncActivity : AppCompatActivity() {
         intentFilter.addAction(NeedleBLEService.ACTION_REAL_TIME_FIRST_PHASE)
         intentFilter.addAction(NeedleBLEService.ACTION_REAL_TIME_SECOND_PHASE)
         intentFilter.addAction(NeedleBLEService.ACTION_REAL_TIME_FINAL_PHASE)
+        intentFilter.addAction(NeedleBLEService.ACTION_SYNC_DONE)
+
         return intentFilter
     }
 

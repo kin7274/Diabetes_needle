@@ -35,6 +35,10 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.List;
 
 /**
@@ -60,6 +64,8 @@ public class NeedleBLEService extends Service {
     public final static String ACTION_REAL_TIME_SECOND_PHASE = "com.example.bluetooth.le.ACTION_REAL_TIME_SECOND_PHASE"; // 날짜 인증
     public final static String ACTION_REAL_TIME_FINAL_PHASE = "com.example.bluetooth.le.ACTION_REAL_TIME_FINAL_PHASE"; // a모든 인증 완료 처리
 
+    public final static String ACTION_SYNC_DONE = "com.example.bluetooth.le.ACTION_SYNC_DONE";
+
     private BluetoothManager mBluetoothManager;
     private BluetoothAdapter mBluetoothAdapter;
     private String mBluetoothDeviceAddress;
@@ -83,6 +89,8 @@ public class NeedleBLEService extends Service {
     boolean secondPhaseCheckerFlag = false;
     boolean dataResultDescriptor = false;
     boolean realTimeDescriptor = false;
+    String receivedData = "";
+    StringBuilder stringBuilder = new StringBuilder();
 
     private final BroadcastReceiver mySyncReceiver = new BroadcastReceiver() {
 
@@ -115,8 +123,44 @@ public class NeedleBLEService extends Service {
                     break;
 
                 case ACTION_FIRST_PHASE_DONE:
+                    receivedData = stringBuilder.toString();
+                    Log.e(TAG, "onReceive: before " + receivedData);
+                    receivedData = receivedData.substring(0, receivedData.length() - 1);
+                    Log.e(TAG, "onReceive: after" + receivedData);
+                    if (receivedData != null) {
+                        String[] splitString = receivedData.split("&");
+                        Log.e(TAG, "onReceive: splitString size -> " + splitString.length);
+                        for (String aSplitString : splitString) {
+                            Log.e(TAG, "onReceive: splitString " + aSplitString);
+                        }
+                        JSONObject obj = null;
+                        JSONArray jsonArray = new JSONArray();
 
-                    Log.e(TAG, "onReceive: " + "모든 데이터 전달 완료" );
+                        for (int i = 0; i < splitString.length; i++) {
+                            obj = new JSONObject();
+                            try {
+                                obj.put("id", String.valueOf(i));
+                                obj.put("value", splitString[i]);
+
+                            } catch (JSONException e) {
+                                // TODO Auto-generated catch block
+                                e.printStackTrace();
+                            }
+                            jsonArray.put(obj);
+                        }
+                        JSONObject finalObject = new JSONObject();
+                        try {
+                            finalObject.put("received", jsonArray);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        Log.e(TAG, "onReceive: finalObject " + finalObject.toString());
+
+                        broadcastUpdate(ACTION_SYNC_DONE, finalObject.toString());
+                    }
+
+
+                    Log.e(TAG, "onReceive: " + "모든 데이터 전달 완료");
 
 
                     break;
@@ -187,6 +231,7 @@ public class NeedleBLEService extends Service {
 
         @Override
         public void onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
+            Log.e(TAG, "onCharacteristicChanged: ");
             broadcastUpdate(ACTION_DATA_AVAILABLE, characteristic);
         }
 
@@ -221,6 +266,19 @@ public class NeedleBLEService extends Service {
      * 데이터를 처리하는 메소드
      *
      * @param action
+     * @param
+     */
+    private void broadcastUpdate(final String action, String jsonString) {
+        final Intent intent = new Intent(action);
+        intent.putExtra(EXTRA_DATA, jsonString);
+        sendBroadcast(intent);
+
+    }
+
+    /**
+     * 데이터를 처리하는 메소드
+     *
+     * @param action
      * @param characteristic
      */
     private void broadcastUpdate(final String action, final BluetoothGattCharacteristic characteristic) {
@@ -229,20 +287,20 @@ public class NeedleBLEService extends Service {
         if (SampleGattAttributes.BLE_CHAR_NEEDLE.equals(characteristic.getUuid())) {
 
             final byte[] data = characteristic.getValue();
-
             if (data != null && data.length > 0) {
-                for (byte b : data) {
-                    Log.e(TAG, "broadcastUpdate: " + String.format("0x%x", b));
-                }
+                Log.e(TAG, "broadcastUpdate: " + data.length);
 
-                if (firstPhaseCheckerFlag){
-                    if (data[0] == 0x10){
+                if (firstPhaseCheckerFlag) {
+                    if (data[0] == 0x10) {
                         broadcastUpdate(ACTION_SERVICE_SCAN_DONE);
                     }
                 }
 
-                if (secondPhaseCheckerFlag){
-                    if (data[data.length-1] == 0x03){
+                if (secondPhaseCheckerFlag) {
+
+                    Log.e(TAG, "broadcastUpdate: " + new String(data));
+                    stringBuilder.append(new String(data));
+                    if (data[data.length - 1] == 0x03) {
                         broadcastUpdate(ACTION_FIRST_PHASE_DONE);
                     }
                 }
@@ -250,114 +308,6 @@ public class NeedleBLEService extends Service {
             }
 
             intent.putExtra(EXTRA_DATA, "");
-
-//        } else if (SampleGattAttributes.BLE_CHAR_CUSTOM_REALTIME.equals(characteristic.getUuid())) {
-//
-//            final byte[] data = characteristic.getValue();
-//
-//            String values = null;
-//
-//            if (data != null && data.length > 0) {
-//                if (data[0] == 0x02 && data[1] == 0x10 && data[2] == 0x03) {
-//                    Log.e(TAG, "broadcastUpdate: " + "1차 인증 성공");
-////                    Toasty.success(getApplicationContext(), "1차 인증 성공", Toast.LENGTH_SHORT).show();
-//                    broadcastUpdate(ACTION_SERVICE_SCAN_DONE);
-//                }
-//                if (data[0] == 0x02 && data[1] == 0x11 && data[2] == 0x03) {
-////                    Toasty.success(getApplicationContext(), "암호화 인증 성공", Toast.LENGTH_SHORT).show();
-//                    Log.e(TAG, "broadcastUpdate: " + "장비 암호화 인증 성공");
-//                    broadcastUpdate(ACTION_FIRST_PHASE_DONE);
-//                }
-//                if (data[0] == 0x02 && data[1] == 0x21 && data[2] == 0x03) {
-//                    Log.e(TAG, "broadcastUpdate: " + "장비 암호화 인증 실패");
-////                    broadcastUpdate(ACTION_FIRST_PHASE_DONE);
-//                }
-//                if (data[0] == 0x02 && data[1] == 0x12 && data[2] == 0x03) {
-//                    Log.e(TAG, "broadcastUpdate: " + "모든 인증 완료 ");
-//                    broadcastUpdate(ACTION_SECOND_PHASE_DONE);
-//                } else {
-//
-//                    for (byte byteChar : data) {
-//                        Log.e(TAG, "broadcastUpdate: --> " + byteChar);
-//                    }
-//
-//                    float floatVal;
-//
-//                    if (data[0] == -1) {
-//
-//                        values = "0.0,";
-//
-//                    } else {
-//                        final int intVal = (data[0] << 8) & 0xff00 | (data[1] & 0xff);
-//                        floatVal = (float) intVal / 100;
-//                        values = String.format("%.1f", floatVal) + ",";
-//
-//                    }
-//
-//                    if (data[2] == -1) {
-//                        values += "0.0,";
-//                    } else {
-//                        final int intSoup = (data[2] << 8) & 0xff00 | (data[3] & 0xff);
-//                        floatVal = (float) intSoup / 100;
-//                        values += String.format("%.1f", floatVal) + ",";
-//                    }
-//
-//                    if (data[4] == -1) {
-//                        values += "0.0,";
-//                    } else {
-//                        final int intSideA = (data[4] << 8) & 0xff00 | (data[5] & 0xff);
-//                        floatVal = (float) intSideA / 100;
-//                        values += String.format("%.1f", floatVal) + ",";
-//                    }
-//
-//                    if (data[6] == -1) {
-//                        values += "0.0,";
-//                    } else {
-//                        final int intSideB = (data[6] << 8) & 0xff00 | (data[7] & 0xff);
-//                        floatVal = (float) intSideB / 100;
-//                        values += String.format("%.1f", floatVal) + ",";
-//                    }
-//
-//                    if (data[8] == -1) {
-//                        values += "0.0,";
-//                    } else {
-//                        final int intSideC = (data[8] << 8) & 0xff00 | (data[9] & 0xff);
-//                        floatVal = (float) intSideC / 100;
-//                        values += String.format("%.1f", floatVal) + ",";
-//                    }
-//
-//                    if (data[10] == -1) {
-//                        values += "0.0,";
-//                    } else {
-//                        final int intSideD = (data[10] << 8) & 0xff00 | (data[11] & 0xff);
-//                        floatVal = (float) intSideD / 100;
-//                        values += String.format("%.1f", floatVal);
-//                    }
-//
-//
-//                    Log.e(TAG, "broadcastUpdate: " + values);
-//
-//
-//                }
-//            }
-////            intent.putExtra(EXTRA_DATA, values + "g");
-//            intent.putExtra(EXTRA_DATA, values);
-//        } else {
-//            // For all other profiles, writes the data formatted in HEX.
-//            final byte[] data = characteristic.getValue();
-//            if (data != null && data.length > 0) {
-//                final StringBuilder stringBuilder = new StringBuilder(data.length);
-//                Log.e(TAG, "data in ");
-//                for (byte byteChar : data) {
-//                    Log.e(TAG, "broadcastUpdate: --> " + byteChar);
-//                    stringBuilder.append(String.format("%02X ", byteChar));
-//                }
-//                Log.e(TAG, "data out ");
-//
-//
-//                intent.putExtra(EXTRA_DATA, new String(data) + "\n" + stringBuilder.toString());
-//            }
-//        }
             sendBroadcast(intent);
         }
     }
@@ -545,7 +495,6 @@ public class NeedleBLEService extends Service {
         return mBluetoothGatt.writeCharacteristic(characteristic);
 
     }
-
 
 
     private boolean startSignal(BluetoothGattCharacteristic characteristic) {
