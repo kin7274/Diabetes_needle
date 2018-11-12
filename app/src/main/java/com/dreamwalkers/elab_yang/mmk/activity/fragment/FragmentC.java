@@ -25,7 +25,7 @@ import io.paperdb.Paper;
 public class FragmentC extends Fragment implements IActivityBased {
     private static final String TAG = "FragmentC";
 
-//    @BindView(R.id.recycler_view)
+    @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
 
     DeviceAdapter deviceAdapter;
@@ -38,10 +38,10 @@ public class FragmentC extends Fragment implements IActivityBased {
 
         View view = inflater.inflate(R.layout.fragment_c, container, false);
         // TODO: 2018-11-12 view. 없이 버터나이프로 걸면 왜 오류가 뜰까요?
-        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+//        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
 
         setDevice();
-//        ButterKnife.bind(this, view);
+        ButterKnife.bind(this, view);
         return view;
     }
 
