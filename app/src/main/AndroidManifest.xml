@@ -154,7 +154,9 @@
             android:enabled="true" />
 
         <activity android:name=".activity.select.SelectDrugActivity" />
-        <activity android:name=".activity.HomeActivity"></activity>
+        <activity
+            android:name=".activity.HomeActivity"
+            android:theme="@style/AppTheme.MaterialHome" />
     </application>
 
 </manifest>
