@@ -118,9 +118,7 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
     }
 
     private void showFragment(Fragment fragment) {
-        getFragmentManager().beginTransaction()
-                .replace(R.id.container, fragment)
-                .commit();
+        getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
     }
 
     private DrawerItem createItemFor(int position) {
@@ -156,7 +154,7 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
     public void setStatusbar() {
         View view = getWindow().getDecorView();
         view.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        getWindow().setStatusBarColor(getResources().getColor(R.color.background));
+        getWindow().setStatusBarColor(getResources().getColor(R.color.white));
     }
 
     private void setTapLayout() {
