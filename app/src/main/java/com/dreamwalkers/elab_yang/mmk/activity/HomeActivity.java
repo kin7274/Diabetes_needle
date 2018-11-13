@@ -16,6 +16,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dreamwalker.slidedrawer.SlidingRootNav;
@@ -54,7 +55,7 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
     private static final int POS_ACCOUNT = 1;
     private static final int POS_MESSAGES = 2;
     private static final int POS_CART = 3;
-    private static final int POS_LOGOUT = 5;
+    private static final int POS_LOGOUT = 6;
 
     private String[] screenTitles;
     private Drawable[] screenIcons;
@@ -77,6 +78,9 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
                 .withSavedState(savedInstanceState)
                 .withMenuLayout(R.layout.menu_left_drawer)
                 .inject();
+
+        TextView textView = slidingRootNav.getLayout().findViewById(R.id.welcome_text_view);
+        textView.setText("좋은아침입니다.");
 
         screenIcons = loadScreenIcons();
         screenTitles = loadScreenTitles();
