@@ -28,8 +28,9 @@ class SyncResultActivity : AbstractActivityBased() {
         result_text.append("\n\n")
         result_text.append(resultArray.toString())
         result_text.append("\n\n")
-
+        Logger.getLogger(DataSyncActivity::class.java.name).warning("bbb" + resultArray.length())
         if (resultArray.length() != 0){
+            Logger.getLogger(DataSyncActivity::class.java.name).warning("aaa" + resultArray.length())
             processJsonArray(resultArray)
         }else{
             result_text.text = "처리할 데이터가 없어요 "
