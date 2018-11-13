@@ -26,7 +26,6 @@ import com.dreamwalkers.elab_yang.mmk.activity.fragment.FragmentA;
 import com.dreamwalkers.elab_yang.mmk.activity.fragment.FragmentB;
 import com.dreamwalkers.elab_yang.mmk.activity.fragment.FragmentC;
 import com.dreamwalkers.elab_yang.mmk.activity.fragment.FragmentD;
-import com.dreamwalkers.elab_yang.mmk.activity.select.SelectDrugActivity;
 import com.dreamwalkers.elab_yang.mmk.menu.DrawerAdapter;
 import com.dreamwalkers.elab_yang.mmk.menu.DrawerItem;
 import com.dreamwalkers.elab_yang.mmk.menu.SimpleItem;
@@ -114,7 +113,6 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
     public void onItemSelected(int position) {
         Log.d(TAG, "onItemSelected: click postition = " + position);
 
-
         if (position == POS_DASHBOARD) {
             Log.d(TAG, "onItemSelected: POS_DASHBOARD");
 //            startActivity(new Intent(this, ));
@@ -122,11 +120,10 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
         } else if (position == POS_ACCOUNT) {
             Log.d(TAG, "onItemSelected: POS_ACCOUNT");
 
-
         } else if (position == POS_MESSAGES) {
             Log.d(TAG, "onItemSelected: POS_MESSAGES");
             // 투약 설정
-            startActivity(new Intent(this, SelectDrugActivity.class));
+            startActivity(new Intent(this, SelectDrugFirstActivity.class));
 
 //            startActivity(new Intent(this, SelectDrugFirstActivity.class));
 
@@ -143,7 +140,6 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
 //        if (position == POS_LOGOUT) {
 //            finish();
 //        }
-
 
         slidingRootNav.closeMenu();
         Log.e(TAG, "onItemSelected: " + position);
@@ -220,13 +216,6 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
             tabLayout.setOnClickListener(view -> {
                 Toast.makeText(getApplication(), "" + tabLayout.getCurrentPosition(), Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "set: tabLayout.getCurrentPosition() = " + tabLayout.getCurrentPosition());
-                if (tabLayout.getCurrentPosition() == 1) {
-                    Log.d(TAG, "set: 여기!!");
-                    Intent intent = new Intent(this, SelectDrugActivity.class);
-                    startActivity(intent);
-                    intent.putExtra("SelectDrugActivity", false);
-                }
-
                 if (tabLayout.getCurrentPosition() == 2) {
                     Log.d(TAG, "set: 여기!!");
                     Intent intent = new Intent(this, NeedleScanActivity.class);

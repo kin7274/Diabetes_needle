@@ -6,6 +6,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.RelativeLayout;
@@ -25,7 +27,8 @@ public class SelectDrugFirstActivity extends AppCompatActivity implements IActiv
     private static final String TAG = "SelectDrugFirstActivity";
 
 //    1. 투약 시점을 선택
-//    2. list.size() -> cardview 표시
+//    2. checkbox.isCheck() -> cardview 표시
+    // TODO: 2018-11-13
 //    3. click -> activity넘어가 설정
 //    4. 완료되면 cardview에 setAdapter
 
@@ -59,15 +62,19 @@ public class SelectDrugFirstActivity extends AppCompatActivity implements IActiv
     Button set_btn;
 
     //    planA
-    int selected_point_cnt = 0;
+//    int selected_point_cnt = 0;
     //    planB
     Boolean selected_point = false;
+
+    Animation animation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_drug_first);
         initSetting();
+
+        animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.anim_slide_in_left);
     }
 
     @Override
@@ -96,7 +103,7 @@ public class SelectDrugFirstActivity extends AppCompatActivity implements IActiv
         // 1번 레이아웃 닫고 2번 연다.
         layout1.setVisibility(View.GONE);
         layout2.setVisibility(View.VISIBLE);
-
+        layout2.startAnimation(animation);
         setAdapter();
     }
 
@@ -113,18 +120,23 @@ public class SelectDrugFirstActivity extends AppCompatActivity implements IActiv
 //        }
 
         if (checkbox1.isChecked())
-            timepoints.add(new TimePoint(checkbox1.getText().toString(), null, null));
+//            timepoints.add(new TimePoint(checkbox1.getText().toString(), null, null));
+            timepoints.add(new TimePoint(checkbox1.getText().toString()));
         if (checkbox2.isChecked())
-            timepoints.add(new TimePoint(checkbox2.getText().toString(), null, null));
+//            timepoints.add(new TimePoint(checkbox2.getText().toString(), null, null));
+            timepoints.add(new TimePoint(checkbox2.getText().toString()));
         if (checkbox3.isChecked())
-            timepoints.add(new TimePoint(checkbox3.getText().toString(), null, null));
+//            timepoints.add(new TimePoint(checkbox3.getText().toString(), null, null));
+            timepoints.add(new TimePoint(checkbox3.getText().toString()));
         if (checkbox4.isChecked())
-            timepoints.add(new TimePoint(checkbox4.getText().toString(), null, null));
+//            timepoints.add(new TimePoint(checkbox4.getText().toString(), null, null));
+            timepoints.add(new TimePoint(checkbox4.getText().toString()));
 
 //        timepoints.add(new TimePoint("공복", "ㅇ1", "ㅇ2"));
 //        timepoints.add(new TimePoint("점심식전", "ㅇㅇ1", "ㅇㅇ2"));
 //        timepoints.add(new TimePoint("저녁식전", "ㅇㅇㅇ1", "ㅇㅇㅇ2"));
 //        timepoints.add(new TimePoint("취침전", "ㅇㅇㅇㅇ1", "ㅇㅇㅇㅇ2"));
+        Log.d(TAG, "setAdapter: 리스트 갯수 = " + timepoints.size());
         TimePointAdapter mTimePointItems = new TimePointAdapter(timepoints);
         mTimePointItems.setOnClickListener(this);
         recyclerview.setAdapter(mTimePointItems);
@@ -141,6 +153,8 @@ public class SelectDrugFirstActivity extends AppCompatActivity implements IActiv
     // 2번 layout. 저장할게욥
     @OnClick(R.id.set_btn)
     void onClick1() {
+        // TODO: 2018-11-13 흠흠흠 
+//        startActivity(new Intent(this, SelectDrugActivity.class));
         finish();
     }
 }

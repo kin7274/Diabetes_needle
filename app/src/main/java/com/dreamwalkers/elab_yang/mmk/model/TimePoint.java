@@ -5,6 +5,10 @@ public class TimePoint {
     private String name;
     private String unit;
 
+    public TimePoint(String timepoint) {
+        this.timepoint = timepoint;
+    }
+
     public TimePoint(String timepoint, String name, String unit) {
         this.timepoint = timepoint;
         this.name = name;
