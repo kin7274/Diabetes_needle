@@ -124,7 +124,7 @@ public class NeedleBLEService extends Service {
                     break;
 
                 case ACTION_FIRST_PHASE_DONE:
-                    broadcastUpdate(ACTION_REAL_TIME_SECOND_PHASE);
+//                    broadcastUpdate(ACTION_REAL_TIME_SECOND_PHASE);
                     receivedData = stringBuilder.toString();
                     Log.e(TAG, "onReceive: before " + receivedData);
                     receivedData = receivedData.substring(0, receivedData.length() - 1);

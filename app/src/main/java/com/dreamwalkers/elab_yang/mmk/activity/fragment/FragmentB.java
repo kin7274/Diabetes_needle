@@ -6,8 +6,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CalendarView;
 
-import com.applikeysolutions.cosmocalendar.view.CalendarView;
 import com.dreamwalkers.elab_yang.mmk.R;
 
 public class FragmentB extends Fragment {

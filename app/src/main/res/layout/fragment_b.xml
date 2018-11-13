@@ -4,8 +4,9 @@
     android:background="@color/background"
     android:orientation="vertical">
 
-    <com.applikeysolutions.cosmocalendar.view.CalendarView
+    <CalendarView
         android:id="@+id/calendar_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
 </LinearLayout>

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
-import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -100,7 +99,7 @@ public class AppIntroVerticalActivity extends VerticalIntro {
         // first_or_second = true;
         check_exec();
         // 전환
-        startActivity(new Intent(this, SpaceTabLayoutActivity.class));
+        startActivity(new Intent(this, HomeActivity.class));
         Log.d(TAG, "onDonePressed: AppIntroVerticalActivity -> MainActivity");
         finish();
     }
@@ -111,7 +110,7 @@ public class AppIntroVerticalActivity extends VerticalIntro {
         if (pref.getBoolean("first_or_second", false)) {
             Log.d(TAG, "check_first: 응 아니야");
 //            startActivity(new Intent(this, MainActivity.class));
-            startActivity(new Intent(this, SpaceTabLayoutActivity.class));
+            startActivity(new Intent(this, HomeActivity.class));
             finish();
         }
     }
