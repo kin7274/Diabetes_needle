@@ -70,7 +70,7 @@ class SelectDrugActivity : AppCompatActivity() {
                 Snackbar.make(toolbar, msg, Snackbar.LENGTH_LONG).show()
                 true
             } else {
-               false
+                false
             }
         }
     }

@@ -112,9 +112,38 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
 
     @Override
     public void onItemSelected(int position) {
-        if (position == POS_LOGOUT) {
+        Log.d(TAG, "onItemSelected: click postition = " + position);
+
+
+        if(position == POS_DASHBOARD){
+            Log.d(TAG, "onItemSelected: POS_DASHBOARD");
+//            startActivity(new Intent(this, ));
+
+        } else if(position == POS_ACCOUNT) {
+            Log.d(TAG, "onItemSelected: POS_ACCOUNT");
+
+
+        } else if(position == POS_MESSAGES){
+            Log.d(TAG, "onItemSelected: POS_MESSAGES");
+            // 투약 설정
+            Intent intent = new Intent(HomeActivity.this, SelectDrugActivity.class);
+            startActivity(intent);
+
+        } else if(position == POS_CART){
+            Log.d(TAG, "onItemSelected: POS_CART");
+
+
+        } else if(position == POS_LOGOUT){
+            Log.d(TAG, "onItemSelected: POS_LOGOUT");
             finish();
+
         }
+
+//        if (position == POS_LOGOUT) {
+//            finish();
+//        }
+
+
         slidingRootNav.closeMenu();
         Log.e(TAG, "onItemSelected: " + position );
 //        Fragment selectedScreen = CenteredTextFragment.createFor(screenTitles[position]);
