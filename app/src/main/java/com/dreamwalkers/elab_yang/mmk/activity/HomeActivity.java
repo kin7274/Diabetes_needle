@@ -126,8 +126,9 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
         } else if(position == POS_MESSAGES){
             Log.d(TAG, "onItemSelected: POS_MESSAGES");
             // 투약 설정
-            Intent intent = new Intent(HomeActivity.this, SelectDrugActivity.class);
-            startActivity(intent);
+//            Intent intent = new Intent(HomeActivity.this, SelectDrugActivity.class);
+//            startActivity(intent);
+            startActivity(new Intent(this, SelectDrugFirstActivity.class));
 
         } else if(position == POS_CART){
             Log.d(TAG, "onItemSelected: POS_CART");

@@ -46,6 +46,12 @@
         <!-- android:screenOrientation="portrait" -->
         <!-- android:theme="@style/AppTheme" /> -->
 
+        <!-- 투약 설정 퍼스트 -->
+        <activity
+            android:name=".activity.SelectDrugFirstActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+
 
         <!-- 호구조사 -->
         <activity
