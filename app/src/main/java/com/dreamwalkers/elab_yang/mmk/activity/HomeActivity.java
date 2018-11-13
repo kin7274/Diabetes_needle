@@ -102,7 +102,7 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
         adapter.setSelected(POS_DASHBOARD);
     }
 
-    private void initSetting(){
+    private void initSetting() {
         Paper.init(this);
         ButterKnife.bind(this);
         setStatusbar();
@@ -115,26 +115,26 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
         Log.d(TAG, "onItemSelected: click postition = " + position);
 
 
-        if(position == POS_DASHBOARD){
+        if (position == POS_DASHBOARD) {
             Log.d(TAG, "onItemSelected: POS_DASHBOARD");
 //            startActivity(new Intent(this, ));
 
-        } else if(position == POS_ACCOUNT) {
+        } else if (position == POS_ACCOUNT) {
             Log.d(TAG, "onItemSelected: POS_ACCOUNT");
 
 
-        } else if(position == POS_MESSAGES){
+        } else if (position == POS_MESSAGES) {
             Log.d(TAG, "onItemSelected: POS_MESSAGES");
             // 투약 설정
-//            Intent intent = new Intent(HomeActivity.this, SelectDrugActivity.class);
-//            startActivity(intent);
-            startActivity(new Intent(this, SelectDrugFirstActivity.class));
+            startActivity(new Intent(this, SelectDrugActivity.class));
 
-        } else if(position == POS_CART){
+//            startActivity(new Intent(this, SelectDrugFirstActivity.class));
+
+        } else if (position == POS_CART) {
             Log.d(TAG, "onItemSelected: POS_CART");
 
 
-        } else if(position == POS_LOGOUT){
+        } else if (position == POS_LOGOUT) {
             Log.d(TAG, "onItemSelected: POS_LOGOUT");
             finish();
 
@@ -146,7 +146,7 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
 
 
         slidingRootNav.closeMenu();
-        Log.e(TAG, "onItemSelected: " + position );
+        Log.e(TAG, "onItemSelected: " + position);
 //        Fragment selectedScreen = CenteredTextFragment.createFor(screenTitles[position]);
 //        showFragment(selectedScreen);
     }
@@ -237,5 +237,5 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
         });
     }
 
-  
+
 }
