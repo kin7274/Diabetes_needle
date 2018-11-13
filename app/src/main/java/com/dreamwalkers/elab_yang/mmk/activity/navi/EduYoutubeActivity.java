@@ -1,6 +1,5 @@
 package com.dreamwalkers.elab_yang.mmk.activity.navi;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,20 +11,25 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.TextView;
 
 import com.dreamwalkers.elab_yang.mmk.R;
+import com.dreamwalkers.elab_yang.mmk.activity.IActivityBased;
 import com.dreamwalkers.elab_yang.mmk.adapter.YoutubeAdapter;
 import com.dreamwalkers.elab_yang.mmk.model.YoutubeItem;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class EduYoutubeActivity extends AppCompatActivity implements YoutubeAdapter.YoutubeViewClickListener {
-    // TODO 저작권 추가
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+public class EduYoutubeActivity extends AppCompatActivity implements IActivityBased, YoutubeAdapter.YoutubeViewClickListener {
+    //
+    @BindView(R.id.recycler_view)
+    RecyclerView recyclerView;
+    //
     private Handler mHandler;
-    public TextView mTextView;
-    Context mContext;
+    // 유튜브 링크 모음
     String youtube_link[] = {
             // 질병관리본부(1)
             "https://www.youtube.com/watch?v=IVaW-aJZ9Vo&t=29s"
@@ -41,14 +45,23 @@ public class EduYoutubeActivity extends AppCompatActivity implements YoutubeAdap
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.youtube);
-        mContext = this;
-        wifi_alarm();
-        setStatusbar();
-        setToolbar();
-        recyclerview_dduddak();
+        initSetting();
     }
 
-    // 상태바 색 변경
+    @Override
+    public void bindView() {
+        ButterKnife.bind(this);
+    }
+
+    @Override
+    public void initSetting() {
+        bindView();
+        setStatusbar();
+        setToolbar();
+        recommand_wifi();
+        setRecyclerview();
+    }
+
     public void setStatusbar() {
         Window window = getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -56,7 +69,6 @@ public class EduYoutubeActivity extends AppCompatActivity implements YoutubeAdap
         window.setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
     }
 
-    // 툴바
     public void setToolbar() {
         Toolbar mytoolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(mytoolbar);
@@ -64,16 +76,14 @@ public class EduYoutubeActivity extends AppCompatActivity implements YoutubeAdap
     }
 
     // 1초 후 와이파이 권장 알람
-    public void wifi_alarm() {
+    public void recommand_wifi() {
         mHandler = new Handler();
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                // 1초 후
-                mHandler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
+        runOnUiThread(() -> {
+            mHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        // 다이얼로그 이용
 //                    AlertDialog.Builder dialog = new AlertDialog.Builder(mContext)
 //                            .setTitle("주의")
 //                            .setMessage("3G/4G환경에서는 데이터 요금이 발생할 수 있습니다.")
@@ -81,30 +91,32 @@ public class EduYoutubeActivity extends AppCompatActivity implements YoutubeAdap
 //                            });
 //                    dialog.create()
 //                            .show();
-                            Snackbar.make(EduYoutubeActivity.this.getWindow().getDecorView().getRootView(), "3G/4G환경에서는 데이터 요금이 발생할 수 있습니다.", 3000).setAction("확인", v -> {
-                            }).show();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+
+                        // 스낵바 이용
+                        Snackbar.make(EduYoutubeActivity.this.getWindow().getDecorView().getRootView(), "3G/4G환경에서는 데이터 요금이 발생할 수 있습니다.", 3000).setAction("확인", v -> {
+                        }).show();
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                }, 1000);
-            }
+                }
+            }, 1000);
         });
     }
 
     // 리사이클러뷰
-    public void recyclerview_dduddak() {
-        // 리사이클러뷰
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+    public void setRecyclerview() {
         recyclerView.setHasFixedSize(false);
-        // 레이아웃매니저
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        // 리스트 생성
+        // 쏐어댑터;
+        setAdapter();
+    }
+
+    public void setAdapter() {
         List<YoutubeItem> youtubeList = new ArrayList<>();
-        //// 질병관리본부
+        // 질병관리본부
         youtubeList.add(new YoutubeItem(R.mipmap.youtube_image_01, "[질병관리본부 - 심뇌혈관질환예방관리]_인포그래픽 동영상_'13년_당뇨병편"));
-        //// 삼성서울병원
+        // 삼성서울병원
         youtubeList.add(new YoutubeItem(R.mipmap.youtube_image_02, "으랏차차_당뇨_1_당신의 혈당은 안녕하십니까 - 내분비대사내과 김재현 교수[의료진 ON Line 강의]"));
         youtubeList.add(new YoutubeItem(R.mipmap.youtube_image_03, "으랏차차_당뇨_2_당뇨병, 피할 수 있는 방안은 - 내분비대사내과 김재현 교수[의료진 ON Line 강의]"));
         youtubeList.add(new YoutubeItem(R.mipmap.youtube_image_04, "으랏차차_당뇨_3_당뇨병 전단계를 관리하는 법 - 내분비대사내과 김재현 교수[의료진 ON Line 강의]"));
@@ -117,8 +129,7 @@ public class EduYoutubeActivity extends AppCompatActivity implements YoutubeAdap
         // 출처
         youtubeList.add(new YoutubeItem(R.mipmap.img_opentype04, "인포그래픽 동영상_'13년_당뇨병편 저작물은 \n" + "공공누리 제4유형(출처표시+상업적이용금지+변경금지) 조건에 따라 이용할 수 있습니다."));
         youtubeList.add(new YoutubeItem(R.mipmap.samsungseoulhospital, "출처 : 삼성서울병원\n" + "더 자세한 정보를 얻고싶다면 홈페이지를 방문해주세요. 클릭시 이동합니다."));
-
-        // 어댑터
+        //
         YoutubeAdapter mYouItems = new YoutubeAdapter(youtubeList);
         mYouItems.setOnClickListener(this);
         recyclerView.setAdapter(mYouItems);
@@ -128,6 +139,8 @@ public class EduYoutubeActivity extends AppCompatActivity implements YoutubeAdap
     @Override
     public void onItemClicked(int position) {
 //        Toast.makeText(getApplicationContext(), "선택값 = " + position, Toast.LENGTH_SHORT).show();
+
+        // 출처제외 position 10 아리일 경우 링크 연결
         if (position != 10) {
             onURL(youtube_link[position]);
         }
@@ -135,7 +148,6 @@ public class EduYoutubeActivity extends AppCompatActivity implements YoutubeAdap
 
     // 클릭 시 해당 URL 연결
     public void onURL(String link) {
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
-        startActivity(intent);
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(link)));
     }
 }

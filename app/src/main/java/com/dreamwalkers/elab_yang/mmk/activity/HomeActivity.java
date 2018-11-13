@@ -42,11 +42,14 @@ import io.paperdb.Paper;
 
 public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnItemSelectedListener {
 
-
     @BindView(R.id.toolbar)
     Toolbar myToolbar;
+
     @BindView(R.id.spaceTabLayout)
     SpaceTabLayout tabLayout;
+
+    @BindView(R.id.viewPager)
+    ViewPager viewPager;
 
     private static final String TAG = "HomeActivity";
 
@@ -111,36 +114,26 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
 
     @Override
     public void onItemSelected(int position) {
-        Log.d(TAG, "onItemSelected: click postition = " + position);
+//        Log.d(TAG, "onItemSelected: click postition = " + position);
+        switch (position) {
+            case POS_DASHBOARD:
+                Log.d(TAG, "onItemSelected: POS_DASHBOARD");
+                break;
 
-        if (position == POS_DASHBOARD) {
-            Log.d(TAG, "onItemSelected: POS_DASHBOARD");
-//            startActivity(new Intent(this, ));
+            case POS_ACCOUNT:
+                Log.d(TAG, "onItemSelected: POS_ACCOUNT");
+                break;
 
-        } else if (position == POS_ACCOUNT) {
-            Log.d(TAG, "onItemSelected: POS_ACCOUNT");
+            case POS_MESSAGES:
+                Log.d(TAG, "onItemSelected: POS_MESSAGES");
+                startActivity(new Intent(this, SelectDrugFirstActivity.class));
+                break;
 
-        } else if (position == POS_MESSAGES) {
-            Log.d(TAG, "onItemSelected: POS_MESSAGES");
-            // 투약 설정
-            startActivity(new Intent(this, SelectDrugFirstActivity.class));
-
-//            startActivity(new Intent(this, SelectDrugFirstActivity.class));
-
-        } else if (position == POS_CART) {
-            Log.d(TAG, "onItemSelected: POS_CART");
-
-
-        } else if (position == POS_LOGOUT) {
-            Log.d(TAG, "onItemSelected: POS_LOGOUT");
-            finish();
-
+            case POS_LOGOUT:
+                Log.d(TAG, "onItemSelected: POS_LOGOUT");
+                finish();
+                break;
         }
-
-//        if (position == POS_LOGOUT) {
-//            finish();
-//        }
-
         slidingRootNav.closeMenu();
         Log.e(TAG, "onItemSelected: " + position);
 //        Fragment selectedScreen = CenteredTextFragment.createFor(screenTitles[position]);
@@ -188,22 +181,12 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
     }
 
     private void setTapLayout() {
-
         //add the fragments you want to display in a List == 내가 원하면 추가가능하다~ 이말이야
         List<android.support.v4.app.Fragment> fragmentList = new ArrayList<>();
-        // 홈 = 기록보기
-        fragmentList.add(new FragmentA());
-        // 캘린더
-        fragmentList.add(new FragmentB());
-        // 장치 관리 + 동기화
-        fragmentList.add(new FragmentC());
-        // 프로필
-        fragmentList.add(new FragmentD());
-
-        // set
-//        final CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id.activity_main);
-
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
+        fragmentList.add(new FragmentA());  // = 기록보기
+        fragmentList.add(new FragmentB());  // 캘린더
+        fragmentList.add(new FragmentC());  // 장치 관리 + 동기화
+        fragmentList.add(new FragmentD());  // 프로필
 
         tabLayout.initialize(viewPager, getSupportFragmentManager(), fragmentList, null);
 
@@ -225,6 +208,4 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
             });
         });
     }
-
-
 }

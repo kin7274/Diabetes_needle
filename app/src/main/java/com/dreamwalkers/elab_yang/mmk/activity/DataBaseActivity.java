@@ -1,6 +1,5 @@
 package com.dreamwalkers.elab_yang.mmk.activity;
 
-import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -31,74 +30,75 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class DataBaseActivity extends AppCompatActivity implements View.OnClickListener {
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+public class DataBaseActivity extends AppCompatActivity implements IActivityBased {
     private final static String TAG = DataBaseActivity.class.getSimpleName();
-    Context mContext;
-    //    FrameLayout frameLayout;
+
     // 데이터가 있을 시 : 리사이클러뷰
-    RelativeLayout data_exist_layout;
+    @BindView(R.id.data_exist_layout)
+    RelativeLayout existLayout;
+
     // 데이터가 없을 시 : 이미지+텍스트뷰
-    RelativeLayout data_0_layout;
+    @BindView(R.id.data_0_layout)
+    RelativeLayout emptyLayout;
+
     DBHelper db;
     SQLiteDatabase sql;
 
     List<CardItem> lists;
     private MyRecyclerAdapter mAdapter;
+
+    @BindView(R.id.recycler_view)
     RecyclerView recycler_view;
 
+    @BindView(R.id.add_btn)
     Button add_btn;
+
+    EventBus bus = EventBus.getDefault();
 
     String data;
     //    String abc[] = {"", "", "", "", "", "", ""};
-    EventBus bus = EventBus.getDefault();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_db);
-        mContext = this;
-        bus.register(this);
-        set();
+        initSetting();
+
         setRecyclerView();
         getDB();
     }
 
-    public void set() {
+    @Override
+    public void bindView() {
+        ButterKnife.bind(this);
+    }
+
+    @Override
+    public void initSetting() {
+        bindView();
+        bus.register(this);
+
         db = new DBHelper(this);
-
-        data_exist_layout = (RelativeLayout) findViewById(R.id.data_exist_layout);
-        data_0_layout = (RelativeLayout) findViewById(R.id.data_0_layout);
-//        frameLayout = (FrameLayout) findViewById(R.id.frameLayout);
-
-        // 추가 버튼
-        add_btn = (Button) findViewById(R.id.add_btn);
-        add_btn.setOnClickListener(this);
-//            selectDialog();
     }
 
     public void setRecyclerView() {
-        recycler_view = (RecyclerView) findViewById(R.id.recycler_view);
-
-//        image_question.setVisibility(frameLayout.GONE);
-//        recycler_view.setVisibility(frameLayout.VISIBLE);
-
         recycler_view.setHasFixedSize(false);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        // 반대로 쌓기
         layoutManager.setReverseLayout(true);
         layoutManager.setStackFromEnd(true);
         recycler_view.setLayoutManager(layoutManager);
-        // 배열 null 예외처리
         try {
             lists = new ArrayList<>();
         } catch (Exception e) {
             e.printStackTrace();
         }
         mAdapter = new MyRecyclerAdapter(lists);
-//        mAdapter.setOnClickListener((MyRecyclerAdapter.MyRecyclerViewClickListener) this);
         recycler_view.setAdapter(mAdapter);
     }
-
 
     public void getDB() {
         sql = db.getReadableDatabase();
@@ -116,23 +116,34 @@ public class DataBaseActivity extends AppCompatActivity implements View.OnClickL
                     + cursor.getString(5) + "\n";
 //            cursor.getString(2) = 인슐린 종류;
             Log.d(TAG, "약값은 " + cursor.getString(2));
-            lists.add(new CardItem(setImage(cursor.getString(2)), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), setImage2(cursor.getString(5))));
+            lists.add(new CardItem(setImage(cursor.getString(2)), cursor.getString(1), cursor.getString(2),
+                    cursor.getString(3), cursor.getString(4), cursor.getString(5), setTimePoint(cursor.getString(5))));
         }
 
         // 데이터가 이싸뇽?
         if (data.equals("")) {
             Log.d(TAG, "setRecyclerView: 없엉ㅅ");
-            data_exist_layout.setVisibility(View.GONE);
-            data_0_layout.setVisibility(View.VISIBLE);
+            setLayout(1);
         } else {
             Log.d(TAG, "getDB: 있어요");
-            data_exist_layout.setVisibility(View.VISIBLE);
-            data_0_layout.setVisibility(View.GONE);
+            setLayout(2);
         }
         mAdapter.notifyDataSetChanged();
         cursor.close();
         sql.close();
         Toast.makeText(getApplicationContext(), "조회하였습니다.", Toast.LENGTH_SHORT).show();
+    }
+
+    public void setLayout(int a) {
+        if (a == 1) {
+            // 데이터가 비어있다
+            existLayout.setVisibility(View.GONE);
+            emptyLayout.setVisibility(View.VISIBLE);
+        } else {
+            // 데이터가 존재하네
+            existLayout.setVisibility(View.VISIBLE);
+            emptyLayout.setVisibility(View.GONE);
+        }
     }
 
     // 앞에 이미지를 선택하자
@@ -185,8 +196,8 @@ public class DataBaseActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-    // 뒤에 이미지를 선택하자
-    public int setImage2(String str) {
+    // 뒤에 이미지 : 타임포인트를 선택하자
+    public int setTimePoint(String str) {
         if (str.equals("아침식전")) {
             return R.mipmap.red1;
         } else if (str.equals("점심식전")) {
@@ -201,7 +212,7 @@ public class DataBaseActivity extends AppCompatActivity implements View.OnClickL
     }
 
     // db에 저장
-    public void set_setDB() {
+    public void second_setDB() {
         int cnt = lists.size();
         //        Toast.makeText(getApplicationContext(), "cnt = " + cnt, Toast.LENGTH_SHORT).show();
         sql = db.getWritableDatabase();
@@ -224,12 +235,11 @@ public class DataBaseActivity extends AppCompatActivity implements View.OnClickL
         sql.close();
     }
 
-    // 뒤로가기
     @Override
     public void onBackPressed() {
-        Toast.makeText(getApplicationContext(), "뒤로가기버튼 누름", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getApplicationContext(), "뒤로가기버튼 누름", Toast.LENGTH_SHORT).show();
 //        showDialog("골라", "저장할까?");
-        DataBaseActivity.this.set_setDB();
+        DataBaseActivity.this.second_setDB();
         DataBaseActivity.this.finish();
     }
 
@@ -254,7 +264,6 @@ public class DataBaseActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onStart() {
         super.onStart();
-
     }
 
     @Override
@@ -292,20 +301,17 @@ public class DataBaseActivity extends AppCompatActivity implements View.OnClickL
             String strEdit5 = edit5.getText().toString();
             // 디뽈트값
 //            lists.set(event.getPosistion(), new CardItem(setImage(""), null, null, null, null, null, setImage2("")));
-            lists.set(event.getPosistion(), new CardItem(setImage(strEdit1), strEdit1, strEdit2, strEdit3, strEdit4, strEdit5, setImage2(strEdit5)));
+            lists.set(event.getPosistion(), new CardItem(setImage(strEdit1), strEdit1, strEdit2, strEdit3, strEdit4, strEdit5, setTimePoint(strEdit5)));
             mAdapter.notifyDataSetChanged();
             dialog.dismiss();
         });
         dialog.show();
     }
 
-    @Override
-    public void onClick(View v) {
+    @OnClick(R.id.add_btn)
+    void onClick1() {
         // 추가 버튼 클릭시
-        // TODO: 2018-11-10 입력 양식 정해주기
-        if (v.getId() == R.id.add_btn) {
-            showdialog_add();
-        }
+        showdialog_add();
     }
 
     private void showdialog_add() {
@@ -368,11 +374,12 @@ public class DataBaseActivity extends AppCompatActivity implements View.OnClickL
             String strEdit4 = edit4.getText().toString();
             String strEdit5 = edit5.getText().toString();
             // 임시로 default
-            lists.add(new CardItem(setImage(strEdit1), strEdit1, strEdit2, strEdit3, strEdit4, strEdit5, setImage2(strEdit5)));
+            lists.add(new CardItem(setImage(strEdit1), strEdit1, strEdit2, strEdit3, strEdit4, strEdit5, setTimePoint(strEdit5)));
             // 내가 추가한게 처음이야? 그럼 뷰를 바꿔야지
             if (lists.size() == 1) {
-                data_exist_layout.setVisibility(View.VISIBLE);
-                data_0_layout.setVisibility(View.GONE);
+                setLayout(2);
+//                data_exist_layout.setVisibility(View.VISIBLE);
+//                data_0_layout.setVisibility(View.GONE);
             }
             mAdapter.notifyDataSetChanged();
             dialog.dismiss();
