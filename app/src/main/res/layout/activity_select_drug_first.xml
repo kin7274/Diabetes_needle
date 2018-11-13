@@ -1,137 +1,204 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:weightSum="2">
+        android:layout_height="match_parent">
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:weightSum="2">
+        <RelativeLayout
+            android:layout_width="300dp"
+            android:layout_height="350dp"
+            android:layout_centerInParent="true">
 
-            <!--공복전-->
-            <RelativeLayout
-                android:id="@+id/timepoint_first"
-                android:layout_width="fill_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1">
+            <TextView
+                android:id="@+id/title1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="1. Time Point"
+                android:textSize="18sp" />
 
-                <ImageView
-                    android:id="@+id/image1"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_centerInParent="true"
-                    android:src="@drawable/ic_cloud_done_black_24dp" />
+            <View
+                android:id="@+id/title_underbar"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_below="@+id/title1"
+                android:background="@color/black" />
 
-                <TextView
-                    android:id="@+id/text1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@+id/image1"
-                    android:fontFamily="@font/my_font_family"
-                    android:gravity="center_horizontal|center_vertical"
-                    android:text="공복"
-                    android:textColor="@color/black"
-                    android:textSize="18sp" />
-            </RelativeLayout>
+            <TextView
+                android:id="@+id/text1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/title_underbar"
+                android:text="사용하시는 투약 시점을 선택해주세요"
+                android:textSize="18sp" />
 
-            <!--저녁전-->
-            <RelativeLayout
-                android:id="@+id/timepoint_third"
-                android:layout_width="fill_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1">
+            <CheckBox
+                android:id="@+id/checkbox1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/text1"
+                android:text="공복" />
 
-                <ImageView
-                    android:id="@+id/image3"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_centerInParent="true"
-                    android:src="@drawable/ic_cloud_done_black_24dp" />
+            <CheckBox
+                android:id="@+id/checkbox2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/checkbox1"
+                android:text="점심식전" />
 
-                <TextView
-                    android:id="@+id/text3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/image3"
-                    android:fontFamily="@font/my_font_family"
-                    android:gravity="center_horizontal|center_vertical"
-                    android:text="공복"
-                    android:textColor="@color/black"
-                    android:textSize="18sp" />
+            <CheckBox
+                android:id="@+id/checkbox3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/checkbox2"
+                android:text="저녁식전" />
 
-            </RelativeLayout>
-        </LinearLayout>
+            <CheckBox
+                android:id="@+id/checkbox4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/checkbox3"
+                android:text="취침전" />
+        </RelativeLayout>
+    </RelativeLayout>
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:weightSum="2">
 
-            <!--점심전-->
-            <RelativeLayout
-                android:id="@+id/timepoint_second"
-                android:layout_width="fill_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1">
+    <!--plan A. 4등분해서 한 POINT씩 SET-->
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:orientation="horizontal"-->
+    <!--android:weightSum="2">-->
 
-                <ImageView
-                    android:id="@+id/image2"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_centerInParent="true"
-                    android:src="@drawable/ic_cloud_done_black_24dp" />
+    <!--<LinearLayout-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_weight="1"-->
+    <!--android:orientation="vertical"-->
+    <!--android:weightSum="2">-->
 
-                <TextView
-                    android:id="@+id/text2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/image2"
-                    android:fontFamily="@font/my_font_family"
-                    android:gravity="center_horizontal|center_vertical"
-                    android:text="공복"
-                    android:textColor="@color/black"
-                    android:textSize="18sp" />
+    <!--&lt;!&ndash;공복전&ndash;&gt;-->
+    <!--<RelativeLayout-->
+    <!--android:id="@+id/timepoint_first"-->
+    <!--android:layout_width="fill_parent"-->
+    <!--android:layout_height="0dp"-->
+    <!--android:layout_weight="1"-->
+    <!--android:background="@drawable/border">-->
 
-            </RelativeLayout>
+    <!--<ImageView-->
+    <!--android:id="@+id/image1"-->
+    <!--android:layout_width="60dp"-->
+    <!--android:layout_height="60dp"-->
+    <!--android:layout_centerInParent="true"-->
+    <!--android:src="@drawable/ic_cloud_done_black_24dp" />-->
 
-            <!--취침전-->
-            <RelativeLayout
-                android:id="@+id/timepoint_forth"
-                android:layout_width="fill_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1">
+    <!--<TextView-->
+    <!--android:id="@+id/text1"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignParentStart="true"-->
+    <!--android:layout_below="@+id/image1"-->
+    <!--android:fontFamily="@font/my_font_family"-->
+    <!--android:gravity="center_horizontal|center_vertical"-->
+    <!--android:text="공복"-->
+    <!--android:textColor="@color/black"-->
+    <!--android:textSize="18sp" />-->
+    <!--</RelativeLayout>-->
 
-                <ImageView
-                    android:id="@+id/image4"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_centerInParent="true"
-                    android:src="@drawable/ic_cloud_done_black_24dp" />
+    <!--&lt;!&ndash;저녁전&ndash;&gt;-->
+    <!--<RelativeLayout-->
+    <!--android:id="@+id/timepoint_third"-->
+    <!--android:layout_width="fill_parent"-->
+    <!--android:layout_height="0dp"-->
+    <!--android:layout_weight="1"-->
+    <!--android:background="@drawable/border">-->
 
-                <TextView
-                    android:id="@+id/text4"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/image4"
-                    android:fontFamily="@font/my_font_family"
-                    android:gravity="center_horizontal|center_vertical"
-                    android:text="공복"
-                    android:textColor="@color/black"
-                    android:textSize="18sp" />
+    <!--<ImageView-->
+    <!--android:id="@+id/image3"-->
+    <!--android:layout_width="60dp"-->
+    <!--android:layout_height="60dp"-->
+    <!--android:layout_centerInParent="true"-->
+    <!--android:src="@drawable/ic_cloud_done_black_24dp" />-->
 
-            </RelativeLayout>
-        </LinearLayout>
-    </LinearLayout>
+    <!--<TextView-->
+    <!--android:id="@+id/text3"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_below="@+id/image3"-->
+    <!--android:fontFamily="@font/my_font_family"-->
+    <!--android:gravity="center_horizontal|center_vertical"-->
+    <!--android:text="저녁전"-->
+    <!--android:textColor="@color/black"-->
+    <!--android:textSize="18sp" />-->
 
-</android.support.constraint.ConstraintLayout>
+    <!--</RelativeLayout>-->
+    <!--</LinearLayout>-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_weight="1"-->
+    <!--android:orientation="vertical"-->
+    <!--android:weightSum="2">-->
+
+    <!--&lt;!&ndash;점심전&ndash;&gt;-->
+    <!--<RelativeLayout-->
+    <!--android:id="@+id/timepoint_second"-->
+    <!--android:layout_width="fill_parent"-->
+    <!--android:layout_height="0dp"-->
+    <!--android:layout_weight="1"-->
+    <!--android:background="@drawable/border">-->
+
+    <!--<ImageView-->
+    <!--android:id="@+id/image2"-->
+    <!--android:layout_width="60dp"-->
+    <!--android:layout_height="60dp"-->
+    <!--android:layout_centerInParent="true"-->
+    <!--android:src="@drawable/ic_cloud_done_black_24dp" />-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/text2"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_below="@+id/image2"-->
+    <!--android:fontFamily="@font/my_font_family"-->
+    <!--android:gravity="center_horizontal|center_vertical"-->
+    <!--android:text="점심전"-->
+    <!--android:textColor="@color/black"-->
+    <!--android:textSize="18sp" />-->
+
+    <!--</RelativeLayout>-->
+
+    <!--&lt;!&ndash;취침전&ndash;&gt;-->
+    <!--<RelativeLayout-->
+    <!--android:background="@drawable/border"-->
+    <!--android:id="@+id/timepoint_forth"-->
+    <!--android:layout_width="fill_parent"-->
+    <!--android:layout_height="0dp"-->
+    <!--android:layout_weight="1">-->
+
+    <!--<ImageView-->
+    <!--android:id="@+id/image4"-->
+    <!--android:layout_width="60dp"-->
+    <!--android:layout_height="60dp"-->
+    <!--android:layout_centerInParent="true"-->
+    <!--android:src="@drawable/ic_cloud_done_black_24dp" />-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/text4"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_below="@+id/image4"-->
+    <!--android:fontFamily="@font/my_font_family"-->
+    <!--android:gravity="center_horizontal|center_vertical"-->
+    <!--android:text="취침전"-->
+    <!--android:textColor="@color/black"-->
+    <!--android:textSize="18sp" />-->
+
+    <!--</RelativeLayout>-->
+    <!--</LinearLayout>-->
+    <!--</LinearLayout>-->
+
+</FrameLayout>

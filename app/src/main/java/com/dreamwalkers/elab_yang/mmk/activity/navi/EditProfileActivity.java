@@ -59,6 +59,7 @@ public class EditProfileActivity extends AppCompatActivity implements IActivityB
         bindView();
         setToolbar();
         setStatusbar();
+
     }
 
     public void setToolbar() {

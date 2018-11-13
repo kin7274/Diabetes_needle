@@ -12,6 +12,11 @@ import butterknife.OnClick;
 
 public class SelectDrugFirstActivity extends AppCompatActivity implements IActivityBased {
 
+//    1. 투약 시점을 선택
+//    2. list.size() -> cardview 표시
+//    3. click -> activity넘어가 설정
+//    4. 완료되면 cardview에 setAdapter
+
     @BindView(R.id.timepoint_first)
     RelativeLayout timepoint_first;
 
@@ -45,5 +50,5 @@ public class SelectDrugFirstActivity extends AppCompatActivity implements IActiv
     void onClick() {
         // 공복전
 
-        }
+    }
 }
