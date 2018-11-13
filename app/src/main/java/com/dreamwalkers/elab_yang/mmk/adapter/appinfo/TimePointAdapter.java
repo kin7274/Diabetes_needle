@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dreamwalkers.elab_yang.mmk.R;
@@ -33,12 +34,15 @@ public class TimePointAdapter extends RecyclerView.Adapter<TimePointAdapter.View
 //        TimePoint card_view = mDataList.get(position);
         TimePoint item = mDataList.get(position);
 
-        // 카드뷰 클릭시 설정하러 가는거지
-        holder.card_view.setOnClickListener(v -> Snackbar.make(v, "뭐요", 3000).show());
+        // detail하게 보기, 확대용
+        holder.card_view.setOnClickListener(v -> Snackbar.make(v, position + "번 째 카드뷰 클릭하셨습니다", 3000).show());
 
         holder.item_timepoint.setText(item.getTimepoint());
         holder.item_name.setText(item.getName());
         holder.item_unit.setText(item.getUnit());
+
+        // 품명과 단위 추가하러 가기
+        holder.add_btn.setOnClickListener(v -> Snackbar.make(v, position + " 위치의 '+버튼' 클릭하셨습니다", 3000).show());
 
         if (mListener != null) {
             final int pos = holder.getAdapterPosition();
@@ -56,6 +60,7 @@ public class TimePointAdapter extends RecyclerView.Adapter<TimePointAdapter.View
         TextView item_timepoint;
         TextView item_name;
         TextView item_unit;
+        ImageView add_btn;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -63,6 +68,7 @@ public class TimePointAdapter extends RecyclerView.Adapter<TimePointAdapter.View
             item_timepoint = (TextView) itemView.findViewById(R.id.item_timepoint);
             item_name = (TextView) itemView.findViewById(R.id.item_name);
             item_unit = (TextView) itemView.findViewById(R.id.item_unit);
+            add_btn = (ImageView) itemView.findViewById(R.id.add_btn);
         }
     }
 
