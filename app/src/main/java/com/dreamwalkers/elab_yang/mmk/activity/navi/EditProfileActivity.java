@@ -19,7 +19,6 @@ import butterknife.OnClick;
 
 public class EditProfileActivity extends AppCompatActivity implements IActivityBased {
     private static final String TAG = "EditProfileActivity";
-    String[] user_data = {"", "", "", "", "", ""};
 
     @BindView(R.id.user_name)
     EditText user_name;
@@ -42,6 +41,9 @@ public class EditProfileActivity extends AppCompatActivity implements IActivityB
     @BindView(R.id.set_btn)
     Button set_btn;
 
+    // 저장값
+    String[] user_data = {"", "", "", "", "", ""};
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +61,6 @@ public class EditProfileActivity extends AppCompatActivity implements IActivityB
         bindView();
         setToolbar();
         setStatusbar();
-
     }
 
     public void setToolbar() {
@@ -85,6 +86,7 @@ public class EditProfileActivity extends AppCompatActivity implements IActivityB
     }
 
     // 후루룹쩝쩝
+    // 모두 긁어서 캐시에 저장한다!
     public void set_cache() {
         SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();

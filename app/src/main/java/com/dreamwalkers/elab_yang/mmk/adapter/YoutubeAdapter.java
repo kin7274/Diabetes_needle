@@ -13,7 +13,6 @@ import com.dreamwalkers.elab_yang.mmk.model.YoutubeItem;
 import java.util.List;
 
 public class YoutubeAdapter extends RecyclerView.Adapter<YoutubeAdapter.ViewHolder> {
-
     private final List<YoutubeItem> mDataList;
     private YoutubeViewClickListener mListener;
     private static int TYPE_FOOTER = 3;
