@@ -122,6 +122,7 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
                 Log.d(TAG, "onItemSelected: POS_ACCOUNT");
                 break;
 
+            // TODO: 2018-11-19 인슐린 설정은 여기서 ㄱㄱㄱㄱㄱㄱㄱ 
             case POS_MESSAGES:
                 Log.d(TAG, "onItemSelected: POS_MESSAGES");
                 startActivity(new Intent(this, SelectDrugFirstActivity.class));

@@ -11,6 +11,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.dreamwalkers.elab_yang.mmk.R;
 import com.dreamwalkers.elab_yang.mmk.adapter.appinfo.TimePointAdapter;
@@ -61,11 +62,6 @@ public class SelectDrugFirstActivity extends AppCompatActivity implements IActiv
     @BindView(R.id.set_btn)
     Button set_btn;
 
-    //    planA
-//    int selected_point_cnt = 0;
-    //    planB
-    Boolean selected_point = false;
-
     Animation animation;
 
     @Override
@@ -73,8 +69,6 @@ public class SelectDrugFirstActivity extends AppCompatActivity implements IActiv
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_drug_first);
         initSetting();
-
-        animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.anim_slide_in_left);
     }
 
     @Override
@@ -86,17 +80,17 @@ public class SelectDrugFirstActivity extends AppCompatActivity implements IActiv
     public void initSetting() {
         bindView();
         setRecyclerview();
+        anim();
     }
 
     // 1번 layout. --다음--> 이동
     @OnClick(R.id.next_btn)
     void onClick() {
         // 이떄 받아오는거야 뭘뭘했는지
-        // 갯수
-//        if (checkbox1.isChecked()) selected_point_cnt++;
-//        if (checkbox2.isChecked()) selected_point_cnt++;
-//        if (checkbox3.isChecked()) selected_point_cnt++;
-//        if (checkbox4.isChecked()) selected_point_cnt++;
+
+
+
+
 
 //        Log.d(TAG, "onClick: selected_point_cnt = " + selected_point_cnt);
 
@@ -115,27 +109,17 @@ public class SelectDrugFirstActivity extends AppCompatActivity implements IActiv
 
     public void setAdapter() {
         List<TimePoint> timepoints = new ArrayList<>();
-//        for (int i = 0; i < selected_point_cnt; i++) {
-//            timepoints.add(new TimePoint(String.valueOf(i), null, null));
-//        }
 
+        // 선택된 체크박스 확인 -> 리스트에 추가
         if (checkbox1.isChecked())
-//            timepoints.add(new TimePoint(checkbox1.getText().toString(), null, null));
             timepoints.add(new TimePoint(checkbox1.getText().toString()));
         if (checkbox2.isChecked())
-//            timepoints.add(new TimePoint(checkbox2.getText().toString(), null, null));
             timepoints.add(new TimePoint(checkbox2.getText().toString()));
         if (checkbox3.isChecked())
-//            timepoints.add(new TimePoint(checkbox3.getText().toString(), null, null));
             timepoints.add(new TimePoint(checkbox3.getText().toString()));
         if (checkbox4.isChecked())
-//            timepoints.add(new TimePoint(checkbox4.getText().toString(), null, null));
             timepoints.add(new TimePoint(checkbox4.getText().toString()));
 
-//        timepoints.add(new TimePoint("공복", "ㅇ1", "ㅇ2"));
-//        timepoints.add(new TimePoint("점심식전", "ㅇㅇ1", "ㅇㅇ2"));
-//        timepoints.add(new TimePoint("저녁식전", "ㅇㅇㅇ1", "ㅇㅇㅇ2"));
-//        timepoints.add(new TimePoint("취침전", "ㅇㅇㅇㅇ1", "ㅇㅇㅇㅇ2"));
         Log.d(TAG, "setAdapter: 리스트 갯수 = " + timepoints.size());
         TimePointAdapter mTimePointItems = new TimePointAdapter(timepoints);
         mTimePointItems.setOnClickListener(this);
@@ -144,16 +128,17 @@ public class SelectDrugFirstActivity extends AppCompatActivity implements IActiv
 
     @Override
     public void onItemClicked(int position) {
-//        Toast.makeText(getApplicationContext(), "선택값 = " + position, Toast.LENGTH_SHORT).show();
-//        if (position != 10) {
-//            onURL(youtube_link[position]);
-//        }
+        Toast.makeText(getApplicationContext(), "선택값 = " + position, Toast.LENGTH_SHORT).show();
+    }
+
+    public void anim() {
+        animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.anim_slide_in_left);
     }
 
     // 2번 layout. 저장할게욥
     @OnClick(R.id.set_btn)
     void onClick1() {
-        // TODO: 2018-11-13 흠흠흠 
+        // TODO: 2018-11-13 흠흠흠 선택화면으로 넘어가자
 //        startActivity(new Intent(this, SelectDrugActivity.class));
         finish();
     }
