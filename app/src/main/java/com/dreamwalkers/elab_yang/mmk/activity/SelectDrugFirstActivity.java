@@ -1,7 +1,9 @@
 package com.dreamwalkers.elab_yang.mmk.activity;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -28,6 +30,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class SelectDrugFirstActivity extends AppCompatActivity implements IActivityBased, TimePointAdapter.TimePointClickListener {
     private static final String TAG = "SelectDrugFirstActivity";
@@ -65,6 +68,8 @@ public class SelectDrugFirstActivity extends AppCompatActivity implements IActiv
 
     // 메뉴 2가지 동작을 위해
     boolean flag = false;
+
+    String[] set_data = new String[4];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,13 +122,12 @@ public class SelectDrugFirstActivity extends AppCompatActivity implements IActiv
     }
 
     @Override
-    public void onAddItemClicked(int position, String tp, String str) {
-        Snackbar.make(getWindow().getDecorView().getRootView(), position + "번째 " + tp + "에 장치를 추가하려해욧!", Toast.LENGTH_SHORT).show();
+    public void onAddItemClicked(int position, String item_timepoint) {
+        //        Snackbar.make(getWindow().getDecorView().getRootView(), position + "번째 " + tp + "에 장치를 추가하려해욧!", Toast.LENGTH_SHORT).show();
 
         // 종류, 품명, 단위(null);
-        timepoints.set(position, new TimePoint("공복", "노보래피트", "0"));
+        timepoints.set(position, new TimePoint(item_timepoint, "노보래피트"));
         mTimePointItems.notifyDataSetChanged();
-
     }
 
     public void anim() {
@@ -158,7 +162,27 @@ public class SelectDrugFirstActivity extends AppCompatActivity implements IActiv
                     // set btn
                     // 현 데이터를 저장 후 종료
                     Snackbar.make(getWindow().getDecorView().getRootView(), "저장", Snackbar.LENGTH_SHORT).show();
-                    finish();
+
+                    String message = "";
+
+                    Log.d(TAG, "onOptionsItemSelected: timepoints.size() = " + timepoints.size());
+                    // 리스트 갯수만큼 반복
+                    for (int i = 0; i < timepoints.size(); i++) {
+                        set_data[i] = timepoints.get(i).getTimepoint() + "/" + timepoints.get(i).getName() + "/" + timepoints.get(i).getUnit();
+                        Log.d(TAG, "onOptionsItemSelected: set_data[i] = " + set_data[i]);
+                        message += set_data[i];
+                    }
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setTitle("title. 최종 확인")
+                            .setMessage("message. 최종 확인" + message)
+                            .setPositiveButton("yes",
+                                    (dialog, id) -> {
+                                        finish();
+                                    });
+                    builder.create()
+                            .show();
+//                    finish();
                     //
                     flag = false;
                     break;

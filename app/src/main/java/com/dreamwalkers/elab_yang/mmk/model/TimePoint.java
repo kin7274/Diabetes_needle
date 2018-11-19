@@ -9,10 +9,9 @@ public class TimePoint {
         this.timepoint = timepoint;
     }
 
-    public TimePoint(String timepoint, String name, String unit) {
+    public TimePoint(String timepoint, String name) {
         this.timepoint = timepoint;
         this.name = name;
-        this.unit = unit;
     }
 
     public String getTimepoint() {

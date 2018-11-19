@@ -6,9 +6,11 @@ import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,7 +24,7 @@ public class TimePointAdapter extends RecyclerView.Adapter<TimePointAdapter.View
     Context context;
     private final List<TimePoint> mDataList;
     private TimePointClickListener mListener;
-    private static int TYPE_FOOTER = 4; // max
+    private static int TYPE_FOOTER = 4;
 
     public TimePointAdapter(Context context, List<TimePoint> dataList) {
         this.context = context;
@@ -67,41 +69,34 @@ public class TimePointAdapter extends RecyclerView.Adapter<TimePointAdapter.View
 
         holder.item_timepoint.setText(item.getTimepoint());
         holder.item_name.setText(item.getName());
-        holder.item_unit.setText(item.getUnit());
+//        holder.item_unit.setText(item.getUnit());
+
+        holder.item_unit.setOnClickListener(v -> {
+
+            // 단위 입력
+            final EditText et = new EditText(context);
+            et.setInputType(InputType.TYPE_CLASS_NUMBER);
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder
+                    .setTitle("title. 단위 입력")
+                    .setMessage("message. 단위 입력")
+                    .setCancelable(false)
+                    .setPositiveButton("yes",
+                            (dialog, id) -> {
+                                holder.item_unit.setText(et.getText().toString());
+                            })
+                    .setView(et);
+            builder.create()
+                    .show();
+        });
 
         // 품명과 단위 추가하러 가기
         holder.add_btn.setOnClickListener(v -> {
 
-            mListener.onAddItemClicked(position, item.getTimepoint(), "a");
-//            context.startActivity(new Intent(context, SelectDrugActivity.class));
-
             // 임시 데이터 추가
-
+            mListener.onAddItemClicked(position, item.getTimepoint());
+//            context.startActivity(new Intent(context, SelectDrugActivity.class));
         });
-
-//            Snackbar.make(v, position + " 위치의 '+버튼' 클릭하셨습니다", 1000).show();
-
-        // 다이얼로그로 삭제하시겠습니까? 표시
-//            AlertDialog.Builder builder = new AlertDialog.Builder(context);
-//            builder
-//                    .setTitle("title. 추가")
-//                    .setMessage("message. 추가")
-//                    .setCancelable(false)
-//                    .setPositiveButton("yes",
-//                            (dialog, id) -> {
-        // 인슐린 선택하러
-//                                context.startActivity(new Intent(context, SelectDrugActivity.class));
-//            dialog.dismiss();
-//                            })
-//                    .setNegativeButton("no",
-//                            (dialog, id) -> {
-//            띠용..
-//                                dialog.dismiss();
-//                            });
-//            builder.create()
-//                    .show();
-//        });
-
 
         if (mListener != null) {
             final int pos = holder.getAdapterPosition();
@@ -110,11 +105,11 @@ public class TimePointAdapter extends RecyclerView.Adapter<TimePointAdapter.View
     }
 
     @Override
-    public int getItemCount () {
+    public int getItemCount() {
         return mDataList.size();
     }
 
-    public void removeAt ( int position){
+    public void removeAt(int position) {
         mDataList.remove(position);
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, mDataList.size());
@@ -137,12 +132,13 @@ public class TimePointAdapter extends RecyclerView.Adapter<TimePointAdapter.View
         }
     }
 
-    public void setOnClickListener (TimePointClickListener listener){
+    public void setOnClickListener(TimePointClickListener listener) {
         mListener = listener;
     }
 
     public interface TimePointClickListener {
         void onItemClicked(int position);
-        void onAddItemClicked(int position, String item_timepoint, String str);
+
+        void onAddItemClicked(int position, String item_timepoint);
     }
 }
