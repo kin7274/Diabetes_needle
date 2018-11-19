@@ -2,8 +2,6 @@ package com.dreamwalkers.elab_yang.mmk.adapter.appinfo;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -14,8 +12,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dreamwalkers.elab_yang.mmk.R;
-import com.dreamwalkers.elab_yang.mmk.activity.SelectDrugFirstActivity;
-import com.dreamwalkers.elab_yang.mmk.activity.select.SelectDrugActivity;
 import com.dreamwalkers.elab_yang.mmk.model.TimePoint;
 
 import java.util.List;
@@ -89,6 +85,8 @@ public class TimePointAdapter extends RecyclerView.Adapter<TimePointAdapter.View
                             (dialog, id) -> {
                                 // 인슐린 선택하러
 //                                context.startActivity(new Intent(context, SelectDrugActivity.class));
+
+
                                 dialog.dismiss();
                             })
                     .setNegativeButton("no",

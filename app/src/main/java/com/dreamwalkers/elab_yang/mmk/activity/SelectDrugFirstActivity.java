@@ -30,7 +30,6 @@ public class SelectDrugFirstActivity extends AppCompatActivity implements IActiv
     Context mContext;
 
 
-
 //    1. 투약 시점을 선택
 //    2. checkbox.isCheck() -> cardview 표시
     // TODO: 2018-11-13
@@ -92,9 +91,6 @@ public class SelectDrugFirstActivity extends AppCompatActivity implements IActiv
     @OnClick(R.id.next_btn)
     void onClick() {
         // 이떄 받아오는거야 뭘뭘했는지
-
-
-
 
 
 //        Log.d(TAG, "onClick: selected_point_cnt = " + selected_point_cnt);
