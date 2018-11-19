@@ -53,11 +53,11 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
 
     private static final String TAG = "HomeActivity";
 
-    private static final int POS_DASHBOARD = 0;
-    private static final int POS_ACCOUNT = 1;
-    private static final int POS_MESSAGES = 2;
-    private static final int POS_CART = 3;
-    private static final int POS_LOGOUT = 6;
+    private static final int POS_DASHBOARD = 0;  // 대시보드
+    private static final int POS_ACCOUNT = 1;  // 내정보
+    private static final int POS_MESSAGES = 2;  // 액세사리
+    private static final int POS_CART = 3;  // 교육영상
+    private static final int POS_LOGOUT = 6;  // 종료하기
 
     private String[] screenTitles;
     private Drawable[] screenIcons;
@@ -69,7 +69,6 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         initSetting();
-
 
         setSupportActionBar(myToolbar);
 
@@ -109,7 +108,6 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
         ButterKnife.bind(this);
         setStatusbar();
         setTapLayout();
-
     }
 
     @Override

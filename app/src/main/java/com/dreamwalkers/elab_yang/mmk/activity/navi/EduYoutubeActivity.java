@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -93,7 +94,11 @@ public class EduYoutubeActivity extends AppCompatActivity implements IActivityBa
 //                            .show();
 
                         // 스낵바 이용
-                        Snackbar.make(EduYoutubeActivity.this.getWindow().getDecorView().getRootView(), "3G/4G환경에서는 데이터 요금이 발생할 수 있습니다.", 3000).setAction("확인", v -> {
+                        Snackbar.make(EduYoutubeActivity.this.getWindow().getDecorView().getRootView(),
+                                "3G/4G환경에서는 데이터 요금이 발생할 수 있습니다.", 3000).setAction("확인", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                            }
                         }).show();
                     } catch (Exception e) {
                         e.printStackTrace();

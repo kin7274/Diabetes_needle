@@ -101,7 +101,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         initSetting();
 //////        hoxy_first();
     }
-
     //
 //
     @Override
