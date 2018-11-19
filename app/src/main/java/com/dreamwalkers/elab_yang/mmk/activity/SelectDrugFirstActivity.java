@@ -1,5 +1,6 @@
 package com.dreamwalkers.elab_yang.mmk.activity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -26,6 +27,9 @@ import butterknife.OnClick;
 
 public class SelectDrugFirstActivity extends AppCompatActivity implements IActivityBased, TimePointAdapter.TimePointClickListener {
     private static final String TAG = "SelectDrugFirstActivity";
+    Context mContext;
+
+
 
 //    1. 투약 시점을 선택
 //    2. checkbox.isCheck() -> cardview 표시
@@ -68,6 +72,7 @@ public class SelectDrugFirstActivity extends AppCompatActivity implements IActiv
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_drug_first);
+        mContext = this;
         initSetting();
     }
 
@@ -121,7 +126,7 @@ public class SelectDrugFirstActivity extends AppCompatActivity implements IActiv
             timepoints.add(new TimePoint(checkbox4.getText().toString()));
 
         Log.d(TAG, "setAdapter: 리스트 갯수 = " + timepoints.size());
-        TimePointAdapter mTimePointItems = new TimePointAdapter(timepoints);
+        TimePointAdapter mTimePointItems = new TimePointAdapter(this, timepoints);
         mTimePointItems.setOnClickListener(this);
         recyclerview.setAdapter(mTimePointItems);
     }
