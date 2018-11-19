@@ -18,7 +18,9 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.dreamwalkers.elab_yang.mmk.R;
+import com.dreamwalkers.elab_yang.mmk.adapter.MyRecyclerAdapter;
 import com.dreamwalkers.elab_yang.mmk.adapter.appinfo.TimePointAdapter;
+import com.dreamwalkers.elab_yang.mmk.model.CardItem;
 import com.dreamwalkers.elab_yang.mmk.model.TimePoint;
 
 import java.util.ArrayList;
@@ -58,6 +60,10 @@ public class SelectDrugFirstActivity extends AppCompatActivity implements IActiv
 
     Animation animation;
 
+    List<TimePoint> timepoints;
+    private TimePointAdapter mTimePointItems;
+
+    // 메뉴 2가지 동작을 위해
     boolean flag = false;
 
     @Override
@@ -87,7 +93,7 @@ public class SelectDrugFirstActivity extends AppCompatActivity implements IActiv
     }
 
     public void setAdapter() {
-        List<TimePoint> timepoints = new ArrayList<>();
+        timepoints = new ArrayList<>();
 
         // 선택된 체크박스 확인 -> 리스트에 추가
         if (checkbox1.isChecked())
@@ -100,7 +106,7 @@ public class SelectDrugFirstActivity extends AppCompatActivity implements IActiv
             timepoints.add(new TimePoint(checkbox4.getText().toString()));
 
         Log.d(TAG, "setAdapter: 리스트 갯수 = " + timepoints.size());
-        TimePointAdapter mTimePointItems = new TimePointAdapter(this, timepoints);
+        mTimePointItems = new TimePointAdapter(this, timepoints);
         mTimePointItems.setOnClickListener(this);
         recyclerview.setAdapter(mTimePointItems);
     }
@@ -108,6 +114,16 @@ public class SelectDrugFirstActivity extends AppCompatActivity implements IActiv
     @Override
     public void onItemClicked(int position) {
         Toast.makeText(getApplicationContext(), "선택값 = " + position, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onAddItemClicked(int position, String tp, String str) {
+        Snackbar.make(getWindow().getDecorView().getRootView(), position + "번째 " + tp + "에 장치를 추가하려해욧!", Toast.LENGTH_SHORT).show();
+
+        // 종류, 품명, 단위(null);
+        timepoints.set(position, new TimePoint("공복", "노보래피트", "0"));
+        mTimePointItems.notifyDataSetChanged();
+
     }
 
     public void anim() {

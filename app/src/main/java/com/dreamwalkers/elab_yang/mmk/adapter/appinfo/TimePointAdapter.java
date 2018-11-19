@@ -24,10 +24,6 @@ public class TimePointAdapter extends RecyclerView.Adapter<TimePointAdapter.View
     private TimePointClickListener mListener;
     private static int TYPE_FOOTER = 4; // max
 
-//    public TimePointAdapter(List<TimePoint> dataList) {
-//        mDataList = dataList;
-//    }
-
     public TimePointAdapter(Context context, List<TimePoint> dataList) {
         this.context = context;
         mDataList = dataList;
@@ -75,7 +71,12 @@ public class TimePointAdapter extends RecyclerView.Adapter<TimePointAdapter.View
 
         // 품명과 단위 추가하러 가기
         holder.add_btn.setOnClickListener(v -> {
-            context.startActivity(new Intent(context, SelectDrugActivity.class));
+
+            mListener.onAddItemClicked(position, item.getTimepoint(), "a");
+//            context.startActivity(new Intent(context, SelectDrugActivity.class));
+
+            // 임시 데이터 추가
+
         });
 
 //            Snackbar.make(v, position + " 위치의 '+버튼' 클릭하셨습니다", 1000).show();
@@ -142,5 +143,6 @@ public class TimePointAdapter extends RecyclerView.Adapter<TimePointAdapter.View
 
     public interface TimePointClickListener {
         void onItemClicked(int position);
+        void onAddItemClicked(int position, String item_timepoint, String str);
     }
 }
