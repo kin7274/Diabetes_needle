@@ -22,7 +22,7 @@ import butterknife.ButterKnife;
 import io.paperdb.Paper;
 
 // 장치를 추가하고 데이터를 받습니다!
-public class FragmentC extends Fragment implements IActivityBased{
+public class FragmentC extends Fragment {
     private static final String TAG = "FragmentC";
 
     //    @BindView(R.id.recycler_view)
