@@ -49,10 +49,6 @@ public class TimePointAdapter extends RecyclerView.Adapter<TimePointAdapter.View
 //        TimePoint card_view = mDataList.get(position);
         TimePoint item = mDataList.get(position);
 
-
-        // TODO: 2018-11-20 단계별로 클릭잠그기, 열기 해야댐!!!!
-
-
         // detail하게 보기, 확대용
         holder.card_view.setOnClickListener((View v) -> {
 //            Snackbar.make(v, position + "번 째 카드뷰 클릭하셨습니다", 1000).show();
@@ -86,18 +82,22 @@ public class TimePointAdapter extends RecyclerView.Adapter<TimePointAdapter.View
 
             Log.d(TAG, "onBindViewHolder: item.getName() = " + item.getName());
 
-            final EditText et = new EditText(context);
-            et.setInputType(InputType.TYPE_CLASS_NUMBER);
-            AlertDialog.Builder builder13 = new AlertDialog.Builder(context)
-                    .setTitle("단위")
-                    .setPositiveButton("yes", (DialogInterface dialog, int id) -> {
-                        item.setUnit(et.getText().toString());
-                        holder.item_unit.setText(et.getText().toString());
-                    })
-                    .setView(et);
-            builder13.create()
-                    .show();
-
+            // TODO: 2018-11-20 설정 단계별로 묶어야하지만 우선은 품명을 설정안하면 단위를 못설정하도록 잠궈놈
+            if (holder.item_name.getText().equals("")) {
+                Snackbar.make(v, "설정먼저ㄱ", Snackbar.LENGTH_SHORT).show();
+            } else {
+                final EditText et = new EditText(context);
+                et.setInputType(InputType.TYPE_CLASS_NUMBER);
+                AlertDialog.Builder builder13 = new AlertDialog.Builder(context)
+                        .setTitle("단위")
+                        .setPositiveButton("yes", (DialogInterface dialog, int id) -> {
+                            item.setUnit(et.getText().toString());
+                            holder.item_unit.setText(et.getText().toString());
+                        })
+                        .setView(et);
+                builder13.create()
+                        .show();
+            }
         });
 
         // 품명과 단위 추가하러 가기
