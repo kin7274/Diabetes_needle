@@ -51,7 +51,6 @@ public class TimePointAdapter extends RecyclerView.Adapter<TimePointAdapter.View
             builder
                     .setTitle("title. 삭제")
                     .setMessage("message. 삭제")
-                    .setCancelable(false)
                     .setPositiveButton("yes",
                             (dialog, id) -> {
                                 // 삭제
@@ -80,7 +79,6 @@ public class TimePointAdapter extends RecyclerView.Adapter<TimePointAdapter.View
             builder
                     .setTitle("title. 단위 입력")
                     .setMessage("message. 단위 입력")
-                    .setCancelable(false)
                     .setPositiveButton("yes",
                             (dialog, id) -> {
                                 holder.item_unit.setText(et.getText().toString());

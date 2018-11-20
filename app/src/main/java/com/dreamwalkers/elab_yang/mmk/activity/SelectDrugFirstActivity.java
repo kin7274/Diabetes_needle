@@ -17,6 +17,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.CheckBox;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dreamwalkers.elab_yang.mmk.R;
@@ -24,6 +25,8 @@ import com.dreamwalkers.elab_yang.mmk.adapter.MyRecyclerAdapter;
 import com.dreamwalkers.elab_yang.mmk.adapter.appinfo.TimePointAdapter;
 import com.dreamwalkers.elab_yang.mmk.model.CardItem;
 import com.dreamwalkers.elab_yang.mmk.model.TimePoint;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +49,27 @@ public class SelectDrugFirstActivity extends AppCompatActivity implements IActiv
     @BindView(R.id.layout2)
     RelativeLayout layout2;
 
+    // 2번 레이아웃
+    @BindView(R.id.title2)
+    TextView title2;
+
+    @BindView(R.id.sub2)
+    TextView sub2;
+
+    @BindView(R.id.title_line2)
+    View title_line2;
+
+    @BindView(R.id.title_line3)
+    View title_line3;
+
+    // 3번 레이아웃
+    @BindView(R.id.title3)
+    TextView title3;
+
+    @BindView(R.id.sub3)
+    TextView sub3;
+
+
     @BindView(R.id.checkbox1)
     CheckBox checkbox1;
 
@@ -67,7 +91,10 @@ public class SelectDrugFirstActivity extends AppCompatActivity implements IActiv
     private TimePointAdapter mTimePointItems;
 
     // 메뉴 2가지 동작을 위해
-    boolean flag = false;
+//    boolean flag = false;
+
+    // 메뉴가 3가지가 되었다
+    int cnt = 0;  // 화면 번호랄까
 
     String[] set_data = new String[4];
 
@@ -147,7 +174,7 @@ public class SelectDrugFirstActivity extends AppCompatActivity implements IActiv
         switch (item.getItemId()) {
             case R.id.select:
                 //
-                if (!flag) {
+                if (cnt == 0) {
                     // next btn
                     // 1번 레이아웃 닫고 2번 연다.
                     layout1.setVisibility(View.GONE);
@@ -155,12 +182,32 @@ public class SelectDrugFirstActivity extends AppCompatActivity implements IActiv
                     layout2.startAnimation(animation);
                     setAdapter();
                     //
-                    flag = true;
+//                    flag = true;
+                    cnt++;
                     break;
                 }
-                if (flag) {
+                if (cnt == 1) {
+                    // 2번 레이아웃 닫고 3번 연다.
+                    title2.setVisibility(View.INVISIBLE);
+                    sub2.setVisibility(View.INVISIBLE);
+                    title_line2.setVisibility(View.INVISIBLE);
+
+                    title3.setVisibility(View.VISIBLE);
+                    sub3.setVisibility(View.VISIBLE);
+                    title_line3.setVisibility(View.VISIBLE);
+
                     // set btn
                     // 현 데이터를 저장 후 종료
+
+//                    finish();
+                    //
+//                    flag = false;
+                    cnt++;
+                    break;
+                }
+
+                if (cnt == 2) {
+
                     Snackbar.make(getWindow().getDecorView().getRootView(), "저장", Snackbar.LENGTH_SHORT).show();
 
                     String message = "";
@@ -182,9 +229,10 @@ public class SelectDrugFirstActivity extends AppCompatActivity implements IActiv
                                     });
                     builder.create()
                             .show();
-//                    finish();
                     //
-                    flag = false;
+//                    flag = true;
+                    // default
+                    cnt = 0;
                     break;
                 }
                 break;
