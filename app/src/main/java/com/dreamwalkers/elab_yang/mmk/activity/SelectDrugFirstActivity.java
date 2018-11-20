@@ -2,7 +2,9 @@ package com.dreamwalkers.elab_yang.mmk.activity;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -154,17 +156,18 @@ public class SelectDrugFirstActivity extends AppCompatActivity implements IActiv
         //        Snackbar.make(getWindow().getDecorView().getRootView(), position + "번째 " + tp + "에 장치를 추가하려해욧!", Toast.LENGTH_SHORT).show();
 
         // TODO: 2018-11-20 코틀린으로
+//        startActivityForResult(new Intent(this, SelectDrugActivity.class), 999);
+//        startActivity(new Intent(this, SelectDrugActivity.class));
 
 
-        startActivity(new Intent(this, SelectDrugActivity.class));
-//        if (!flag) {
-//            timepoints.set(position, new TimePoint(item_timepoint, "노보래피트\n휴머로그"));
-//            flag = true;
-//        } else {
-//            timepoints.set(position, new TimePoint(item_timepoint, "노보래피트"));
-//            flag = false;
-//        }
-//        mTimePointItems.notifyDataSetChanged();
+        if (!flag) {
+            timepoints.set(position, new TimePoint(item_timepoint, "노보래피트\n휴머로그"));
+            flag = true;
+        } else {
+            timepoints.set(position, new TimePoint(item_timepoint, "노보래피트"));
+            flag = false;
+        }
+        mTimePointItems.notifyDataSetChanged();
     }
 
     public void anim() {
@@ -219,18 +222,30 @@ public class SelectDrugFirstActivity extends AppCompatActivity implements IActiv
                     Log.d(TAG, "onOptionsItemSelected: timepoints.size() = " + timepoints.size());
                     // 리스트 갯수만큼 반복
                     for (int i = 0; i < timepoints.size(); i++) {
-                        set_data[i] = timepoints.get(i).getTimepoint() + "/" + timepoints.get(i).getName() + "/" + timepoints.get(i).getUnit();
+//                        set_data[i] = timepoints.get(i).getTimepoint() + "/" + timepoints.get(i).getName() + "/" + timepoints.get(i).getUnit() + "\n";
+                        set_data[i] = timepoints.get(i).getTimepoint() + "/" + timepoints.get(i).getName() + "/" + timepoints.get(i).getUnit() + "\n";
                         Log.d(TAG, "onOptionsItemSelected: set_data[i] = " + set_data[i]);
                         message += set_data[i];
                     }
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    String finalMessage = message;
                     builder.setTitle("title. 최종 확인")
                             .setMessage("message. 최종 확인" + message)
                             .setPositiveButton("yes",
                                     (dialog, id) -> {
 
-                                        // TODO: 2018-11-20 message 캐시에 저장하기!!! 
+                                        // TODO: 2018-11-20 message 캐시에 저장하기!!!
+
+                                        SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+                                        SharedPreferences.Editor editor = pref.edit();
+                                        editor.putString("setData", finalMessage);
+                                        Log.d(TAG, "setData = " + finalMessage);
+                                        editor.apply();
+//                                        finish();
+
+                                        Snackbar.make(getWindow().getDecorView().getRootView(), "저장햇슴돠", Snackbar.LENGTH_SHORT).show();
+
                                         finish();
                                     });
                     builder.create()
@@ -243,5 +258,15 @@ public class SelectDrugFirstActivity extends AppCompatActivity implements IActiv
                 break;
         }
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == 999) {
+
+            }
+        }
     }
 }

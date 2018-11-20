@@ -37,7 +37,13 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
         holder.item_message.setText(item.getMessage());
 
         // 설정 추가하러 가기
-//        holder.add_btn.setOnClickListener(v -> Snackbar.make(v, position + " 위치의 '+버튼' 클릭하셨습니다", 3000).show());
+        holder.add_btn.setOnClickListener(v -> {
+//            Snackbar.make(v, position + " 위치의 '+버튼' 클릭하셨습니다", 3000).show());
+
+            // 임시 데이터 추가
+            mListener.onAddItemClicked(position);
+        });
+
 
         if (mListener != null) {
             final int pos = holder.getAdapterPosition();
@@ -69,5 +75,6 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
 
     public interface ProfileClickListener {
         void onItemClicked(int position);
+        void onAddItemClicked(int position);
     }
 }

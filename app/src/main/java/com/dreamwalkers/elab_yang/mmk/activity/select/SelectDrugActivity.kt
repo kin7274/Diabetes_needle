@@ -1,5 +1,6 @@
 package com.dreamwalkers.elab_yang.mmk.activity.select
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
@@ -66,6 +67,11 @@ class SelectDrugActivity : AppCompatActivity() {
                 } else {
                     msg = resources.getQuantityString(R.plurals.you_selected_x_songs, selectedCount, selectedCount)
                     mMultiSelect!!.showSelectedPage()
+
+                    // TODO 지훈
+//                    val resultIntent = Intent(this, SelectDrugActivity::class.java)
+//                    resultIntent.putExtra("result", "뭐시여")
+
                 }
                 Snackbar.make(toolbar, msg, Snackbar.LENGTH_LONG).show()
                 true

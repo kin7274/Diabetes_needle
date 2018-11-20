@@ -80,7 +80,6 @@ public class OneInsulinActivity extends AppCompatActivity implements View.OnClic
 //        text4 = (TextView) findViewById(R.id.text4);
 //        text4.setOnClickListener(this);
 
-        // TODO: 2018-11-12 2개에도 넣자
         checkbox1 = (CheckBox) findViewById(R.id.checkbox1);
         checkbox1.setOnClickListener(this);
         checkbox2 = (CheckBox) findViewById(R.id.checkbox2);
