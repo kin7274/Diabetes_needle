@@ -1,6 +1,7 @@
 package com.dreamwalkers.elab_yang.mmk.activity;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dreamwalkers.elab_yang.mmk.R;
+import com.dreamwalkers.elab_yang.mmk.activity.select.SelectDrugActivity;
 import com.dreamwalkers.elab_yang.mmk.adapter.MyRecyclerAdapter;
 import com.dreamwalkers.elab_yang.mmk.adapter.appinfo.TimePointAdapter;
 import com.dreamwalkers.elab_yang.mmk.model.CardItem;
@@ -151,19 +153,18 @@ public class SelectDrugFirstActivity extends AppCompatActivity implements IActiv
     public void onAddItemClicked(int position, String item_timepoint) {
         //        Snackbar.make(getWindow().getDecorView().getRootView(), position + "번째 " + tp + "에 장치를 추가하려해욧!", Toast.LENGTH_SHORT).show();
 
-        // 투약시점, 품명;
-        // 1개인 경우;
-//        timepoints.set(position, new TimePoint(item_timepoint, "노보래피트"));
+        // TODO: 2018-11-20 코틀린으로
 
-        // 2개인 경우;
-        if (!flag) {
-            timepoints.set(position, new TimePoint(item_timepoint, "노보래피트\n휴머로그"));
-            flag = true;
-        } else {
-            timepoints.set(position, new TimePoint(item_timepoint, "노보래피트"));
-            flag = false;
-        }
-        mTimePointItems.notifyDataSetChanged();
+
+        startActivity(new Intent(this, SelectDrugActivity.class));
+//        if (!flag) {
+//            timepoints.set(position, new TimePoint(item_timepoint, "노보래피트\n휴머로그"));
+//            flag = true;
+//        } else {
+//            timepoints.set(position, new TimePoint(item_timepoint, "노보래피트"));
+//            flag = false;
+//        }
+//        mTimePointItems.notifyDataSetChanged();
     }
 
     public void anim() {
@@ -228,6 +229,8 @@ public class SelectDrugFirstActivity extends AppCompatActivity implements IActiv
                             .setMessage("message. 최종 확인" + message)
                             .setPositiveButton("yes",
                                     (dialog, id) -> {
+
+                                        // TODO: 2018-11-20 message 캐시에 저장하기!!! 
                                         finish();
                                     });
                     builder.create()

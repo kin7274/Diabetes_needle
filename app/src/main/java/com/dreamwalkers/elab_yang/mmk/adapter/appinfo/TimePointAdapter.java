@@ -2,6 +2,7 @@ package com.dreamwalkers.elab_yang.mmk.adapter.appinfo;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.CardView;
@@ -48,6 +49,10 @@ public class TimePointAdapter extends RecyclerView.Adapter<TimePointAdapter.View
 //        TimePoint card_view = mDataList.get(position);
         TimePoint item = mDataList.get(position);
 
+
+        // TODO: 2018-11-20 단계별로 클릭잠그기, 열기 해야댐!!!!
+
+
         // detail하게 보기, 확대용
         holder.card_view.setOnClickListener((View v) -> {
 //            Snackbar.make(v, position + "번 째 카드뷰 클릭하셨습니다", 1000).show();
@@ -75,11 +80,23 @@ public class TimePointAdapter extends RecyclerView.Adapter<TimePointAdapter.View
         holder.item_timepoint.setText(item.getTimepoint());
         holder.item_name.setText(item.getName());
 
-//        holder.item_unit.setText(item.getUnit());
+        //        holder.item_unit.setText(item.getUnit());
 
         holder.item_unit.setOnClickListener(v -> {
 
             Log.d(TAG, "onBindViewHolder: item.getName() = " + item.getName());
+
+            final EditText et = new EditText(context);
+            et.setInputType(InputType.TYPE_CLASS_NUMBER);
+            AlertDialog.Builder builder13 = new AlertDialog.Builder(context)
+                    .setTitle("단위")
+                    .setPositiveButton("yes", (DialogInterface dialog, int id) -> {
+                        item.setUnit(et.getText().toString());
+                        holder.item_unit.setText(et.getText().toString());
+                    })
+                    .setView(et);
+            builder13.create()
+                    .show();
 
         });
 
