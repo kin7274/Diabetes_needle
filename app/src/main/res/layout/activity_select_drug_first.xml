@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     android:background="@color/background">
 
-    <!-- 툴바, 추가된 소스 -->
     <android.support.v7.widget.Toolbar
         android:id="@+id/my_toolbar"
         android:layout_width="match_parent"

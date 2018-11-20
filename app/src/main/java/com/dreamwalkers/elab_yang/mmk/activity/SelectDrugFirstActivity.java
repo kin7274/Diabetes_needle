@@ -125,7 +125,7 @@ public class SelectDrugFirstActivity extends AppCompatActivity implements IActiv
     public void onAddItemClicked(int position, String item_timepoint) {
         //        Snackbar.make(getWindow().getDecorView().getRootView(), position + "번째 " + tp + "에 장치를 추가하려해욧!", Toast.LENGTH_SHORT).show();
 
-        // 종류, 품명, 단위(null);
+        // 종류, 품명, z;
         timepoints.set(position, new TimePoint(item_timepoint, "노보래피트"));
         mTimePointItems.notifyDataSetChanged();
     }
