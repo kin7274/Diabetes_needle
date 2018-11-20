@@ -90,8 +90,7 @@ public class SelectDrugFirstActivity extends AppCompatActivity implements IActiv
     List<TimePoint> timepoints;
     private TimePointAdapter mTimePointItems;
 
-    // 메뉴 2가지 동작을 위해
-//    boolean flag = false;
+    boolean flag = false;
 
     // 메뉴가 3가지가 되었다
     int cnt = 0;  // 화면 번호랄까
@@ -152,8 +151,18 @@ public class SelectDrugFirstActivity extends AppCompatActivity implements IActiv
     public void onAddItemClicked(int position, String item_timepoint) {
         //        Snackbar.make(getWindow().getDecorView().getRootView(), position + "번째 " + tp + "에 장치를 추가하려해욧!", Toast.LENGTH_SHORT).show();
 
-        // 종류, 품명, z;
-        timepoints.set(position, new TimePoint(item_timepoint, "노보래피트"));
+        // 투약시점, 품명;
+        // 1개인 경우;
+//        timepoints.set(position, new TimePoint(item_timepoint, "노보래피트"));
+
+        // 2개인 경우;
+        if (!flag) {
+            timepoints.set(position, new TimePoint(item_timepoint, "노보래피트\n휴머로그"));
+            flag = true;
+        } else {
+            timepoints.set(position, new TimePoint(item_timepoint, "노보래피트"));
+            flag = false;
+        }
         mTimePointItems.notifyDataSetChanged();
     }
 
@@ -173,7 +182,8 @@ public class SelectDrugFirstActivity extends AppCompatActivity implements IActiv
 //        return super.onOptionsItemSelected(item);
         switch (item.getItemId()) {
             case R.id.select:
-                //
+
+                // 1페
                 if (cnt == 0) {
                     // next btn
                     // 1번 레이아웃 닫고 2번 연다.
@@ -181,11 +191,12 @@ public class SelectDrugFirstActivity extends AppCompatActivity implements IActiv
                     layout2.setVisibility(View.VISIBLE);
                     layout2.startAnimation(animation);
                     setAdapter();
-                    //
-//                    flag = true;
+
                     cnt++;
                     break;
                 }
+
+                // 2페
                 if (cnt == 1) {
                     // 2번 레이아웃 닫고 3번 연다.
                     title2.setVisibility(View.INVISIBLE);
@@ -196,22 +207,14 @@ public class SelectDrugFirstActivity extends AppCompatActivity implements IActiv
                     sub3.setVisibility(View.VISIBLE);
                     title_line3.setVisibility(View.VISIBLE);
 
-                    // set btn
-                    // 현 데이터를 저장 후 종료
-
-//                    finish();
-                    //
-//                    flag = false;
                     cnt++;
                     break;
                 }
 
+                // 3페
                 if (cnt == 2) {
-
                     Snackbar.make(getWindow().getDecorView().getRootView(), "저장", Snackbar.LENGTH_SHORT).show();
-
                     String message = "";
-
                     Log.d(TAG, "onOptionsItemSelected: timepoints.size() = " + timepoints.size());
                     // 리스트 갯수만큼 반복
                     for (int i = 0; i < timepoints.size(); i++) {
@@ -229,8 +232,7 @@ public class SelectDrugFirstActivity extends AppCompatActivity implements IActiv
                                     });
                     builder.create()
                             .show();
-                    //
-//                    flag = true;
+
                     // default
                     cnt = 0;
                     break;

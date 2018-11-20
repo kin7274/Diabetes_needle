@@ -15,10 +15,10 @@
             android:id="@+id/card_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginRight="8dp"
             android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
             android:elevation="5dp"
             app:cardCornerRadius="5dp">
 
@@ -31,46 +31,90 @@
                 <ImageView
                     android:id="@+id/add_btn"
                     android:layout_width="0dp"
-                    android:layout_marginLeft="16dp"
                     android:layout_height="match_parent"
+                    android:layout_marginLeft="16dp"
                     android:layout_weight="1"
                     android:src="@mipmap/plus" />
 
-                <TextView
-                    android:id="@+id/item_timepoint"
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_margin="4dp"
-                    android:layout_weight="3"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:textColor="@color/black"
-                    android:textSize="24sp"
-                    android:textStyle="bold" />
+                    android:layout_weight="8"
+                    android:orientation="vertical"
+                    android:weightSum="8">
 
-                <TextView
-                    android:id="@+id/item_name"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_margin="4dp"
-                    android:layout_weight="4"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:textStyle="italic" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="3">
 
-                <TextView
-                    android:id="@+id/item_unit"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_margin="4dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginBottom="8dp"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:textStyle="italic" />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3"
+                            android:gravity="center_vertical|center_horizontal"
+                            android:text="투약시점"
+                            android:textColor="@color/gray"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3"
+                            android:gravity="center_vertical|center_horizontal"
+                            android:text="품명"
+                            android:textColor="@color/gray"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="8dp"
+                            android:layout_weight="2"
+                            android:gravity="center_vertical|center_horizontal"
+                            android:text="단위"
+                            android:textColor="@color/gray"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="5">
+
+                        <TextView
+                            android:id="@+id/item_timepoint"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="3"
+                            android:gravity="center_vertical|center_horizontal"
+                            android:textColor="@color/black"
+                            android:textSize="24sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/item_name"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="3"
+                            android:gravity="center_vertical|center_horizontal"
+                            android:textColor="@color/black"
+                            android:textSize="18sp"
+                            android:textStyle="italic" />
+
+                        <TextView
+                            android:id="@+id/item_unit"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="8dp"
+                            android:layout_weight="2"
+                            android:gravity="center_vertical|center_horizontal"
+                            android:textColor="@color/black"
+                            android:textSize="18sp"
+                            android:textStyle="italic" />
+                    </LinearLayout>
+                </LinearLayout>
 
             </LinearLayout>
         </android.support.v7.widget.CardView>

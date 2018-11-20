@@ -7,18 +7,24 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dreamwalkers.elab_yang.mmk.R;
+import com.dreamwalkers.elab_yang.mmk.activity.DataBaseActivity;
 import com.dreamwalkers.elab_yang.mmk.activity.select.SelectDrugActivity;
+import com.dreamwalkers.elab_yang.mmk.model.CardItem;
 import com.dreamwalkers.elab_yang.mmk.model.TimePoint;
 
 import java.util.List;
+
+import static android.content.ContentValues.TAG;
 
 public class TimePointAdapter extends RecyclerView.Adapter<TimePointAdapter.ViewHolder> {
     Context context;
@@ -68,24 +74,13 @@ public class TimePointAdapter extends RecyclerView.Adapter<TimePointAdapter.View
 
         holder.item_timepoint.setText(item.getTimepoint());
         holder.item_name.setText(item.getName());
+
 //        holder.item_unit.setText(item.getUnit());
 
         holder.item_unit.setOnClickListener(v -> {
 
-            // 단위 입력
-            final EditText et = new EditText(context);
-            et.setInputType(InputType.TYPE_CLASS_NUMBER);
-            AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            builder
-                    .setTitle("title. 단위 입력")
-                    .setMessage("message. 단위 입력")
-                    .setPositiveButton("yes",
-                            (dialog, id) -> {
-                                holder.item_unit.setText(et.getText().toString());
-                            })
-                    .setView(et);
-            builder.create()
-                    .show();
+            Log.d(TAG, "onBindViewHolder: item.getName() = " + item.getName());
+
         });
 
         // 품명과 단위 추가하러 가기
