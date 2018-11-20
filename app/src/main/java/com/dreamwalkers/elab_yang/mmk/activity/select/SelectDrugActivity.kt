@@ -1,5 +1,6 @@
 package com.dreamwalkers.elab_yang.mmk.activity.select
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
@@ -68,9 +69,16 @@ class SelectDrugActivity : AppCompatActivity() {
                     msg = resources.getQuantityString(R.plurals.you_selected_x_songs, selectedCount, selectedCount)
                     mMultiSelect!!.showSelectedPage()
 
-                    // TODO 지훈
-//                    val resultIntent = Intent(this, SelectDrugActivity::class.java)
-//                    resultIntent.putExtra("result", "뭐시여")
+                    // TODO 지훈    boolean 어떻게 넣지...
+                    val resultIntent = Intent(this, SelectDrugActivity::class.java)
+                    // TODO 이건 되는데
+                    resultIntent.putExtra("result", "2")
+                    // TODO 와 이건 안되지?
+//                    resultIntent.putExtra("result", selectedCount)
+
+                    setResult(Activity.RESULT_OK, resultIntent)
+                    finish()
+
 
                 }
                 Snackbar.make(toolbar, msg, Snackbar.LENGTH_LONG).show()

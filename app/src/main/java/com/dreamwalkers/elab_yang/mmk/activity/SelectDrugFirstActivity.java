@@ -28,6 +28,7 @@ import com.dreamwalkers.elab_yang.mmk.activity.select.SelectDrugActivity;
 import com.dreamwalkers.elab_yang.mmk.adapter.MyRecyclerAdapter;
 import com.dreamwalkers.elab_yang.mmk.adapter.appinfo.TimePointAdapter;
 import com.dreamwalkers.elab_yang.mmk.model.CardItem;
+import com.dreamwalkers.elab_yang.mmk.model.Imsi;
 import com.dreamwalkers.elab_yang.mmk.model.TimePoint;
 
 import org.w3c.dom.Text;
@@ -101,6 +102,8 @@ public class SelectDrugFirstActivity extends AppCompatActivity implements IActiv
 
     String[] set_data = new String[4];
 
+    Imsi imsi;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -119,6 +122,7 @@ public class SelectDrugFirstActivity extends AppCompatActivity implements IActiv
         setRecyclerview();
         anim();
         setSupportActionBar(myToolbar);
+        imsi = (Imsi) getApplication();
     }
 
     public void setRecyclerview() {
@@ -156,18 +160,24 @@ public class SelectDrugFirstActivity extends AppCompatActivity implements IActiv
         //        Snackbar.make(getWindow().getDecorView().getRootView(), position + "번째 " + tp + "에 장치를 추가하려해욧!", Toast.LENGTH_SHORT).show();
 
         // TODO: 2018-11-20 코틀린으로
-//        startActivityForResult(new Intent(this, SelectDrugActivity.class), 999);
+
+        // 전역변수에 저장
+        imsi.setPosition(position);
+        imsi.setItem_timepoint(item_timepoint);
+
+        startActivityForResult(new Intent(this, SelectDrugActivity.class), 999);
+
 //        startActivity(new Intent(this, SelectDrugActivity.class));
 
 
-        if (!flag) {
-            timepoints.set(position, new TimePoint(item_timepoint, "노보래피트\n휴머로그"));
-            flag = true;
-        } else {
-            timepoints.set(position, new TimePoint(item_timepoint, "노보래피트"));
-            flag = false;
-        }
-        mTimePointItems.notifyDataSetChanged();
+//        if (!flag) {
+//            timepoints.set(position, new TimePoint(item_timepoint, "노보래피트\n휴머로그"));
+//            flag = true;
+//        } else {
+//            timepoints.set(position, new TimePoint(item_timepoint, "노보래피트"));
+//            flag = false;
+//        }
+//        mTimePointItems.notifyDataSetChanged();
     }
 
     public void anim() {
@@ -234,9 +244,6 @@ public class SelectDrugFirstActivity extends AppCompatActivity implements IActiv
                             .setMessage("message. 최종 확인" + message)
                             .setPositiveButton("yes",
                                     (dialog, id) -> {
-
-                                        // TODO: 2018-11-20 message 캐시에 저장하기!!!
-
                                         SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
                                         SharedPreferences.Editor editor = pref.edit();
                                         editor.putString("setData", finalMessage);
@@ -265,7 +272,18 @@ public class SelectDrugFirstActivity extends AppCompatActivity implements IActiv
 //        super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == 999) {
+                Log.d(TAG, "onActivityResult: data received");
 
+                Log.d(TAG, "onActivityResult: data.getStringExtra(\"result\") = " + data.getStringExtra("result"));
+                int a = imsi.getPosition();
+                String b = imsi.getItem_timepoint();
+                Log.d(TAG, "onActivityResult: a = " + a);
+                Log.d(TAG, "onActivityResult: b = " + b);
+
+//                timepoints.set(position, new TimePoint(item_timepoint, "노보래피트\n휴머로그"));
+//                timepoints.set(imsi.getPosition(), new TimePoint(imsi.getItem_timepoint(), data.getStringExtra("result")));
+                timepoints.set(a, new TimePoint(b, data.getStringExtra("result")));
+                mTimePointItems.notifyDataSetChanged();
             }
         }
     }
