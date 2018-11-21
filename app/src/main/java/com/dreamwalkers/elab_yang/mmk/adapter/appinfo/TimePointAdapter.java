@@ -75,8 +75,9 @@ public class TimePointAdapter extends RecyclerView.Adapter<TimePointAdapter.View
 
         holder.item_timepoint.setText(item.getTimepoint());
         holder.item_name.setText(item.getName());
+        holder.item_unit.setText(item.getUnit());
 
-        //        holder.item_unit.setText(item.getUnit());
+        holder.item_unit.setText(item.getUnit());
 
         holder.item_unit.setOnClickListener(v -> {
 
@@ -86,13 +87,16 @@ public class TimePointAdapter extends RecyclerView.Adapter<TimePointAdapter.View
             if (holder.item_name.getText().equals("")) {
                 Snackbar.make(v, "설정먼저ㄱ", Snackbar.LENGTH_SHORT).show();
             } else {
+                Log.d(TAG, "onBindViewHolder: item.getTimepoint() = " + item.getTimepoint());
+
+
                 final EditText et = new EditText(context);
                 et.setInputType(InputType.TYPE_CLASS_NUMBER);
                 AlertDialog.Builder builder13 = new AlertDialog.Builder(context)
                         .setTitle("단위")
                         .setPositiveButton("yes", (DialogInterface dialog, int id) -> {
                             item.setUnit(et.getText().toString());
-                            holder.item_unit.setText(et.getText().toString());
+                            holder.item_unit.setText(item.getUnit());
                         })
                         .setView(et);
                 builder13.create()
@@ -100,7 +104,7 @@ public class TimePointAdapter extends RecyclerView.Adapter<TimePointAdapter.View
             }
         });
 
-        // 품명과 단위 추가하러 가기
+//         품명과 단위 추가하러 가기
         holder.add_btn.setOnClickListener(v -> {
 
             // 임시 데이터 추가

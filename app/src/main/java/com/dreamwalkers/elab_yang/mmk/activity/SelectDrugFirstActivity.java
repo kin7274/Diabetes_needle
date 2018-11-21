@@ -211,22 +211,23 @@ public class SelectDrugFirstActivity extends AppCompatActivity implements IActiv
                 }
 
                 // 2페
-                if (cnt == 1) {
-                    // 2번 레이아웃 닫고 3번 연다.
-                    title2.setVisibility(View.INVISIBLE);
-                    sub2.setVisibility(View.INVISIBLE);
-                    title_line2.setVisibility(View.INVISIBLE);
-
-                    title3.setVisibility(View.VISIBLE);
-                    sub3.setVisibility(View.VISIBLE);
-                    title_line3.setVisibility(View.VISIBLE);
-
-                    cnt++;
-                    break;
-                }
+//                if (cnt == 1) {
+                // 2번 레이아웃 닫고 3번 연다.
+//                    title2.setVisibility(View.INVISIBLE);
+//                    sub2.setVisibility(View.INVISIBLE);
+//                    title_line2.setVisibility(View.INVISIBLE);
+//
+//                    title3.setVisibility(View.VISIBLE);
+//                    sub3.setVisibility(View.VISIBLE);
+//                    title_line3.setVisibility(View.VISIBLE);
+//
+//                    cnt++;
+//                    break;
+//                }
 
                 // 3페
-                if (cnt == 2) {
+//                if (cnt == 2) {
+                if (cnt == 1) {
                     Snackbar.make(getWindow().getDecorView().getRootView(), "저장", Snackbar.LENGTH_SHORT).show();
                     String message = "";
                     Log.d(TAG, "onOptionsItemSelected: timepoints.size() = " + timepoints.size());
@@ -282,6 +283,7 @@ public class SelectDrugFirstActivity extends AppCompatActivity implements IActiv
 
 //                timepoints.set(position, new TimePoint(item_timepoint, "노보래피트\n휴머로그"));
 //                timepoints.set(imsi.getPosition(), new TimePoint(imsi.getItem_timepoint(), data.getStringExtra("result")));
+//                timepoints.set(a, new TimePoint(b, data.getStringExtra("result")));
                 timepoints.set(a, new TimePoint(b, data.getStringExtra("result")));
                 mTimePointItems.notifyDataSetChanged();
             }
