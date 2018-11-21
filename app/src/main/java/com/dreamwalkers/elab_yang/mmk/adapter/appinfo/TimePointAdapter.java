@@ -3,7 +3,6 @@ package com.dreamwalkers.elab_yang.mmk.adapter.appinfo;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -12,15 +11,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dreamwalkers.elab_yang.mmk.R;
-import com.dreamwalkers.elab_yang.mmk.activity.DataBaseActivity;
-import com.dreamwalkers.elab_yang.mmk.activity.select.SelectDrugActivity;
-import com.dreamwalkers.elab_yang.mmk.model.CardItem;
 import com.dreamwalkers.elab_yang.mmk.model.TimePoint;
 
 import java.util.List;
@@ -73,14 +68,19 @@ public class TimePointAdapter extends RecyclerView.Adapter<TimePointAdapter.View
                     .show();
         });
 
+
         holder.item_timepoint.setText(item.getTimepoint());
         holder.item_name.setText(item.getName());
         holder.item_unit.setText(item.getUnit());
-
         holder.item_unit.setText(item.getUnit());
 
-        holder.item_unit.setOnClickListener(v -> {
+        // 단위칸이 비어있다면!? hint = "단위입력"
+        if (holder.item_unit.getText().equals("")) {
+//            holder.item_unit.setBackgroundResource(R.color.red);
+            holder.item_unit.setHint("단위 입력");
+        }
 
+        holder.item_unit.setOnClickListener(v -> {
             Log.d(TAG, "onBindViewHolder: item.getName() = " + item.getName());
 
             // TODO: 2018-11-20 설정 단계별로 묶어야하지만 우선은 품명을 설정안하면 단위를 못설정하도록 잠궈놈
@@ -88,8 +88,7 @@ public class TimePointAdapter extends RecyclerView.Adapter<TimePointAdapter.View
                 Snackbar.make(v, "설정먼저ㄱ", Snackbar.LENGTH_SHORT).show();
             } else {
                 Log.d(TAG, "onBindViewHolder: item.getTimepoint() = " + item.getTimepoint());
-
-
+                // 다이얼로그
                 final EditText et = new EditText(context);
                 et.setInputType(InputType.TYPE_CLASS_NUMBER);
                 AlertDialog.Builder builder13 = new AlertDialog.Builder(context)
@@ -106,7 +105,6 @@ public class TimePointAdapter extends RecyclerView.Adapter<TimePointAdapter.View
 
 //         품명과 단위 추가하러 가기
         holder.add_btn.setOnClickListener(v -> {
-
             // 임시 데이터 추가
             mListener.onAddItemClicked(position, item.getTimepoint());
 //            context.startActivity(new Intent(context, SelectDrugActivity.class));
