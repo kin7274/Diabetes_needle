@@ -22,16 +22,22 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.dreamwalkers.elab_yang.mmk.R;
+import com.dreamwalkers.elab_yang.mmk.activity.IActivityBased;
 import com.dreamwalkers.elab_yang.mmk.activity.ProfileActivity_v1;
 import com.dreamwalkers.elab_yang.mmk.activity.SelectDrugFirstActivity;
 import com.dreamwalkers.elab_yang.mmk.activity.select.SelectDrugActivity;
+import com.dreamwalkers.elab_yang.mmk.activity.sync.needle.v1.ReceiveDataActivity;
 import com.dreamwalkers.elab_yang.mmk.adapter.appinfo.ProfileAdapter;
 import com.dreamwalkers.elab_yang.mmk.model.Profile;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +46,9 @@ import static android.content.Context.MODE_PRIVATE;
 
 // 프로필
 public class FragmentD extends Fragment implements ProfileAdapter.ProfileClickListener {
+    private final static String TAG = FragmentD.class.getSimpleName();
     RecyclerView recyclerview;
+    TextView textView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -62,6 +70,15 @@ public class FragmentD extends Fragment implements ProfileAdapter.ProfileClickLi
 
         // read cache data
         SharedPreferences pref = this.getActivity().getSharedPreferences("pref", MODE_PRIVATE);
+
+        // 떙떙땡님 반갑습니다.
+        if (pref.getString("user_data0", "").equals("")) {
+            //
+            
+        } else {
+            Log.d(TAG, "setAdapter: 띠용 ");
+            textView.setText(pref.getString("user_data0", ""));
+        }
 
         // 1
         String message = "이름 : " + pref.getString("user_data0", "") + "\n" + "나이 : " + pref.getString("user_data1", "") + "\n"

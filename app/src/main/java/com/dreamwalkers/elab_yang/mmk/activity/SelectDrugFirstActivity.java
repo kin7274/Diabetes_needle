@@ -251,9 +251,7 @@ public class SelectDrugFirstActivity extends AppCompatActivity implements IActiv
                                         Log.d(TAG, "setData = " + finalMessage);
                                         editor.apply();
 //                                        finish();
-
                                         Snackbar.make(getWindow().getDecorView().getRootView(), "저장햇슴돠", Snackbar.LENGTH_SHORT).show();
-
                                         finish();
                                     });
                     builder.create()
