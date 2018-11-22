@@ -74,7 +74,7 @@ public class FragmentD extends Fragment implements ProfileAdapter.ProfileClickLi
         // 떙떙땡님 반갑습니다.
         if (pref.getString("user_data0", "").equals("")) {
             //
-            
+
         } else {
             Log.d(TAG, "setAdapter: 띠용 ");
             textView.setText(pref.getString("user_data0", ""));
@@ -93,7 +93,7 @@ public class FragmentD extends Fragment implements ProfileAdapter.ProfileClickLi
 
         profiles.add(new Profile("신체정보", message));  // 신체정보
         profiles.add(new Profile("현재 복용 중인 약", message1));  // 복용중이신 약
-        profiles.add(new Profile("마지막 투약일", "2018. 11. 12 07:52 10단위 투약"));  // 최근 투약일(횟수?)
+//        profiles.add(new Profile("마지막 투약일", "2018. 11. 12 07:52 10단위 투약"));  // 최근 투약일(횟수?)
 
         ProfileAdapter mProfileItems = new ProfileAdapter(profiles);
         mProfileItems.setOnClickListener(this);

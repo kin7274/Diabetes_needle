@@ -1,22 +1,17 @@
 package com.dreamwalkers.elab_yang.mmk.activity.fragment;
 
 
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CalendarView;
 import android.widget.TextView;
 
 import com.dreamwalkers.elab_yang.mmk.R;
 import com.shrikanthravi.collapsiblecalendarview.data.Day;
 import com.shrikanthravi.collapsiblecalendarview.widget.CollapsibleCalendar;
-
-import java.time.LocalDate;
 
 import static android.support.constraint.Constraints.TAG;
 
