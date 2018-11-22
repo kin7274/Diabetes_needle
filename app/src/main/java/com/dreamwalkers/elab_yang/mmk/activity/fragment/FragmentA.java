@@ -38,10 +38,29 @@ public class FragmentA extends Fragment implements DashboardAdapter.DashboardCli
     public void setAdapter() {
         List<Dashboard> dashboards = new ArrayList<>();
 
-        // 지난 7일간의 내역
-        dashboards.add(new Dashboard("지난 7일간의 내역 title", "지난 7일간의 내역 content"));
+        // 장치를 추가하지 않으셨군ㅇ료?
+        dashboards.add(new Dashboard(1));
 
-        dashboards.add(new Dashboard("현재 복용 중인 약", "ㅅㅅ"));  // 복용중이신 약
+        // 투약 정보를 추가하지 않으셨군ㅇ료?
+        dashboards.add(new Dashboard(2));
+
+        // 개인 정보를 추가하지 않으셨군ㅇ료?
+        dashboards.add(new Dashboard(3));
+
+        // 지난 7일간의 내역
+        dashboards.add(new Dashboard("지난 7일간의 내역 title",
+                "지난 7일간의 내역 content\n" + "18. 11. 23. 00:00 휴머로그 3단위 투여\n"));
+
+        // 혈당 관리 - 좀 세부화해야겠는데?
+        dashboards.add(new Dashboard("혈당 관리 title", "혈당 관리 content"));
+
+        // 알림 시간 설정
+        dashboards.add(new Dashboard("알림 시간 설정 Title"
+                , "Content \n" + "아침 : 07:00 알림\n" + "점심 : 12:00 알림\n" + "..."));
+
+        // 총 투약 횟수
+        dashboards.add(new Dashboard("총 투약 횟수 Title"
+                , "Content \n" + "11월달 23일 / 30일\n" + "연속 23일째 투약 중"));
 
         DashboardAdapter mDashboardItems = new DashboardAdapter(dashboards);
         mDashboardItems.setOnClickListener(this);
