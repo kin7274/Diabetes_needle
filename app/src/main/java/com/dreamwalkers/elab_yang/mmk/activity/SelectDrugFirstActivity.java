@@ -2,7 +2,9 @@ package com.dreamwalkers.elab_yang.mmk.activity;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -26,6 +28,7 @@ import com.dreamwalkers.elab_yang.mmk.activity.select.SelectDrugActivity;
 import com.dreamwalkers.elab_yang.mmk.adapter.MyRecyclerAdapter;
 import com.dreamwalkers.elab_yang.mmk.adapter.appinfo.TimePointAdapter;
 import com.dreamwalkers.elab_yang.mmk.model.CardItem;
+import com.dreamwalkers.elab_yang.mmk.model.Imsi;
 import com.dreamwalkers.elab_yang.mmk.model.TimePoint;
 
 import org.w3c.dom.Text;
@@ -99,6 +102,8 @@ public class SelectDrugFirstActivity extends AppCompatActivity implements IActiv
 
     String[] set_data = new String[4];
 
+    Imsi imsi;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,6 +122,7 @@ public class SelectDrugFirstActivity extends AppCompatActivity implements IActiv
         setRecyclerview();
         anim();
         setSupportActionBar(myToolbar);
+        imsi = (Imsi) getApplication();
     }
 
     public void setRecyclerview() {
@@ -155,8 +161,15 @@ public class SelectDrugFirstActivity extends AppCompatActivity implements IActiv
 
         // TODO: 2018-11-20 코틀린으로
 
+        // 전역변수에 저장
+        imsi.setPosition(position);
+        imsi.setItem_timepoint(item_timepoint);
 
-        startActivity(new Intent(this, SelectDrugActivity.class));
+        startActivityForResult(new Intent(this, SelectDrugActivity.class), 999);
+
+//        startActivity(new Intent(this, SelectDrugActivity.class));
+
+
 //        if (!flag) {
 //            timepoints.set(position, new TimePoint(item_timepoint, "노보래피트\n휴머로그"));
 //            flag = true;
@@ -198,39 +211,47 @@ public class SelectDrugFirstActivity extends AppCompatActivity implements IActiv
                 }
 
                 // 2페
-                if (cnt == 1) {
-                    // 2번 레이아웃 닫고 3번 연다.
-                    title2.setVisibility(View.INVISIBLE);
-                    sub2.setVisibility(View.INVISIBLE);
-                    title_line2.setVisibility(View.INVISIBLE);
-
-                    title3.setVisibility(View.VISIBLE);
-                    sub3.setVisibility(View.VISIBLE);
-                    title_line3.setVisibility(View.VISIBLE);
-
-                    cnt++;
-                    break;
-                }
+//                if (cnt == 1) {
+                // 2번 레이아웃 닫고 3번 연다.
+//                    title2.setVisibility(View.INVISIBLE);
+//                    sub2.setVisibility(View.INVISIBLE);
+//                    title_line2.setVisibility(View.INVISIBLE);
+//
+//                    title3.setVisibility(View.VISIBLE);
+//                    sub3.setVisibility(View.VISIBLE);
+//                    title_line3.setVisibility(View.VISIBLE);
+//
+//                    cnt++;
+//                    break;
+//                }
 
                 // 3페
-                if (cnt == 2) {
+//                if (cnt == 2) {
+                if (cnt == 1) {
                     Snackbar.make(getWindow().getDecorView().getRootView(), "저장", Snackbar.LENGTH_SHORT).show();
                     String message = "";
                     Log.d(TAG, "onOptionsItemSelected: timepoints.size() = " + timepoints.size());
                     // 리스트 갯수만큼 반복
                     for (int i = 0; i < timepoints.size(); i++) {
-                        set_data[i] = timepoints.get(i).getTimepoint() + "/" + timepoints.get(i).getName() + "/" + timepoints.get(i).getUnit();
+//                        set_data[i] = timepoints.get(i).getTimepoint() + "/" + timepoints.get(i).getName() + "/" + timepoints.get(i).getUnit() + "\n";
+                        set_data[i] = timepoints.get(i).getTimepoint() + "/" + timepoints.get(i).getName() + "/" + timepoints.get(i).getUnit() + "\n";
                         Log.d(TAG, "onOptionsItemSelected: set_data[i] = " + set_data[i]);
                         message += set_data[i];
                     }
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    String finalMessage = message;
                     builder.setTitle("title. 최종 확인")
                             .setMessage("message. 최종 확인" + message)
                             .setPositiveButton("yes",
                                     (dialog, id) -> {
-
-                                        // TODO: 2018-11-20 message 캐시에 저장하기!!! 
+                                        SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+                                        SharedPreferences.Editor editor = pref.edit();
+                                        editor.putString("setData", finalMessage);
+                                        Log.d(TAG, "setData = " + finalMessage);
+                                        editor.apply();
+//                                        finish();
+                                        Snackbar.make(getWindow().getDecorView().getRootView(), "저장햇슴돠", Snackbar.LENGTH_SHORT).show();
                                         finish();
                                     });
                     builder.create()
@@ -243,5 +264,27 @@ public class SelectDrugFirstActivity extends AppCompatActivity implements IActiv
                 break;
         }
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == 999) {
+                Log.d(TAG, "onActivityResult: data received");
+
+                Log.d(TAG, "onActivityResult: data.getStringExtra(\"result\") = " + data.getStringExtra("result"));
+                int a = imsi.getPosition();
+                String b = imsi.getItem_timepoint();
+                Log.d(TAG, "onActivityResult: a = " + a);
+                Log.d(TAG, "onActivityResult: b = " + b);
+
+//                timepoints.set(position, new TimePoint(item_timepoint, "노보래피트\n휴머로그"));
+//                timepoints.set(imsi.getPosition(), new TimePoint(imsi.getItem_timepoint(), data.getStringExtra("result")));
+//                timepoints.set(a, new TimePoint(b, data.getStringExtra("result")));
+                timepoints.set(a, new TimePoint(b, data.getStringExtra("result")));
+                mTimePointItems.notifyDataSetChanged();
+            }
+        }
     }
 }
